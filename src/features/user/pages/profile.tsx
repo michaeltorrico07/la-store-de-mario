@@ -16,10 +16,10 @@ export const Profile = () => {
     LogOutUser()
     navigate("/login")
   }
-    return (
-        <div>
-            <div>Hola, a Perfil {user?.email}</div>
-            <button onClick={logOut}>Sign Out</button>
-        </div>
-    )
+  return (
+    <div>
+      <div>Hola, a Perfil {user?.email}</div>
+      <button onClick={logOut}>Sign Out</button>
+    </div>
+  )
 }

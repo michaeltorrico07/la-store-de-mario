@@ -15,7 +15,7 @@ export const Register = () => {
       <div
         className="hidden md:block md:w-1/2 bg-cover bg-center"
         style={{ backgroundImage: "url('/Mario.jpg')" }}
-      ></div>
+      />
       <div className="w-full md:w-1/2 flex items-center justify-center">
         <div className="w-full max-w-md px-8">
           <div className="flex justify-end mb-4">
