@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { User } from "./auth";
 import { auth, api } from '../../infrastructure/services/index';
 import { AuthContext } from './authContext'
-import { onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signOut, signInWithEmailAndPassword } from "firebase/auth";
+import { onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signOut, signInWithEmailAndPassword, confirmPasswordReset, sendPasswordResetEmail } from "firebase/auth";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null)
@@ -42,12 +42,32 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await signInWithEmailAndPassword(auth, email, password)
   }
 
+  const ResetPassword = async (oobCode: string, newPassword: string) => {
+    try {
+      await confirmPasswordReset(auth, oobCode, newPassword)
+      return true
+    } catch (error) {
+      console.error("Error al restablecer la contraseña", error)
+      return false
+    }
+  }
+
+  const sendResetPasswordEmail = async (email: string) => {
+    try {
+      await sendPasswordResetEmail(auth, email)
+      return true
+    } catch (error) {
+      console.error("Error al enviar el correo de restablecimiento de contraseña", error)
+      return false
+    }
+  }
+
   const LogOutUser = async () => {
     await signOut(auth)
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, registerUser, LogOutUser, loginUser }}>
+    <AuthContext.Provider value={{ user, loading, registerUser, LogOutUser, loginUser, ResetPassword, sendResetPasswordEmail }}>
       {children}
     </AuthContext.Provider>
   )
