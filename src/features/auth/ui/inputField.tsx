@@ -19,7 +19,7 @@ export const InputField = ({ error, registration, ...props }: InputFieldProps) =
         <p className="text-red-600 text-sm">{error.message}</p>
       ) : props.placeholder === "Contraseña" ? (
         <div className="text-sm text-gray-500 mt-1">
-          Debes tener al menos 6 caracteres
+          Debe tener al menos 6 caracteres
         </div>
       ) : null}
     </div>

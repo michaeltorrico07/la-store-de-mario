@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import type { LoginSchema } from '../schemas/index';
-import { loginSchema } from '../schemas/index';
+import type { PasswordSchema } from '../schemas/index';
+import { passwordSchema } from '../schemas/index';
 import { useAuth } from '../hooks/useAuth.ts';
 import { InputField } from '../ui/inputField.tsx';
 
-export const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
-  const { submitLogin, error, loading, success } = useAuth();
+export const ResetPassword = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm<PasswordSchema>({ resolver: zodResolver(passwordSchema) });
+  const { submitResetPassword, error, loading, success } = useAuth();
 
   return (
     <div className="flex h-screen">
@@ -29,20 +29,9 @@ export const Login = () => {
               </div>
             </div>
           </div>
-          <h1 className="text-3xl font-bold mb-4 text-center">Inicia sesión o regístrate</h1>
-          <p className="text-center mb-6">
-            Ingresa con tu correo electrónico si tienes cuenta. En caso de no tener, 
-            <Link to="/register" className="text-red-600 ml-1">regístrate aquí</Link>
-          </p>
+          <h1 className="text-2xl font-bold mb-4 text-center">Reinicio de contraseña</h1>
 
-          <form onSubmit={handleSubmit(submitLogin)} className="space-y-4">
-            <InputField
-              type="email"
-              placeholder="Correo electrónico"
-              registration={register("email")}
-              error={errors.email}
-            />
-
+          <form onSubmit={handleSubmit(submitResetPassword)} className="space-y-4">
             <InputField
               type="password"
               placeholder="Contraseña"
@@ -50,12 +39,18 @@ export const Login = () => {
               error={errors.password}
             />
 
+            <InputField
+              type="password"
+              placeholder="Nueva Contraseña"
+              registration={register("confirmPassword")}
+              error={errors.confirmPassword}
+            />
+
             {error && <p className="text-red-600 text-sm">{error}</p>}
-            {success && <p className="text-green-600 text-sm">¡Sesión iniciada! Redirigiendo a Perfil...</p>}
-            
-            <Link to='/forgot-password' className="text-red-600 ml-1">Recuperar Contraseña</Link>
-            <button type="submit" className="w-full py-3 bg-red-600 text-white rounded-md cursor-pointer mt-4" disabled={loading}>
-              {loading ? "Cargando..." : "Iniciar sesión"}
+            {success && <p className="text-green-600 text-sm">¡Contraseña cambiada! Inicie sesión a continuacion.</p>}
+
+            <button type="submit" className="w-full py-3 bg-red-600 text-white rounded-md">
+              {loading ? "Cargando..." : "Resetear contraseña"}
             </button>
           </form>
         </div>
