@@ -40,9 +40,23 @@ export const useAuth = () => {
       navigate("/profile")
       setSuccess(true);
       setLoading(false);
-    } catch (error) {
-      setError("Error al registrar el usuario");
-      console.log(error)
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.log(error.code)
+        // Mapeo de errores de Firebase
+        switch (error.code) {
+          case "auth/invalid-credential":
+            setError('Email o contraseña incorrectos. Por favor verifica e intenta nuevamente')
+            break;
+          case "auth/too-many-requests":
+            setError('Demasiados intentos fallidos. Por favor espere un momento e intente nuevamente')
+            break;
+          default:
+            setError('Hubo un error al enviar el email. Por favor intenta nuevamente')
+        }
+      } else {
+        setError('Hubo un error al enviar el email. Por favor intenta nuevamente')
+      }
       setSuccess(false);
       setLoading(false);
     }
@@ -57,8 +71,8 @@ export const useAuth = () => {
       setSuccess(true);
       setLoading(false);
       setTimeout(() => {
-        navigate('/login')
-      }, 1000);
+        navigate('/')
+      }, 2500);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         // Mapeo de errores de Firebase
@@ -88,38 +102,31 @@ export const useAuth = () => {
     if (!oobCode) {
       setError("Token de restablecimiento no encontrado");
       setLoading(false)
-      setTimeout(() => {
-        navigate('/login')
-      }, 1000);
       return;
     }
 
     try {
       await ResetPassword(oobCode, data.password);
+      setSuccess(true);
+      setLoading(false);
       setTimeout(() => {
         navigate('/login')
-      }, 1000);
-    } catch (error: unknown) {
-      if (error instanceof FirebaseError) {
-        // Mapeo de errores de Firebase
-        switch (error.code) {
-          case "auth/expired-action-code":
-            setError('The reset link has expired. Please request a new one')
-            break;
-          case "auth/invalid-action-code":
-            setError('The reset link is invalid. Please try again')
-            break;
-          case "auth/user-not-found":
-            setError('The user does not exist. Please check your email and try again')
-            break;
-          case "auth/weak-password":
-            setError('The password is too weak. Please try a stronger one')
-            break;
-          default:
-            setError('There was an error logging in. Please try again')
-        }
+      }, 2000);
+    } catch (error: any) {
+      // Mapeo de errores de Firebase
+      switch (error.code) {
+        case "auth/invalid-action-code":
+          setError('El enlace de restablecimiento no es válido. Inténtalo de nuevo.')
+          break;
+        case "auth/weak-password":
+          setError('La contraseña es demasiado débil. Intente una más segura.')
+          break;
+        default:
+          setError('Se produjo un error al reestablecer la contraseña. Inténtalo de nuevo.')
       }
     }
+    setSuccess(false);
+    setLoading(false);
   }
 
   return {

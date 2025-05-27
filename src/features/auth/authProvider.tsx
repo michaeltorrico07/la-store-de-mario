@@ -43,23 +43,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const ResetPassword = async (oobCode: string, newPassword: string) => {
-    try {
-      await confirmPasswordReset(auth, oobCode, newPassword)
-      return true
-    } catch (error) {
-      console.error("Error al restablecer la contraseña", error)
-      return false
-    }
+    await confirmPasswordReset(auth, oobCode, newPassword)
+    return true
   }
 
   const sendResetPasswordEmail = async (email: string) => {
-    try {
-      await sendPasswordResetEmail(auth, email)
-      return true
-    } catch (error) {
-      console.error("Error al enviar el correo de restablecimiento de contraseña", error)
-      return false
-    }
+    await sendPasswordResetEmail(auth, email)
+    return true
   }
 
   const LogOutUser = async () => {

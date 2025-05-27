@@ -40,10 +40,10 @@ export const SendEmail = () => {
             />
 
             {error && <p className="text-red-600 text-sm">{error}</p>}
-            {success && <p className="text-green-600 text-sm">¡Sesión iniciada! Redirigiendo a Perfil...</p>}
+            {success && <p className="text-green-600 text-sm">¡Correo enviado! Revisa tu bandeja de entrada.</p>}
 
-            <button type="submit" className="w-full py-3 bg-red-600 text-white rounded-md">
-              {loading ? "Cargando..." : "Iniciar sesión"}
+            <button type="submit" className="w-full py-3 bg-red-600 text-white rounded-md cursor-pointer">
+              {loading ? "Cargando..." : "Enviar correo"}
             </button>
           </form>
         </div>
