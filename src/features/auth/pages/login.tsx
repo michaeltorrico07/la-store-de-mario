@@ -5,10 +5,18 @@ import type { LoginSchema } from '../schemas/index';
 import { loginSchema } from '../schemas/index';
 import { useAuth } from '../hooks/useAuth.ts';
 import { InputField } from '../ui/inputField.tsx';
+import { useEffect } from 'react';
 
 export const Login = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
+  const { register, handleSubmit, formState: { errors }, reset,  } = useForm<LoginSchema>({ resolver: zodResolver(loginSchema) });
   const { submitLogin, error, loading, success } = useAuth();
+
+  useEffect(() => {
+    reset({
+      email: "",
+      password: ""
+    });
+  }, [reset]);
 
   return (
     <div className="flex h-screen">
@@ -53,7 +61,7 @@ export const Login = () => {
             {error && <p className="text-red-600 text-sm">{error}</p>}
             {success && <p className="text-green-600 text-sm">¡Sesión iniciada! Redirigiendo a Perfil...</p>}
             
-            <Link to='/forgot-password' className="text-red-600 ml-1">Recuperar Contraseña</Link>
+            <Link to='/forgot-password' className="text-blue-600 ml-1">Recuperar Contraseña</Link>
             <button type="submit" className="w-full py-3 bg-red-600 text-white rounded-md cursor-pointer mt-4" disabled={loading}>
               {loading ? "Cargando..." : "Iniciar sesión"}
             </button>

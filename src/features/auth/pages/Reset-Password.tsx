@@ -49,7 +49,7 @@ export const ResetPassword = () => {
             {error && <p className="text-red-600 text-sm">{error}</p>}
             {success && <p className="text-green-600 text-sm">¡Contraseña cambiada! Inicie sesión a continuacion.</p>}
 
-            <button type="submit" className="w-full py-3 bg-red-600 text-white rounded-md">
+            <button type="submit" className="w-full py-3 bg-red-600 text-white rounded-md cursor-pointer">
               {loading ? "Cargando..." : "Resetear contraseña"}
             </button>
           </form>

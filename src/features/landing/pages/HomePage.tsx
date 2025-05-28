@@ -29,12 +29,12 @@ export const HomePage = () => {
           {/* Botones */}
           <div className="space-y-4">
             <Link to="/login" className="block">
-              <button className="w-full py-3 bg-red-600 text-white rounded-md">
+              <button className="w-full py-3 bg-red-600 text-white rounded-md cursor-pointer">
                 Iniciar sesión
               </button>
             </Link>
             <Link to="/register" className="block">
-              <button className="w-full py-3 bg-gray-200 text-black rounded-md">
+              <button className="w-full py-3 bg-gray-200 text-black rounded-md cursor-pointer">
                 Registrarse
               </button>
             </Link>

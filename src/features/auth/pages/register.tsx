@@ -79,7 +79,7 @@ export const Register = () => {
 
             <button
             type="submit"
-            className="w-full py-3 bg-red-600 text-white rounded-md"
+            className="w-full py-3 bg-red-600 text-white rounded-md cursor-pointer"
             >
             {loading ? "Cargando..." : "Registrarse"}
             </button>
