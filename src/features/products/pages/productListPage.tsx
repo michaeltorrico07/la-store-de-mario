@@ -91,4 +91,5 @@ const ProductListPage: React.FC = () => {
   );
 };
 
+ {/* No mas export default bynfi */}
 export default ProductListPage;
