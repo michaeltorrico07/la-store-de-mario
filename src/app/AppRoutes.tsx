@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { HomePage, Login, Register, Profile, ResetPassword, SendEmail } from '../features/index';
+import ProductListPage from '../features/products/pages/ProductListPage';
 
 const AppRoutes = () => {
   return (
@@ -10,6 +11,7 @@ const AppRoutes = () => {
       <Route path="/profile" element={<Profile />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/forgot-password" element={<SendEmail />} />
+      <Route path="/productos" element={<ProductListPage />} />
     </Routes>
   );
 };
