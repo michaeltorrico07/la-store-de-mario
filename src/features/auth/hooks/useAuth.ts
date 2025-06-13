@@ -1,8 +1,9 @@
-import { useState } from 'react';
-import type { RegisterSchema, LoginSchema, PasswordSchema, EmailSchema } from '../schemas/index';
-import { useAuthContext } from './useAuthContext';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useState } from 'react'
+import type { RegisterSchema, LoginSchema, PasswordSchema, EmailSchema } from '../schemas/index'
+import { useAuthContext } from './useAuthContext'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { FirebaseError } from '@firebase/util'
+import { api } from '../../../infrastructure/services'
 
 export const useAuth = () => {
   const [error, setError] = useState<string | null>(null);
@@ -17,12 +18,22 @@ export const useAuth = () => {
     setSuccess(false);
     setLoading(true);
     try {
-      await registerUser(data.email, data.password);
-
+      const userId = await registerUser(data.email, data.password);
+      const userData = {
+        id: userId,
+        name: data.name,
+        lastName: data.lastName,
+        dni: data.dni,
+        email: data.email,
+      }
       // Guardar los datos del usuario en la BD
+      await api.post('/user', userData)
 
       setSuccess(true);
       setLoading(false);
+      setTimeout(() => {
+        navigate('/login')
+      }, 3000);
     } catch (error) {
       setError("Error al registrar el usuario");
       console.log(error)
