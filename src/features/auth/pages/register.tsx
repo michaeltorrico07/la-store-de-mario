@@ -31,15 +31,15 @@ export const Register = () => {
             <InputField
               type="text"
               placeholder="Nombre"
-              registration={register("nombre")}
-              error={errors.nombre}
+              registration={register("name")}
+              error={errors.name}
             />
 
             <InputField
               type="text"
               placeholder="Apellido"
-              registration={register("apellido")}
-              error={errors.apellido}
+              registration={register("lastName")}
+              error={errors.lastName}
             />
 
             <InputField
