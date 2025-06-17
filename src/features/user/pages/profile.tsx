@@ -15,7 +15,7 @@ export const Profile = () => {
   }
   return (
     <div>
-      <div>Hola, a Perfil {user?.email}</div>
+      <div>Hola, a Perfil {user?.name}</div>
       <button onClick={logOut}>Sign Out</button>
     </div>
   )

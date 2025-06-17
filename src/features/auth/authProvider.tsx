@@ -12,11 +12,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         try {
-          const res = await api.get("/user")
+          const res = await api.get(`/user/${currentUser.uid}`)
           setUser({
-            ...res.data.user,
+            ...res.data.data,
             id: currentUser.uid,
-            email: currentUser.email || "",
             isVerified: currentUser.emailVerified,
           })
         } catch (error) {
@@ -36,6 +35,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
     await sendEmailVerification(userCredential.user)
     await LogOutUser()
+    const id = userCredential.user.uid
+    return id
   }
 
   const loginUser = async (email: string, password: string) => {

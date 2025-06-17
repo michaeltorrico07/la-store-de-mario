@@ -2,10 +2,7 @@ import axios from "axios";
 import { auth } from "./firebase";
 import { VITE_BACKEND_API_URL } from '../config/env'
 
-export const api = axios.create({
-    baseURL: `${VITE_BACKEND_API_URL}`, // Cambia según tu backend
-    headers: { "Content-Type": "application/json" }
-});
+
 
 // Interceptor para adjuntar el token solo si el usuario está autenticado
 api.interceptors.request.use(async (config) => {

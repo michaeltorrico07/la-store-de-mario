@@ -1,16 +1,16 @@
 export interface User {
   id: string,
   email: string,
-  nombre: string,
-  apellido: string,
-  dni?: string,
-  isVerified?: boolean
+  name: string,
+  lastName: string,
+  dni: string,
+  isVerified: boolean
 }
 
 export type AuthContextType = {
   user: User | null;
   loading: boolean
-  registerUser: (email: string, password: string) => Promise<void>;
+  registerUser: (email: string, password: string) => Promise<string>;
   loginUser: (email: string, password: string) => Promise<void>;
   LogOutUser: () => Promise<void>;
   ResetPassword: (oobCode: string, newPassword: string) => Promise<boolean>;
