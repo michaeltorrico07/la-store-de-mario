@@ -12,7 +12,7 @@ const AppRoutes = () => {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/forgot-password" element={<SendEmail />} />
       <Route path="/productos" element={<ProductListPage />} />
-      <Route path="/OtroApiTest" element={< OtroApiTest />} />
+      <Route path="/otroapitest" element={< OtroApiTest />} />
 
       <Route path="/test" element={< UseApiTest />} />
     </Routes>
