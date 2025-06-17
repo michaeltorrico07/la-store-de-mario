@@ -20,11 +20,11 @@ export const useProducts = () => {
         console.error(err);
         setError('Error cargando productos');
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     };
 
-    loadProducts();
+    loadProducts()
   }, []);
 
   return { products, loading, error, setProducts };
