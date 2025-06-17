@@ -4,13 +4,12 @@ import ProductCard from '../components/ProductCard';
 import CategoryFilter from '../components/CategoryFilter';
 import SortFilter from '../components/SortFilter';
 import Cart from '../components/Cart';
-import { mockProducts } from '../data/mockProducts';
-import type { Product } from '../data/mockProducts';
+import { useProducts } from '../hooks/useProducts';
 
 const ProductListPage: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('todos');
   const [sortBy, setSortBy] = useState('default');
-  const [products] = useState<Product[]>(mockProducts); // CAMBIAR: Conectar con estado global o API
+  const { products } = useProducts();
 
   // Filtrar productos por categoría
   const filteredProducts = selectedCategory === 'todos' 
