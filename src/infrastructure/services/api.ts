@@ -3,7 +3,7 @@ import { auth } from "./firebase";
 import { VITE_BACKEND_API_URL } from '../config/env'
 
 export const api = axios.create({
-    baseURL: `${VITE_BACKEND_API_URL}/api`, // Cambia según tu backend
+    baseURL: `${VITE_BACKEND_API_URL}`, // Cambia según tu backend
     headers: { "Content-Type": "application/json" }
 });
 
