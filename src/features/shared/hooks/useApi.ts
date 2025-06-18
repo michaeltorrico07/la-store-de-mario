@@ -1,4 +1,4 @@
-import type { AxiosRequestConfig, AxiosResponse, Method } from 'axios'
+import type { AxiosError, AxiosRequestConfig, AxiosResponse, Method, AxiosHeaders } from 'axios'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { api } from '../../../infrastructure/services'
 
@@ -6,8 +6,8 @@ type Data<T> = T | null
 
 type CustomError = Error | null
 
-interface UseApiOptions {
-  autoFetch: true
+export interface UseApiOptions {
+  autoFetch: boolean
   params: ApiCallOptions
 }
 
@@ -17,6 +17,7 @@ interface ApiCallOptions {
   query?: Record<string, unknown>
   pathParam?: string
   body?: Record<string, unknown>
+  headers?: AxiosHeaders
 }
 
 interface UseApiCall<T> {
@@ -24,7 +25,7 @@ interface UseApiCall<T> {
   controller: AbortController
 }
 
-interface UseApiResult<T> {
+export interface UseApiResult<T> {
   loading: boolean
   data: Data<T>
   error: CustomError
@@ -32,7 +33,7 @@ interface UseApiResult<T> {
   cancel: () => void
 }
 
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
   success: boolean
   data: T
   error: unknown
@@ -58,11 +59,12 @@ export const useApi = <T> (options: UseApiOptions): UseApiResult<T> => {
     call.then((response) => {
       if (!controller.signal.aborted) {
         setData(response.data.data)
-        console.log(response.data)
       }
       setError(null)
-    }).catch((err) => {
+    }).catch((err: AxiosError) => {
+      if (err.code == "ERR_CANCELED") return      
       setError(err)
+      console.log(err)
     }).finally(() => {
       setLoading(false)
     })
@@ -87,7 +89,7 @@ export const useApi = <T> (options: UseApiOptions): UseApiResult<T> => {
   return { loading, data, error, fetch, cancel }
 }
 
-const apiCall = <T>({ method, url, pathParam, query, body}: ApiCallOptions): UseApiCall<T> => {
+const apiCall = <T>({ method, url, pathParam, query, body, headers}: ApiCallOptions): UseApiCall<T> => {
   const controller = new AbortController()
   const fulUrl = pathParam? `${url.replace(/\/$/, '')}/${pathParam}` : url
   const config: AxiosRequestConfig = { 
@@ -96,7 +98,8 @@ const apiCall = <T>({ method, url, pathParam, query, body}: ApiCallOptions): Use
     fulUrl, 
     params: query, 
     data: body,
-    signal: controller.signal
+    signal: controller.signal,
+    headers: headers
   }
   const call = api.request<T>(config)
   return { call, controller }

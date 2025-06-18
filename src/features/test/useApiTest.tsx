@@ -1,27 +1,10 @@
-import { useRef } from "react"
-import { useApi } from "../shared/hooks/useApi"
-import type { Method } from "axios"
+import { useParams } from "react-router-dom"
+import { useGetProduct } from "./getproduct"
 
-interface Product {
-  _uuid: string
-  name: string
-  tags: string[]
-  description: string
-  image: string
-  price: number
-}
-
+// auth.currentUser?.uid
 export const UseApiTest = () => {
-  const paramsRef = useRef({
-    method: 'GET' as Method,
-    url: '/product',
-    pathParam: '95a551c2-c68e-4043-8b80-fe2ad53d6593',
-  })
-
-  const { data, loading, error } = useApi<Product>({
-    autoFetch: true,
-    params: paramsRef.current
-  })
+  const { id } = useParams()
+  const { data, loading, error } = useGetProduct({id})
 
   if (loading) return <p>Cargando productos...</p>
   if (error) return <p>Error al cargar productos: {error.message}</p>
@@ -31,8 +14,8 @@ export const UseApiTest = () => {
       <h2>Lista de Productos</h2>
       <ul>
         {(
-          <li key={data._uuid} style={{ marginBottom: '1rem' }}>
-            <img src={data.image} alt={data.name} width={100} />
+          <li key={data.id} style={{ marginBottom: '1rem' }}>
+            <img className='w-[200px]' src={data.image} alt={data.name} width={100} />
             <h1>{data.name}</h1>
             <p>{data.description}</p>
             <p>Precio: ${data.price}</p>

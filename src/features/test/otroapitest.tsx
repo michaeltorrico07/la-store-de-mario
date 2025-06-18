@@ -11,38 +11,47 @@ interface Product {
   price: number
 }
 
-export const OtroApiTest = () => {
+export const CrearProducto = () => {
   const paramsRef = useRef({
-    method: 'GET' as Method,
+    method: 'POST' as Method,
     url: '/product',
-    query: {
-      tags: ['wasa', 'panchubi'],
-    },
+    body: {
+      name: "panchubi",
+      description: "un panchubi con mayonesa",
+      tags: ["pancho", "panchubi", "le pongo queso y ahora es veneco", "wasa"],
+      image: "https://www.ab173.com/upload/default/2024/0802/5dbb5e90e50b1b741d482a129f2d3a12.png",
+      price: 2499
+    }
   })
 
-  const { data, loading, error } = useApi<Product[]>({
-    autoFetch: true,
+  const { data, loading, error, fetch } = useApi<Product>({
+    autoFetch: false,
     params: paramsRef.current,
   })
 
-  if (loading) return <p>Cargando productos...</p>
-  if (error) return <p>Error al cargar productos: {error.message}</p>
-  if (!data || data.length === 0) return <p>No se encontraron productos</p>
+  const handleCreate = () => {
+    fetch(paramsRef.current)
+  }
 
   return (
     <div>
-      <h2>Lista de Productos</h2>
-      <ul>
-        {data.map((product) => (
-          <li key={product._uuid} style={{ marginBottom: '1rem' }}>
-            <img src={product.image} alt={product.name} width={100} />
-            <h1>{product.name}</h1>
-            <p>{product.description}</p>
-            <p>Precio: ${product.price}</p>
-            <p>Tags: {product.tags.join(', ')}</p>
-          </li>
-        ))}
-      </ul>
+      <h2>Crear Producto</h2>
+      <button onClick={handleCreate} disabled={loading}>
+        {loading ? 'Creando...' : 'Crear producto'}
+      </button>
+
+      {error && <p style={{ color: 'red' }}>Error: {error.message}</p>}
+
+      {data && (
+        <div style={{ marginTop: '1rem' }}>
+          <h3>Producto creado:</h3>
+          <p><strong>Nombre:</strong> {data.name}</p>
+          <p><strong>Descripción:</strong> {data.description}</p>
+          <p><strong>Precio:</strong> ${data.price}</p>
+          <p><strong>Tags:</strong> {data.tags.join(', ')}</p>
+          <img src={data.image} alt={data.name} width={150} />
+        </div>
+      )}
     </div>
   )
 }
