@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, UseApiTest, CrearProducto } from '../features/index';
+import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, UseApiTest, CrearProducto, OtraApiTest } from '../features/index';
 import ProductListPage from '../features/products/pages/ProductListPage';
 
 const AppRoutes = () => {
@@ -12,8 +12,10 @@ const AppRoutes = () => {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/forgot-password" element={<SendEmail />} />
       <Route path="/productos" element={<ProductListPage />} />
-      <Route path="/otroapitest" element={< CrearProducto />} />
+      
 
+      <Route path="/otroapitest" element={< OtraApiTest />} />
+      <Route path="/crearBalatro" element={< CrearProducto />} />
       <Route path="/test/:id" element={< UseApiTest />} />
     </Routes>
   );

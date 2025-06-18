@@ -11,7 +11,7 @@ export interface UseApiOptions {
   params: ApiCallOptions
 }
 
-interface ApiCallOptions {
+export interface ApiCallOptions {
   method: Method
   url: string
   query?: Record<string, unknown>
@@ -29,8 +29,8 @@ export interface UseApiResult<T> {
   loading: boolean
   data: Data<T>
   error: CustomError
-  fetch: (param: ApiCallOptions) => void
   cancel: () => void
+  handleCall: () => void
 }
 
 export interface ApiResponse<T> {
@@ -86,7 +86,11 @@ export const useApi = <T> (options: UseApiOptions): UseApiResult<T> => {
     }
     return () => cancel()
   }, [cancel, fetch, options?.autoFetch, options.params])
-  return { loading, data, error, fetch, cancel }
+
+  const handleCall = () => {
+    fetch(options.params)
+  }
+  return { loading, data, error, cancel, handleCall }
 }
 
 const apiCall = <T>({ method, url, pathParam, query, body, headers}: ApiCallOptions): UseApiCall<T> => {

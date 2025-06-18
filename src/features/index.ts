@@ -1,9 +1,11 @@
 export * from './landing/pages/HomePage'
 export * from './auth/pages/login'
 export * from './auth/pages/register'
-export * from './user/pages/profile'
 export * from './auth/pages/Reset-Password'
 export * from './auth/pages/sendEmail'
+export * from './user/pages/profile'
 export * from './products'
+
 export * from './test/useApiTest'
-export * from './test/otroapitest'
+export * from './test/crearBalatro'
+export * from './test/otraApiTest'
