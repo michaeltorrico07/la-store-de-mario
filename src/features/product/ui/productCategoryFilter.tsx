@@ -1,22 +1,16 @@
-import React from 'react';
-
 interface Category {
-  id: string;
-  label: string;
-  count: number;
+  id: string
+  label: string
+  count: number
 }
 
 interface CategoryFilterProps {
-  categories: Category[];
-  selectedCategory: string;
-  onCategoryChange: (categoryId: string) => void;
+  categories: Category[]
+  selectedCategory: string
+  onCategoryChange: (categoryId: string) => void
 }
 
-const CategoryFilter: React.FC<CategoryFilterProps> = ({ 
-  categories, 
-  selectedCategory, 
-  onCategoryChange 
-}) => {
+export const CategoryFilter = ({ categories, selectedCategory, onCategoryChange }: CategoryFilterProps) => {
   return (
     <div className="flex flex-wrap gap-3 mb-6">
       {categories.map((category) => (
@@ -40,7 +34,5 @@ const CategoryFilter: React.FC<CategoryFilterProps> = ({
         </button>
       ))}
     </div>
-  );
-};
-
-export default CategoryFilter;
+  )
+}

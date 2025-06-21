@@ -4,6 +4,16 @@ import { auth, api } from '../../infrastructure/services/index';
 import { AuthContext } from './authContext'
 import { onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signOut, signInWithEmailAndPassword, confirmPasswordReset, sendPasswordResetEmail } from "firebase/auth";
 
+export type AuthContextType = {
+  user: User | null;
+  loading: boolean
+  registerUser: (email: string, password: string) => Promise<string>;
+  loginUser: (email: string, password: string) => Promise<void>;
+  LogOutUser: () => Promise<void>;
+  ResetPassword: (oobCode: string, newPassword: string) => Promise<boolean>;
+  sendResetPasswordEmail: (email: string) => Promise<boolean>;
+}
+
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null)
   const [loading, setLoading] = useState(true)

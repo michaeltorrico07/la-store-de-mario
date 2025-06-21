@@ -45,51 +45,53 @@ export const useApi = <T> (options: UseApiOptions): UseApiResult<T> => {
   const [error, setError] = useState<CustomError>(null)
   const abortControllerRef = useRef<(AbortController | null)>(null)
 
-  const fetch = useCallback((param: ApiCallOptions)=> {
-    setLoading(true)
-    setData(null)
-    setError(null)
-
-    if (abortControllerRef.current) {
-      abortControllerRef.current.abort()
-    }
-
-    const { call, controller } = apiCall<ApiResponse<T>>(param)
-    abortControllerRef.current = controller
-    call.then((response) => {
-      if (!controller.signal.aborted) {
-        setData(response.data.data)
-      }
-      setError(null)
-    }).catch((err: AxiosError) => {
-      if (err.code == "ERR_CANCELED") return      
-      setError(err)
-      console.log(err)
-    }).finally(() => {
-      setLoading(false)
-    })
-
-    return () => controller.abort()
-  }, [])
-
   const cancel = useCallback(() => {
     if (abortControllerRef.current) {
       abortControllerRef.current.abort()
       abortControllerRef.current = null
-      setLoading(false)
     }
+    setLoading(false)
   }, [])
 
+  const fetch = useCallback((param: ApiCallOptions)=> {
+    cancel()
+    setLoading(true)
+    setData(null)
+    setError(null)
+
+    const { call, controller } = apiCall<ApiResponse<T>>(param)
+    abortControllerRef.current = controller
+  
+    call
+      .then((response) => {
+        if (!controller.signal.aborted) {
+          setData(response.data.data)
+          setError(null)
+        }
+      })
+      .catch((err: AxiosError) => {
+        if (err.code == "ERR_CANCELED") return      
+        setError(err)
+        console.log(err)
+      })
+      .finally(() => {
+        if (!controller.signal.aborted) {
+          setLoading(false)
+        }
+    })
+  }, [cancel])
+
+  const handleCall = useCallback(() => {
+    fetch(options.params)
+  },[fetch, options.params])
+  
   useEffect(() => {
     if (options?.autoFetch) {
-      return fetch(options.params)
+      fetch(options.params)
     }
     return () => cancel()
   }, [cancel, fetch, options?.autoFetch, options.params])
 
-  const handleCall = () => {
-    fetch(options.params)
-  }
   return { loading, data, error, cancel, handleCall }
 }
 
