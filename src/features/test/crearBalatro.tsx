@@ -1,4 +1,3 @@
-// CrearProducto.tsx
 import { useCreateBalatro } from "./createBalatro"
 
 export const CrearProducto = () => {

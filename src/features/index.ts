@@ -1,10 +1,30 @@
-export * from './landing/pages/HomePage'
-export * from './auth/pages/login'
-export * from './auth/pages/register'
-export * from './auth/pages/Reset-Password'
-export * from './auth/pages/sendEmail'
-export * from './user/pages/profile'
-export * from './products'
+export * from './auth'
+
+
+export * from './landing'
+
+export * from './user'
+
+export * from './product'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 export * from './test/useApiTest'
 export * from './test/crearBalatro'

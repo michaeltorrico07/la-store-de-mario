@@ -1,19 +1,14 @@
-import React, { useState } from 'react';
-import { useCart } from '../components/CartContext';
-import type { Product } from '../data/mockProducts';
+import { useState } from "react"
+import { type Product } from "../product"
+import { useCart } from "../hooks/useCart"
 
-interface ProductCardProps {
-  product: Product;
+interface ProductCartProps {
+  product: Product
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
-  const [isFlipped, setIsFlipped] = useState(false);
-  const { addToCart } = useCart();
-
-  const handleAddToCart = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    addToCart(product);
-  };
+export const ProductCard = ({ product }: ProductCartProps) => {
+  const [isFlipped, setIsFlipped] = useState(false)
+  const { handleAddCart } = useCart()
 
   return (
     <div className="relative w-full h-80 sm:h-96 perspective-1000">
@@ -69,7 +64,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </h3>
               <div className="space-y-1 sm:space-y-2 mb-3 sm:mb-4">
                 <p className="text-xs sm:text-sm opacity-90 capitalize">
-                  Categoría: {product.category}
+                  Categoría: {product.tags}
                 </p>
               </div>
               <div className="mb-3 sm:mb-4 max-h-16 sm:max-h-20 overflow-hidden">
@@ -82,7 +77,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </div>
               
               <button 
-                onClick={handleAddToCart}
+                onClick={handleAddCart(product)}
                 className="bg-white/20 backdrop-blur-sm border border-white/30 text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg hover:bg-white/30 transition-all duration-200 text-xs sm:text-sm font-medium w-full max-w-48 hover:scale-105 active:scale-95 cursor-pointer"
               >
                 🛒 Agregar al Carrito
@@ -99,7 +94,5 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
       </div>
     </div>
-  );
-};
-
-export default ProductCard;
+  )
+}

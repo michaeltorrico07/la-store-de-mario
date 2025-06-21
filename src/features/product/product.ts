@@ -1,67 +1,63 @@
-// Datos temporales - CAMBIAR: Reemplazar con API calls a la base de datos
+export type SortBy = 'default' | 'price-asc' | 'price-desc' | 'name-az';
+export interface CartItem extends Product {
+  quantity: number;
+}
 export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  category: string;
-  image: string;
-  calories: string;
-  description: string;
+  id: string
+  name: string
+  tags: string[]
+  description: string
+  image: string
+  price: number
 }
 
-export const mockProducts: Product[] = [
+export const productsData: Product[] = [
   {
-    id: 1,
+    id: "awsfeawsfawsf",
     name: "Pancho Clásico",
     price: 3000,
-    category: "comidas",
-    image: "/images/pancho-clasico.jpg", // CAMBIAR: Ruta real de la imagen
-    calories: "243kcal",
+    tags: ["comidas"],
+    image: "/images/pancho-clasico.jpg",
     description: "Pancho con ketchup, mostaza y papitas"
   },
-  {
-    id: 2,
+  {    
+    id: "awsfawdawsdeawsfawsf",
     name: "Pancho Especial",
     price: 4500,
-    category: "comidas",
+    tags: ["comidas"],
     image: "/images/pancho-especial.jpg", // CAMBIAR: Ruta real de la imagen
-    calories: "350kcal",
     description: "Pancho con todos los ingredientes premium"
   },
   {
-    id: 3,
+    id: "awsedfafgkjias0edjgisa",
     name: "Coca Cola",
     price: 2000,
-    category: "bebidas",
+    tags: ["bebidas"],
     image: "/images/coca-cola.jpg", // CAMBIAR: Ruta real de la imagen
-    calories: "140kcal",
     description: "Bebida gaseosa 500ml"
   },
   {
-    id: 4,
+    id: "jsikadegfjnasioedgad",
     name: "Torta Chocolate",
     price: 3500,
-    category: "postres",
+    tags: ["postres"],
     image: "/images/torta-chocolate.jpg", // CAMBIAR: Ruta real de la imagen
-    calories: "420kcal",
     description: "Deliciosa torta de chocolate casera"
   },
   {
-    id: 5,
+    id: "sedojpgsoihgiopsdfh",
     name: "Papas Fritas",
     price: 2500,
-    category: "snacks",
+    tags: ["snacks"],
     image: "/images/papas-fritas.jpg", // CAMBIAR: Ruta real de la imagen
-    calories: "320kcal",
     description: "Papas fritas crujientes y doradas"
   },
   {
-    id: 6,
+    id: "sajdimgvosiajndgbiopsdhg",
     name: "Hamburguesa",
     price: 5000,
-    category: "comidas",
+    tags: ["comidas"],
     image: "/images/hamburguesa.jpg", // CAMBIAR: Ruta real de la imagen
-    calories: "580kcal",
     description: "Hamburguesa completa con papas"
   }
 ];

@@ -23,7 +23,7 @@ export const useCreateBalatro = (): UseApiResult<Product> => {
         image: "https://www.ab173.com/upload/default/2024/0802/5dbb5e90e50b1b741d482a129f2d3a12.png",
         price: 2499
       }
-    }  
+    }
   })
 
   const { data, loading, error, cancel, handleCall } = useApi<Product>(paramsRef.current)
