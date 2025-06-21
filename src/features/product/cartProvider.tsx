@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo, useEffect } from 'react'
+import { useState, useCallback, useMemo } from 'react'
 import type { Product, CartItem } from './product'
 import { CartContext } from './cartContext.tsx'
 
@@ -18,10 +18,6 @@ export interface CartContextType {
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
-
-  useEffect(() => {
-  console.log("Nuevo estado de isOpen:", isOpen);
-}, [isOpen]);
 
   const addToCart = useCallback((product: Product)=>{
     setItems(currentItems => {

@@ -23,7 +23,7 @@ export const ProductCard = ({ product }: ProductCartProps) => {
           <div className="relative h-40 sm:h-48 bg-gray-100 overflow-hidden">
             <div className="w-full h-full flex items-center justify-center bg-gray-200">
               <img 
-                src="/wasa.png" 
+                src={`${product.image}`} 
                 alt="Mario" 
                 className="w-80 h-80 object-cover"
               />

@@ -1,14 +1,7 @@
-import { useApi, type UseApiResult, type UseApiOptions } from "../shared/hooks/useApi"
-import { useRef } from "react"
+import { useApi, type UseApiResult, type UseApiOptions } from "../../shared"
+import { useEffect, useRef } from "react"
+import type { Product } from "../product"
 
-interface Product {
-  id: string
-  name: string
-  tags: string[]
-  description: string
-  image: string
-  price: number
-}
 
 export const useGetAllProduct = (): UseApiResult<Product[]> => {
   const paramsRef = useRef<UseApiOptions>({
@@ -20,6 +13,8 @@ export const useGetAllProduct = (): UseApiResult<Product[]> => {
   })
 
   const { data, loading, error, cancel, handleCall } = useApi<Product[]>(paramsRef.current)
-  console.log(data)
+  useEffect(()=> {
+    console.log(data)
+  },[data])
   return { data, loading, error, cancel, handleCall }
 }

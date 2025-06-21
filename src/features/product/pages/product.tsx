@@ -1,15 +1,13 @@
-import { useState } from 'react'
-import { productsData, type Product } from '../product'
-import { useFilteredSortedProducts } from '../hooks'
+import { useFilteredSortedProducts, useGetAllProduct } from '../hooks'
 import { ProductList, SortFilter, CategoryFilter } from '../ui'
-
 import { categoriesData } from '../categoriesData'
 
 
 export const ProductListContainer = () => {
-  const [products] = useState<Product[]>(productsData);
-  const {sortedProducts, selectedCategory, changeCategory, changeSort, sortBy} = useFilteredSortedProducts(products)
-  const categories = categoriesData(products)
+  
+  const { data } = useGetAllProduct()
+  const {sortedProducts, selectedCategory, changeCategory, changeSort, sortBy} = useFilteredSortedProducts(data)
+  const categories = categoriesData(data)
   return (
     <>
 

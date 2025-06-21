@@ -5,7 +5,7 @@ interface Category {
 }
 
 interface CategoryFilterProps {
-  categories: Category[]
+  categories: Category[] | null
   selectedCategory: string
   onCategoryChange: (categoryId: string) => void
 }
@@ -13,7 +13,7 @@ interface CategoryFilterProps {
 export const CategoryFilter = ({ categories, selectedCategory, onCategoryChange }: CategoryFilterProps) => {
   return (
     <div className="flex flex-wrap gap-3 mb-6">
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <button
           key={category.id}
           onClick={() => onCategoryChange(category.id)}

@@ -9,7 +9,7 @@ interface UseFilteredSortedProduct {
   changeSort: (sort: SortBy) => void
 }
 
-export const useFilteredSortedProducts = (products: Product[]): UseFilteredSortedProduct => {
+export const useFilteredSortedProducts = (products: Product[] | null): UseFilteredSortedProduct => {
   const [selectedCategory, setSelectedCategory] = useState('todos')
   const [sortBy, setSortBy] = useState<SortBy>('default')
 
@@ -22,6 +22,7 @@ export const useFilteredSortedProducts = (products: Product[]): UseFilteredSorte
   }, [])
 
   const filtered = useMemo(() => {
+    if (!products) return []
     return selectedCategory === 'todos'
       ? products
       : products.filter(p => p.tags.includes(selectedCategory))
@@ -37,6 +38,7 @@ export const useFilteredSortedProducts = (products: Product[]): UseFilteredSorte
       }
     })
   }, [filtered, sortBy])
+
 
   return {
     sortedProducts,
