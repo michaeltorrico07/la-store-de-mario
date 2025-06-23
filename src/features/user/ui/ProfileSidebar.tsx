@@ -1,8 +1,12 @@
 import { User, Clock } from 'lucide-react';
+import { useContext } from 'react';
+import { AuthContext } from '../../auth/authContext';
+import { useNavigate } from 'react-router-dom';
 
 interface ProfileSidebarProps {
   userData: {
-    curso: string;
+    name: string;
+    dni: string
   };
   activeTab: string;
   setActiveTab: (tab: string) => void;
@@ -13,22 +17,30 @@ export function ProfileSidebar({
   activeTab,
   setActiveTab
 }: ProfileSidebarProps) {
+  const authContext = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  const SignOut = async () => {
+    authContext?.LogOutUser()
+    navigate('/login')
+  }
+
   return (
     <div className="bg-[#303030] rounded-lg p-6 text-white">
       {/* Avatar y saludo */}
       <div className="text-center mb-6">
-        <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 hover:scale-105">
+        <div className="hover:cursor-pointer w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 hover:scale-105">
           <User className="w-10 h-10 text-gray-700" />
         </div>
-        <h2 className="text-xl font-bold mb-1">Hola Bynfi</h2>
-        <p className="text-gray-300">Curso: {userData.curso}</p>
+        <h2 className="text-xl font-bold mb-1">Hola {userData?.name}!</h2>
+        <p className="text-gray-300">DNI: {userData?.dni}</p>
       </div>
 
       {/* Botones de navegación */}
       <div className="space-y-3 mb-6">
         <button
           onClick={() => setActiveTab('historial')}
-          className={`w-full py-3 px-4 rounded-lg transition-all duration-300 ease-in-out flex items-center transform hover:scale-105 active:scale-95 ${
+          className={`cursor-pointer w-full py-3 px-4 rounded-lg transition-all duration-300 ease-in-out flex items-center transform hover:scale-105 active:scale-95 ${
             activeTab === 'historial'
               ? 'bg-red-600 text-white shadow-lg shadow-red-600/30 translate-x-1'
               : 'bg-gray-700 hover:bg-gray-600 text-white hover:translate-x-1'
@@ -42,7 +54,7 @@ export function ProfileSidebar({
         
         <button
           onClick={() => setActiveTab('datos')}
-          className={`w-full py-3 px-4 rounded-lg transition-all duration-300 ease-in-out flex items-center transform hover:scale-105 active:scale-95 ${
+          className={`cursor-pointer w-full py-3 px-4 rounded-lg transition-all duration-300 ease-in-out flex items-center transform hover:scale-105 active:scale-95 ${
             activeTab === 'datos'
               ? 'bg-red-600 text-white shadow-lg shadow-red-600/30 translate-x-1'
               : 'bg-gray-700 hover:bg-gray-600 text-white hover:translate-x-1'
@@ -56,7 +68,7 @@ export function ProfileSidebar({
       </div>
 
       {/* Botón cerrar sesión */}
-      <button className="w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-red-700/30">
+      <button onClick={() => SignOut()} className="cursor-pointer w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-red-700/30">
         <svg
           className="w-5 h-5 mr-2 transition-transform duration-300 hover:rotate-12"
           fill="none"

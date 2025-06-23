@@ -1,23 +1,6 @@
 import { Clock, FileText } from 'lucide-react';
+import type { OrderHistoryTabProps } from '../profile'
 
-interface Producto {
-  nombre: string;
-  cantidad: number;
-}
-
-interface Order {
-  id: string;
-  productos: Producto[];
-  persona: string;
-  precio: number;
-  metodo: string;
-  fecha: string;
-}
-
-interface OrderHistoryTabProps {
-  orderHistory: Order[];
-  showTicketModal: (order: Order) => void;
-}
 
 export function OrderHistoryTab({
   orderHistory,
@@ -30,7 +13,7 @@ export function OrderHistoryTab({
       </div>
 
       <div className="overflow-x-auto">
-        {orderHistory.length === 0 ? (
+        {orderHistory?.length === 0 || orderHistory === undefined ? (
           <div className="text-center py-8">
             <Clock className="w-12 h-12 text-gray-400 mx-auto mb-4" />
             <p className="text-gray-600">No tienes pedidos aún</p>
@@ -50,7 +33,7 @@ export function OrderHistoryTab({
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {orderHistory.map((order, index) => (
+                {orderHistory?.map((order, index) => (
                   <tr 
                     key={order.id} 
                     className="hover:bg-gray-50 transition-colors duration-200 animate-in fade-in slide-in-from-bottom-2"
@@ -63,7 +46,7 @@ export function OrderHistoryTab({
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-sm text-gray-800">
-                        {order.productos.map((producto, index) => (
+                        {order?.productos?.map((producto, index) => (
                           <div key={index}>
                             {producto.nombre} (x{producto.cantidad})
                           </div>

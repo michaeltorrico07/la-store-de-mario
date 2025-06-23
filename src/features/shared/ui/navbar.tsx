@@ -34,6 +34,9 @@ export const Navbar = () => {
             <a href="/productos" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
               Productos
             </a>
+            <a href="/profile" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
+              Perfil
+            </a>
           </div>
 
           {/* Usuario y Carrito - Lado derecho */}
@@ -43,7 +46,7 @@ export const Navbar = () => {
             {showCart && (
               <button
                 onClick={toggleCart}
-                className="relative p-2 text-white hover:text-gray-300 transition-colors"
+                className="cursor-pointer relative p-2 text-white hover:text-gray-300 transition-colors"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5m0 0h8M9.5 18a1.5 1.5 0 003 0m6 0a1.5 1.5 0 003 0" />
