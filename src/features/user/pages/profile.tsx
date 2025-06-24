@@ -24,7 +24,7 @@ export const Profile = () => {
     showTicketModal,
     closeTicket
   } = useProfile();
-  const { orders } = useUserOrders()
+  const { data } = useUserOrders()
   
 
   return (
@@ -59,7 +59,7 @@ export const Profile = () => {
                     className="animate-in fade-in slide-in-from-right-5 duration-500 ease-out"
                   >
                     <OrderHistoryTab
-                      orderHistory={orders}
+                      orderHistory={data ?? []}
                       showTicketModal={showTicketModal}
                     />
                   </div>
