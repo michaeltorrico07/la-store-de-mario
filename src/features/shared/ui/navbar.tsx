@@ -1,6 +1,6 @@
 import { useCart } from '../../product/hooks/useCart'
 import { useAuthContext } from '../../auth/hooks/useAuthContext'
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 
 export const Navbar = () => {
   const { user } = useAuthContext()
@@ -28,15 +28,15 @@ export const Navbar = () => {
 
           {/* Navegación central */}
           <div className="flex items-center justify-center space-x-8 lg:space-x-12">
-            <a href="/" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
+            <Link to="/" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
               Inicio
-            </a>
-            <a href="/productos" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
+            </Link>
+            <Link to="/productos" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
               Productos
-            </a>
-            <a href="/profile" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
+            </Link>
+            <Link to="/profile" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
               Perfil
-            </a>
+            </Link>
           </div>
 
           {/* Usuario y Carrito - Lado derecho */}

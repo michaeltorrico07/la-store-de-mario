@@ -57,7 +57,7 @@ export function OrderHistoryTab({
                       {order.persona}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">
-                      ${order.precio.toLocaleString()}
+                      ${order?.precio?.toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
                       {order.metodo}
