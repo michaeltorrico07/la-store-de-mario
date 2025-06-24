@@ -5,7 +5,7 @@ import { OrderHistoryTab } from '../ui/OrderHistoryTab';
 import { TicketModal } from '../ui/TicketModal';
 import { Navbar } from '../../shared/ui/navbar'; // Importar la Navbar
 import { useUserOrders } from '../hooks/useUserOrders';
-
+import { useAuthContext } from '../../auth/hooks/useAuthContext';
 export const Profile = () => {
   const {
     activeTab,
@@ -24,7 +24,8 @@ export const Profile = () => {
     showTicketModal,
     closeTicket
   } = useProfile();
-  const { data } = useUserOrders()
+  const { loading } = useAuthContext()
+  const { data } = useUserOrders(loading)
   
 
   return (

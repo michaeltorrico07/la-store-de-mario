@@ -2,9 +2,9 @@ import { useRef } from 'react';
 import type { Order } from '../profile'
 import { useApi, type UseApiResult, type UseApiOptions } from '../../shared'
 
-export const useUserOrders = (): UseApiResult<Order[]> => {
+export const useUserOrders = (firebaseisReady:boolean): UseApiResult<Order[]> => {
   const paramsRef = useRef<UseApiOptions>({
-    autoFetch: true,
+    autoFetch: !firebaseisReady,
     params: {
       method: 'GET',
       url: '/order/user'
