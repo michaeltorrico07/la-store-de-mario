@@ -1,5 +1,6 @@
 import { ProductCard } from './productCard'
 import type { Product } from '../product'
+import "../styles/animations.css"
 
 interface ProductListProps {
   products: Product[]
