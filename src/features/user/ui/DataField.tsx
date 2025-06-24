@@ -1,15 +1,6 @@
-import type { ReactNode } from 'react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
+import type { DataFieldProps } from '../profile'
 
-interface DataFieldProps {
-  icon: LucideIcon;
-  title: string;
-  value: string;
-  isExpanded: boolean;
-  onToggle: () => void;
-  children?: ReactNode;
-}
 
 export function DataField({ 
   icon: Icon, 
@@ -32,7 +23,7 @@ export function DataField({
             <p className="text-gray-600 transition-colors duration-200">{value}</p>
           </div>
         </div>
-        <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center transition-all duration-200 hover:bg-gray-50 hover:scale-105">
+        <div className="cursor-pointer w-8 h-8 bg-white rounded-full flex items-center justify-center transition-all duration-200 hover:bg-gray-50 hover:scale-105">
           <div className="transition-transform duration-300">
             {isExpanded ? 
               <ChevronUp className="w-4 h-4 text-gray-600" /> : 

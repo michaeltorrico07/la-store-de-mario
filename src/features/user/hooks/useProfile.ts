@@ -1,74 +1,12 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import type {
+  UserData,
+  Order,
+  ExpandedSections
+} from '../profile.d'
+import { AuthContext } from '../../auth/authContext';
 
-// Tipos para los datos del usuario
-export interface UserData {
-  name: string;
-  email: string;
-  password: string;
-  curso: string;
-}
 
-// Tipos para cada producto
-export interface Producto {
-  nombre: string;
-  cantidad: number;
-  precio: number;
-}
-
-// Tipos para cada pedido
-export interface Order {
-  id: string;
-  productos: Producto[];
-  persona: string;
-  precio: number;
-  metodo: string;
-  fecha: string;
-  fechaCompleta: string;
-  estado: 'Completado' | 'Pendiente' | 'En preparación' | string;
-}
-
-export interface PasswordData {
-  current: string;
-  new: string;
-  confirm: string;
-}
-
-export interface ExpandedSections {
-  name: boolean;
-  email: boolean;
-  password: boolean;
-}
-
-// Props para componentes
-export interface PersonalDataTabProps {
-  userData: UserData;
-  expandedSections: ExpandedSections;
-  toggleSection: (section: keyof ExpandedSections) => void;
-  showPassword: boolean;
-  setShowPassword: (show: boolean) => void;
-  passwordData: PasswordData;
-  handlePasswordChange: (field: keyof PasswordData, value: string) => void;
-  handleSavePassword: () => void;
-}
-
-export interface OrderHistoryTabProps {
-  orderHistory: Order[];
-  showTicketModal: (order: Order) => void;
-}
-
-export interface TicketModalProps {
-  selectedTicket: Order | null;
-  showTicket: boolean;
-  closeTicket: () => void;
-}
-
-// Datos simulados del usuario
-const userData: UserData = {
-  name: "Adrian De Sousa",
-  email: "adriandesousa84@gmail.com",
-  password: "********",
-  curso: "6°1"
-};
 
 // Datos simulados de historial de pedidos
 const orderHistory: Order[] = [
@@ -132,6 +70,16 @@ const orderHistory: Order[] = [
 ];
 
 export const useProfile = () => {
+  const authContext = useContext(AuthContext);
+
+  // Datos simulados del usuario
+  const userData: UserData = {
+    name: authContext?.user?.name,
+    email: authContext?.user?.email,
+    dni: authContext?.user?.dni,
+    lastName: authContext?.user?.lastName
+  };
+
   const [activeTab, setActiveTab] = useState<string>('datos');
   const [expandedSections, setExpandedSections] = useState<ExpandedSections>({
     name: false,
@@ -139,12 +87,9 @@ export const useProfile = () => {
     password: false
   });
 
-  const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [passwordData, setPasswordData] = useState<PasswordData>({
-    current: '',
-    new: '',
-    confirm: ''
-  });
+  const [showCurrentPassword, setShowCurrentPassword] = useState<boolean>(false);
+  const [showNewPassword, setShowNewPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
 
   const [selectedTicket, setSelectedTicket] = useState<Order | null>(null);
   const [showTicket, setShowTicket] = useState<boolean>(false);
@@ -156,22 +101,6 @@ export const useProfile = () => {
     }));
   };
 
-  const handlePasswordChange = (field: keyof PasswordData, value: string) => {
-    setPasswordData(prev => ({
-      ...prev,
-      [field]: value
-    }));
-  };
-
-  const handleSavePassword = () => {
-    if (passwordData.new !== passwordData.confirm) {
-      alert('Las contraseñas no coinciden');
-      return;
-    }
-    alert('Contraseña actualizada correctamente');
-    setPasswordData({ current: '', new: '', confirm: '' });
-    toggleSection('password');
-  };
 
   const showTicketModal = (order: Order) => {
     setSelectedTicket(order);
@@ -187,8 +116,9 @@ export const useProfile = () => {
     // State
     activeTab,
     expandedSections,
-    showPassword,
-    passwordData,
+    showCurrentPassword,
+    showNewPassword,
+    showConfirmPassword,
     selectedTicket,
     showTicket,
     userData,
@@ -197,9 +127,9 @@ export const useProfile = () => {
     // Actions
     setActiveTab,
     toggleSection,
-    setShowPassword,
-    handlePasswordChange,
-    handleSavePassword,
+    setShowCurrentPassword,
+    setShowNewPassword,
+    setShowConfirmPassword,
     showTicketModal,
     closeTicket
   };
