@@ -1,27 +1,23 @@
 import { User, Clock } from 'lucide-react';
-import { useContext } from 'react';
-import { AuthContext } from '../../auth/authContext';
+import { useAuthContext } from '../../auth/hooks/useAuthContext';
 import { useNavigate } from 'react-router-dom';
 
 interface ProfileSidebarProps {
-  userData: {
+  user: {
     name: string;
     dni: string
   };
   activeTab: string;
-  setActiveTab: (tab: string) => void;
+  handleTabChange: (tab: string) => void;
+  handleCall: () => void;
 }
 
-export function ProfileSidebar({
-  userData,
-  activeTab,
-  setActiveTab
-}: ProfileSidebarProps) {
-  const authContext = useContext(AuthContext)
+export const ProfileSidebar = ({ user, activeTab, handleTabChange, handleCall }: ProfileSidebarProps) => {
+  const { LogOutUser } = useAuthContext()
   const navigate = useNavigate()
 
   const SignOut = async () => {
-    authContext?.LogOutUser()
+    LogOutUser()
     navigate('/login')
   }
 
@@ -32,14 +28,14 @@ export function ProfileSidebar({
         <div className="hover:cursor-pointer w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 transition-transform duration-300 hover:scale-105">
           <User className="w-10 h-10 text-gray-700" />
         </div>
-        <h2 className="text-xl font-bold mb-1">Hola {userData?.name}!</h2>
-        <p className="text-gray-300">DNI: {userData?.dni}</p>
+        <h2 className="text-xl font-bold mb-1">Hola {user?.name}!</h2>
+        <p className="text-gray-300">DNI: {user?.dni}</p>
       </div>
 
       {/* Botones de navegación */}
       <div className="space-y-3 mb-6">
         <button
-          onClick={() => setActiveTab('historial')}
+          onClick={() => {handleTabChange('historial'); handleCall()}}
           className={`cursor-pointer w-full py-3 px-4 rounded-lg transition-all duration-300 ease-in-out flex items-center transform hover:scale-105 active:scale-95 ${
             activeTab === 'historial'
               ? 'bg-red-600 text-white shadow-lg shadow-red-600/30 translate-x-1'
@@ -53,7 +49,7 @@ export function ProfileSidebar({
         </button>
         
         <button
-          onClick={() => setActiveTab('datos')}
+          onClick={() => handleTabChange('datos')}
           className={`cursor-pointer w-full py-3 px-4 rounded-lg transition-all duration-300 ease-in-out flex items-center transform hover:scale-105 active:scale-95 ${
             activeTab === 'datos'
               ? 'bg-red-600 text-white shadow-lg shadow-red-600/30 translate-x-1'
