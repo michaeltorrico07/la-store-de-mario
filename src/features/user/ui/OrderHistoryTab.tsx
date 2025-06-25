@@ -1,11 +1,7 @@
 import { Clock, FileText } from 'lucide-react';
-import type { OrderHistoryTabProps } from '../profile'
+import type { OrderHistoryTabProps } from '../profile.d'
 
-
-export function OrderHistoryTab({
-  orderHistory,
-  showTicketModal
-}: OrderHistoryTabProps) {
+export const OrderHistoryTab = ({ orderHistory, showTicketModal }: OrderHistoryTabProps) => {
   return (
     <div className="bg-white rounded-lg shadow-md w-full transition-all duration-300 animate-in fade-in slide-in-from-right-3">
       <div className="p-6 border-b border-gray-200">
@@ -46,24 +42,24 @@ export function OrderHistoryTab({
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-sm text-gray-800">
-                        {order?.productos?.map((producto, index) => (
+                        {order?.products?.map((product, index) => (
                           <div key={index}>
-                            {producto.nombre} (x{producto.cantidad})
+                            {product.name} (x{product.amount})
                           </div>
                         ))}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                      {order.persona}
+                      {order.user}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">
-                      ${order?.precio?.toLocaleString()}
+                      ${order?.price?.toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                      {order.metodo}
+                      {order.method}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                      {order.fecha}
+                      {order.date.getDate()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button

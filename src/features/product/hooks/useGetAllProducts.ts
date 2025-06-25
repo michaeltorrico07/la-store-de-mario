@@ -8,7 +8,7 @@ export const useGetAllProduct = (): UseApiResult<Product[]> => {
     autoFetch: true,
     params: {
       method: 'GET',
-      url: '/order/user'
+      url: '/product'
     }
   })
 

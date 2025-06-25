@@ -7,7 +7,7 @@ import { CartPortalWrapper } from '../features/product/ui/global/cartPortalWrapp
 
 function App() {
   const location = useLocation()
-  const showNavbar = ['/productos', '/perfil','/balatro', '/productosPOSTA'].includes(location.pathname)
+  const showNavbar = ['/productos', '/profile','/balatro', '/productosPOSTA'].includes(location.pathname)
 
   return (
     <AuthProvider>

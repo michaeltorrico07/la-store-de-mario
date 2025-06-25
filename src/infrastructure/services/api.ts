@@ -10,7 +10,6 @@ export const api = axios.create({
 // Interceptor para adjuntar el token solo si el usuario está autenticado
 api.interceptors.request.use(async (config) => {
     const user = auth.currentUser;
-    console.log("Current user:", user);
     
     if (user) {
         const token = await user.getIdToken();
