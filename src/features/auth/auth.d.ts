@@ -15,4 +15,6 @@ export type AuthContextType = {
   LogOutUser: () => Promise<void>;
   ResetPassword: (oobCode: string, newPassword: string) => Promise<boolean>;
   sendResetPasswordEmail: (email: string) => Promise<boolean>;
+  reauthenticateUser: (password: string) => Promise<void>;
+  changePassword: (newPassword: string) => Promise<void>;
 }

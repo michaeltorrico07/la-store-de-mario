@@ -21,45 +21,41 @@ export const OrderHistoryTab = ({ orderHistory, showTicketModal }: OrderHistoryT
                 <tr>
                   <th className="px-6 py-3 text-left text-sm font-medium">Código</th>
                   <th className="px-6 py-3 text-left text-sm font-medium">Productos</th>
-                  <th className="px-6 py-3 text-left text-sm font-medium">Persona</th>
-                  <th className="px-6 py-3 text-left text-sm font-medium">Precio</th>
-                  <th className="px-6 py-3 text-left text-sm font-medium">Método</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium">Precio total</th>
                   <th className="px-6 py-3 text-left text-sm font-medium">Retiro</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium">Estado</th>
                   <th className="px-6 py-3 text-left text-sm font-medium">Acciones</th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 {orderHistory?.map((order, index) => (
                   <tr 
-                    key={order.id} 
+                    key={order.code} 
                     className="hover:bg-gray-50 transition-colors duration-200 animate-in fade-in slide-in-from-bottom-2"
                     style={{
                       animationDelay: `${index * 50}ms`
                     }}
                   >
                     <td className="px-6 py-4 whitespace-nowrap font-bold text-gray-800">
-                      {order.id}
+                      {order.code}
                     </td>
                     <td className="px-6 py-4">
                       <div className="text-sm text-gray-800">
-                        {order?.products?.map((product, index) => (
+                        {order?.listProducts?.map((product, index) => (
                           <div key={index}>
                             {product.name} (x{product.amount})
                           </div>
                         ))}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                      {order.user}
-                    </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-bold text-gray-800">
-                      ${order?.price?.toLocaleString()}
+                      ${order?.totalPrice?.toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                      {order.method}
+                      {order?.deliverDate}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                      {order.date.getDate()}
+                      {order?.delivered ? 'Entregado' : 'Pendiente'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <button

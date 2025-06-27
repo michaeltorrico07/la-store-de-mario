@@ -1,13 +1,14 @@
-import { X, Calendar, CreditCard, Users } from 'lucide-react';
+import { X, Calendar, Users } from 'lucide-react';
 import { type Order } from '../profile.d'
 
 interface TicketModalProps {
   selectedTicket: Order | null;
   showTicket: boolean;
   closeTicket: () => void;
+  user: string
 }
 
-export const TicketModal = ({ selectedTicket, showTicket, closeTicket }: TicketModalProps) => {
+export const TicketModal = ({ selectedTicket, showTicket, closeTicket, user }: TicketModalProps) => {
   if (!showTicket || !selectedTicket) return null;
 
   return (
@@ -25,7 +26,7 @@ export const TicketModal = ({ selectedTicket, showTicket, closeTicket }: TicketM
           <div className="text-center">
             <h2 className="text-2xl font-bold mb-2">TICKET DE PEDIDO</h2>
             <div className="bg-white text-[#303030] px-4 py-2 rounded-lg inline-block">
-              <span className="text-3xl font-bold">#{selectedTicket.id}</span>
+              <span className="text-3xl font-bold">#{selectedTicket.code}</span>
             </div>
           </div>
         </div>
@@ -53,21 +54,14 @@ export const TicketModal = ({ selectedTicket, showTicket, closeTicket }: TicketM
                 <Users className="w-5 h-5 text-gray-600 mr-2" />
                 <div>
                   <p className="text-gray-600">Cliente:</p>
-                  <p className="font-bold text-lg">{selectedTicket.user}</p>
+                  <p className="font-bold text-lg">{user}</p>
                 </div>
               </div>
               <div className="flex items-center">
                 <Calendar className="w-5 h-5 text-gray-600 mr-2" />
                 <div>
                   <p className="text-gray-600">Fecha:</p>
-                  <p className="font-bold text-lg text-red-600">{selectedTicket.date.toDateString()}</p>
-                </div>
-              </div>
-              <div className="flex items-center">
-                <CreditCard className="w-5 h-5 text-gray-600 mr-2" />
-                <div>
-                  <p className="text-gray-600">Método de pago:</p>
-                  <p className="font-bold text-lg">{selectedTicket.method}</p>
+                  <p className="font-bold text-lg text-red-600">{selectedTicket.deliverDate}</p>
                 </div>
               </div>
             </div>
@@ -79,7 +73,7 @@ export const TicketModal = ({ selectedTicket, showTicket, closeTicket }: TicketM
               PRODUCTOS PEDIDOS
             </h3>
             <div className="space-y-3">
-              {selectedTicket.products.map((product, index) => (
+              {selectedTicket.listProducts.map((product, index) => (
                 <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                   <div className="flex-1">
                     <p className="font-bold text-lg text-gray-800">{product.name}</p>
@@ -91,7 +85,7 @@ export const TicketModal = ({ selectedTicket, showTicket, closeTicket }: TicketM
                   </div>
                   <div className="text-right">
                     <p className="text-2xl font-bold text-red-600">
-                      ${product.price.toLocaleString()}
+                      ${product.price}
                     </p>
                   </div>
                 </div>
@@ -103,7 +97,7 @@ export const TicketModal = ({ selectedTicket, showTicket, closeTicket }: TicketM
           <div className="border-t-2 border-gray-300 pt-4">
             <div className="flex justify-between items-center bg-[#303030] text-white p-4 rounded-lg">
               <span className="text-xl font-bold">TOTAL A PAGAR:</span>
-              <span className="text-3xl font-bold">${selectedTicket.price.toLocaleString()}</span>
+              <span className="text-3xl font-bold">${selectedTicket.totalPrice}</span>
             </div>
           </div>
 

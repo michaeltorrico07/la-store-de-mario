@@ -7,7 +7,7 @@ export interface User {
 }
 
 // Tipos para cada producto
-export interface Product {
+export interface OrderProduct {
   name: string;
   amount: number;
   price: number;
@@ -15,12 +15,10 @@ export interface Product {
 
 // Tipos para cada pedido
 export interface Order {
-  id: string;
-  products: Producto[];
-  user: string;
-  price: number;
-  method: string;
-  date: Date;
+  code: string;
+  listProducts: OrderProduct[];
+  totalPrice: number;
+  deliverDate: string;
   delivered: boolean;
 }
 

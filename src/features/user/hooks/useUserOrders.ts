@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import type { Order } from '../profile'
 import { useApi, type UseApiResult, type UseApiOptions } from '../../shared'
 
@@ -12,9 +12,6 @@ export const useUserOrders = (): UseApiResult<Order[]> => {
   })
 
   const { data, loading, error, cancel, handleCall } = useApi<Order[]>(paramsRef.current)
-  useEffect(() => {
-    console.log(error)
-    console.log(data) 
-  },[error, data])
+  
   return { data, loading, error, cancel, handleCall }
 };
