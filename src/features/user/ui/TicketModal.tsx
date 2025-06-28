@@ -1,33 +1,13 @@
 import { X, Calendar, CreditCard, Users } from 'lucide-react';
-
-interface Producto {
-  nombre: string;
-  cantidad: number;
-  precio: number;
-}
-
-interface SelectedTicket {
-  id: string;
-  estado: 'Completado' | 'Pendiente' | string;
-  persona: string;
-  fechaCompleta: string;
-  fecha: string;
-  metodo: string;
-  productos: Producto[];
-  precio: number;
-}
+import { type Order } from '../profile.d'
 
 interface TicketModalProps {
-  selectedTicket: SelectedTicket | null;
+  selectedTicket: Order | null;
   showTicket: boolean;
   closeTicket: () => void;
 }
 
-export function TicketModal({
-  selectedTicket,
-  showTicket,
-  closeTicket
-}: TicketModalProps) {
+export const TicketModal = ({ selectedTicket, showTicket, closeTicket }: TicketModalProps) => {
   if (!showTicket || !selectedTicket) return null;
 
   return (
@@ -55,14 +35,14 @@ export function TicketModal({
           {/* Estado */}
           <div className="text-center">
             <div className={`inline-flex items-center px-4 py-2 rounded-full text-lg font-bold ${
-              selectedTicket.estado === 'Completado'
+              selectedTicket.delivered
                 ? 'bg-green-100 text-green-800'
                 : 'bg-yellow-100 text-yellow-800'
             }`}>
               <div className={`w-3 h-3 rounded-full mr-2 ${
-                selectedTicket.estado === 'Completado' ? 'bg-green-500' : 'bg-yellow-500'
+                selectedTicket.delivered ? 'bg-green-500' : 'bg-yellow-500'
               }`}></div>
-              {selectedTicket.estado.toUpperCase()}
+              {selectedTicket.delivered ? 'Entregado' : 'Pendiente'}
             </div>
           </div>
 
@@ -73,22 +53,21 @@ export function TicketModal({
                 <Users className="w-5 h-5 text-gray-600 mr-2" />
                 <div>
                   <p className="text-gray-600">Cliente:</p>
-                  <p className="font-bold text-lg">{selectedTicket.persona}</p>
+                  <p className="font-bold text-lg">{selectedTicket.user}</p>
                 </div>
               </div>
               <div className="flex items-center">
                 <Calendar className="w-5 h-5 text-gray-600 mr-2" />
                 <div>
                   <p className="text-gray-600">Fecha:</p>
-                  <p className="font-bold">{selectedTicket.fechaCompleta}</p>
-                  <p className="font-bold text-lg text-red-600">{selectedTicket.fecha}</p>
+                  <p className="font-bold text-lg text-red-600">{selectedTicket.date.toDateString()}</p>
                 </div>
               </div>
               <div className="flex items-center">
                 <CreditCard className="w-5 h-5 text-gray-600 mr-2" />
                 <div>
                   <p className="text-gray-600">Método de pago:</p>
-                  <p className="font-bold text-lg">{selectedTicket.metodo}</p>
+                  <p className="font-bold text-lg">{selectedTicket.method}</p>
                 </div>
               </div>
             </div>
@@ -100,19 +79,19 @@ export function TicketModal({
               PRODUCTOS PEDIDOS
             </h3>
             <div className="space-y-3">
-              {selectedTicket.productos.map((producto, index) => (
+              {selectedTicket.products.map((product, index) => (
                 <div key={index} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
                   <div className="flex-1">
-                    <p className="font-bold text-lg text-gray-800">{producto.nombre}</p>
+                    <p className="font-bold text-lg text-gray-800">{product.name}</p>
                     <div className="flex items-center mt-1">
                       <span className="bg-red-600 text-white px-3 py-1 rounded-full text-sm font-bold">
-                        Cantidad: {producto.cantidad}
+                        Cantidad: {product.amount}
                       </span>
                     </div>
                   </div>
                   <div className="text-right">
                     <p className="text-2xl font-bold text-red-600">
-                      ${producto.precio.toLocaleString()}
+                      ${product.price.toLocaleString()}
                     </p>
                   </div>
                 </div>
@@ -124,7 +103,7 @@ export function TicketModal({
           <div className="border-t-2 border-gray-300 pt-4">
             <div className="flex justify-between items-center bg-[#303030] text-white p-4 rounded-lg">
               <span className="text-xl font-bold">TOTAL A PAGAR:</span>
-              <span className="text-3xl font-bold">${selectedTicket.precio.toLocaleString()}</span>
+              <span className="text-3xl font-bold">${selectedTicket.price.toLocaleString()}</span>
             </div>
           </div>
 
