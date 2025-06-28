@@ -8,11 +8,11 @@ export const useGetAllProduct = (): UseApiResult<Product[]> => {
     autoFetch: true,
     params: {
       method: 'GET',
-      url: '/order/user'
+      url: '/product'
     }
   })
 
-  const { data, loading, error, cancel, handleCall } = useApi<Product[]>(paramsRef.current)
+  const { data, loading, error, cancel, handleCall, onSubmit } = useApi<Product[]>(paramsRef)
 
-  return { data, loading, error, cancel, handleCall }
+  return { data, loading, error, cancel, handleCall, onSubmit }
 }

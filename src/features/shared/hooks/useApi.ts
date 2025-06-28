@@ -36,8 +36,6 @@ export interface UseApiResult<T> {
   error: CustomError
   cancel: () => void
   handleCall: () => void
-  fetch: (param: ApiCallOptions) => void
-  updateParams: (newParams: Partial<ApiCallOptions>) => void
   onSubmit:(formData: Body) => void
 }
 
@@ -101,22 +99,22 @@ export const useApi = <T> (optionsRef: RefObject<UseApiOptions>): UseApiResult<T
   }, [cancel, fetch, optionsRef])
 
 
-const cleanObject = (obj: Record<string, unknown>) => {
-  const newObj: Record<string, unknown> = {};
-  for (const key in obj) {
-    const val = obj[key]
-    if (
-      val !== undefined &&
-      val !== null &&
-      !(typeof val === "string" && val.trim() === "") &&
-      !(Array.isArray(val) && val.length === 0) &&
-      !(typeof val === "number" && isNaN(val))
-    ) {
-      newObj[key] = val
+  const cleanObject = (obj: Record<string, unknown>) => {
+    const newObj: Record<string, unknown> = {};
+    for (const key in obj) {
+      const val = obj[key]
+      if (
+        val !== undefined &&
+        val !== null &&
+        !(typeof val === "string" && val.trim() === "") &&
+        !(Array.isArray(val) && val.length === 0) &&
+        !(typeof val === "number" && isNaN(val))
+      ) {
+        newObj[key] = val
+      }
     }
+    return newObj
   }
-  return newObj
-}
 
   const updateParams = useCallback((newParams: Partial<ApiCallOptions>) => {
     optionsRef.current.params = {
@@ -125,7 +123,6 @@ const cleanObject = (obj: Record<string, unknown>) => {
       body: newParams.body || optionsRef.current.params.body,
       query: newParams.query || optionsRef.current.params.query,
       headers: newParams.headers || optionsRef.current.params.headers}
-    console.log(optionsRef.current)
     handleCall()
   },[handleCall, optionsRef])
 
@@ -146,7 +143,7 @@ const cleanObject = (obj: Record<string, unknown>) => {
 
   }, [optionsRef, updateParams])
 
-  return { loading, data, error, cancel, handleCall, fetch, updateParams, onSubmit }
+  return { loading, data, error, cancel, handleCall, onSubmit }
 }
 
 const apiCall = <T>({ method, url, pathParam, query, body, headers}: ApiCallOptions): UseApiCall<T> => {
@@ -161,7 +158,6 @@ const apiCall = <T>({ method, url, pathParam, query, body, headers}: ApiCallOpti
     signal: controller.signal,
     headers: headers
   }
-  console.log(config)
   const call = api.request<T>(config)
   return { call, controller }
 }
