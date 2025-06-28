@@ -11,7 +11,7 @@ export const useUserOrders = (firebaseisReady:boolean): UseApiResult<Order[]> =>
     }
   })
 
-  const { data, loading, error, cancel, handleCall } = useApi<Order[]>(paramsRef.current)
+  const { data, loading, error, cancel, handleCall, fetch } = useApi<Order[]>(paramsRef.current)
 
-  return { data, loading, error, cancel, handleCall }
+  return { data, loading, error, cancel, handleCall, fetch }
 };

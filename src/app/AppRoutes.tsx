@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, UseApiTest, CrearProducto, OtraApiTest } from '../features/index'
+import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, UseApiTest, CrearProducto, OtraApiTest, UpdatearBalatro } from '../features/index'
 
 export const AppRoutes = () => {
   return (
@@ -17,6 +17,7 @@ export const AppRoutes = () => {
 
       <Route path="/otroapitest" element={< OtraApiTest />} />
       <Route path="/crearBalatro" element={< CrearProducto />} />
+      <Route path="/unsa" element={< UpdatearBalatro />} />
       <Route path="/test/:id" element={< UseApiTest />} />
     </Routes>
   )
