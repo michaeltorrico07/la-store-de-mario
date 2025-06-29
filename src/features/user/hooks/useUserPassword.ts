@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { type PasswordType } from "../schemas/personalDataSchema";
-import { updatePassword, getAuth, EmailAuthProvider, reauthenticateWithCredential } from 'firebase/auth'
 import { FirebaseError } from 'firebase/app'
+import { useAuthContext } from "../../auth/hooks/useAuthContext";
 
 
 export const useUserPassword = () => {
@@ -9,23 +9,18 @@ export const useUserPassword = () => {
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
 
+  const { reauthenticateUser, changePassword } = useAuthContext();
+
   const submitNewPassword = async (data: PasswordType) => {
     try {
       setLoading(true);
       setError(null);
       setMessage(null)
-      const auth = getAuth();
-      const user = auth.currentUser;
-      if (!user || !user.email) {
-        throw new Error("No se encontró el usuario autenticado");
-      }
-
-      // Reautenticación con la contraseña actual
-      const credential = EmailAuthProvider.credential(user.email, data.current);
-      await reauthenticateWithCredential(user, credential);
+      
+      await reauthenticateUser(data.current)
 
       // Si la reautenticación fue exitosa, actualizamos la contraseña
-      await updatePassword(user, data.new);
+      await changePassword(data.new);
       setMessage('Contraseña actualizada correctamente')
       setTimeout(() => {
         setMessage(null)
@@ -34,7 +29,7 @@ export const useUserPassword = () => {
     } catch (error) {
       if (error instanceof FirebaseError) {
         switch (error.code) {
-          case 'auth/wrong-password':
+          case 'auth/invalid-credential':
             setError("La contraseña actual es incorrecta");
             break;
           case 'auth/weak-password':
