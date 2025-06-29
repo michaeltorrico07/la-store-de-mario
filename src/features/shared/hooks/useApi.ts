@@ -1,22 +1,27 @@
 import type { AxiosError, AxiosRequestConfig, AxiosResponse, Method, AxiosHeaders } from 'axios'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState, type RefObject } from 'react'
 import { api } from '../../../infrastructure/services'
 
 type Data<T> = T | null
 
 type CustomError = Error | null
 
+interface Body {
+  id?: string
+  [key: string]: unknown
+}
+
 export interface UseApiOptions {
   autoFetch: boolean
   params: ApiCallOptions
 }
 
-export interface ApiCallOptions {
+export interface ApiCallOptions{
   method: Method
   url: string
   query?: Record<string, unknown>
   pathParam?: string
-  body?: Record<string, unknown>
+  body?: Body
   headers?: AxiosHeaders
 }
 
@@ -31,6 +36,7 @@ export interface UseApiResult<T> {
   error: CustomError
   cancel: () => void
   handleCall: () => void
+  onSubmit:(formData: Body) => void
 }
 
 export interface ApiResponse<T> {
@@ -39,7 +45,7 @@ export interface ApiResponse<T> {
   error: unknown
 }
 
-export const useApi = <T> (options: UseApiOptions): UseApiResult<T> => {
+export const useApi = <T> (optionsRef: RefObject<UseApiOptions>): UseApiResult<T> => {
   const [loading, setLoading] = useState<boolean>(false)
   const [data, setData] = useState<Data<T>>(null)
   const [error, setError] = useState<CustomError>(null)
@@ -82,17 +88,62 @@ export const useApi = <T> (options: UseApiOptions): UseApiResult<T> => {
   }, [cancel])
 
   const handleCall = useCallback(() => {
-    fetch(options.params)
-  },[fetch, options.params])
+    fetch(optionsRef.current.params)
+  },[fetch, optionsRef])
   
   useEffect(() => {
-    if (options?.autoFetch) {
-      fetch(options.params)
+    if (optionsRef.current?.autoFetch) {
+      fetch(optionsRef.current.params)
     }
     return () => cancel()
-  }, [cancel, fetch, options?.autoFetch, options.params])
+  }, [cancel, fetch, optionsRef])
 
-  return { loading, data, error, cancel, handleCall }
+
+  const cleanObject = (obj: Record<string, unknown>) => {
+    const newObj: Record<string, unknown> = {};
+    for (const key in obj) {
+      const val = obj[key]
+      if (
+        val !== undefined &&
+        val !== null &&
+        !(typeof val === "string" && val.trim() === "") &&
+        !(Array.isArray(val) && val.length === 0) &&
+        !(typeof val === "number" && isNaN(val))
+      ) {
+        newObj[key] = val
+      }
+    }
+    return newObj
+  }
+
+  const updateParams = useCallback((newParams: Partial<ApiCallOptions>) => {
+    optionsRef.current.params = {
+      ...optionsRef.current.params, 
+      ...newParams, 
+      body: newParams.body || optionsRef.current.params.body,
+      query: newParams.query || optionsRef.current.params.query,
+      headers: newParams.headers || optionsRef.current.params.headers}
+    handleCall()
+  },[handleCall, optionsRef])
+
+  const onSubmit = useCallback((formData: Body)=> {
+  if (optionsRef.current.params.method === 'PUT') {
+    const { id, ...body } = formData;
+    const cleanedBody = cleanObject(body);
+    updateParams({
+      body: cleanedBody,
+      pathParam: id
+    })
+  }
+  if (optionsRef.current.params.method === 'POST') {
+    updateParams({
+      body: formData,
+    })
+  }
+
+  }, [optionsRef, updateParams])
+
+  return { loading, data, error, cancel, handleCall, onSubmit }
 }
 
 const apiCall = <T>({ method, url, pathParam, query, body, headers}: ApiCallOptions): UseApiCall<T> => {
