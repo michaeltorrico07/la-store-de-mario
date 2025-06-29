@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
-import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, UseApiTest, CrearProducto, OtraApiTest, UpdatearBalatro } from '../features/index'
-
+import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, UseApiTest, CrearProducto, OtraApiTest, UpdatearBalatro, KitchenPanel } from '../features/index'
+import { DeliveryPanel } from '../features/employees/delivery/pages/DeliveryPanel'
 export const AppRoutes = () => {
   return (
     <Routes>
@@ -11,6 +11,10 @@ export const AppRoutes = () => {
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/forgot-password" element={<SendEmail />} />
       <Route path="/productos" element={<ProductListContainer />} />
+      <Route path="/kitchen" element={<KitchenPanel />} />
+      <Route path="/delivery" element={<DeliveryPanel />} />
+      
+      
 
 
 
