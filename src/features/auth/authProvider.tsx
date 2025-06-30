@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import type { User } from "./auth";
 import { auth, api } from '../../infrastructure/services/index';
 import { AuthContext } from './authContext'
-import { onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signOut, signInWithEmailAndPassword, confirmPasswordReset, sendPasswordResetEmail } from "firebase/auth";
+import { onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signOut, signInWithEmailAndPassword, confirmPasswordReset, sendPasswordResetEmail, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | null>(null)
@@ -57,8 +57,24 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     await signOut(auth)
   }
 
+  const reauthenticateUser = async (password: string) =>{
+
+    if (!user) throw new Error("No user is currently authenticated");
+    const credential = EmailAuthProvider.credential(user.email, password);
+
+    if (!auth.currentUser) throw new Error("No user is currently authenticated");
+    await reauthenticateWithCredential(auth.currentUser, credential);
+  }
+
+  const changePassword = async (newPassword: string) =>{
+    if (!user) throw new Error("No user is currently authenticated");
+    if (!auth.currentUser) throw new Error("No user is currently authenticated");
+
+    await updatePassword(auth.currentUser, newPassword);
+  }
+
   return (
-    <AuthContext.Provider value={{ user, loading, registerUser, LogOutUser, loginUser, ResetPassword, sendResetPasswordEmail }}>
+    <AuthContext.Provider value={{ user, loading, registerUser, LogOutUser, loginUser, ResetPassword, sendResetPasswordEmail, reauthenticateUser, changePassword }}>
       {children}
     </AuthContext.Provider>
   )

@@ -1,11 +1,6 @@
-import { ProfileSidebar } from '../ui/ProfileSidebar';
-import { PersonalDataTab } from '../ui/PersonalDataTab';
-import { OrderHistoryTab } from '../ui/OrderHistoryTab';
-import { TicketModal } from '../ui/TicketModal';
+import { ProfileSidebar, PersonalDataTab, OrderHistoryTab, TicketModal } from '../ui';
 import { useAuthContext } from '../../auth/hooks/useAuthContext';
-import { useUserOrders } from '../hooks';
-import { useProfileTab } from '../hooks';
-import { useTicket } from '../hooks';
+import { useUserOrders, useProfileTab, useTicket } from '../hooks';
 
 export const Profile = () => {
   const { selectedTicket, showTicket, showTicketModal, closeTicket } = useTicket();
@@ -53,7 +48,6 @@ export const Profile = () => {
               </div>
             </div>
           </div>
-
         </div>
 
         {/* Modal del ticket */}
@@ -61,6 +55,7 @@ export const Profile = () => {
           selectedTicket={selectedTicket}
           showTicket={showTicket}
           closeTicket={closeTicket}
+          user={user?.name ?? ''}
         />
       </div>
     </>
