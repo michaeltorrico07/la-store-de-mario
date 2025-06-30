@@ -10,7 +10,7 @@ interface Product {
   price: number
 }
 
-export const useCreateBalatro = (): UseApiResult<Product> => {
+export const useCreateBalatro = (): Partial<UseApiResult<Product>> => {
   const paramsRef = useRef<UseApiOptions>({
     autoFetch: false,
     params: {
@@ -26,7 +26,7 @@ export const useCreateBalatro = (): UseApiResult<Product> => {
     }
   })
 
-  const { data, loading, error, cancel, handleCall } = useApi<Product>(paramsRef.current)
+  const { data, loading, error, cancel, handleCall } = useApi<Product>(paramsRef)
 
   return { data, loading, error, cancel, handleCall }
 }

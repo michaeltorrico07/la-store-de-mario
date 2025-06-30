@@ -1,7 +1,12 @@
 import { useCart } from '../hooks/useCart';
 import { ItemCardCart } from './itemCardCart';
+import { useInitPointRedirect } from '../hooks/useInitPointRedirect';
+
 export const Cart = () => {
   const { items, removeFromCart, updateQuantity, clearCart, toggleCart, getTotalPrice } = useCart();
+  const { generateInitPoint } = useInitPointRedirect(items)
+
+
   return (
     <>
       {/* Overlay */}
@@ -54,7 +59,7 @@ export const Cart = () => {
               </div>
               
               <div className="space-y-2">
-                <button className="w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-medium transition-colors">
+                <button onClick={generateInitPoint} className="cursor-pointer w-full bg-red-600 hover:bg-red-700 text-white py-3 rounded-lg font-medium transition-colors">
                   Proceder al Pago
                 </button>
                 

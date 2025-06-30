@@ -11,11 +11,11 @@ export const useUse = (): UseApiResult<ProductFormDataPartial> => {
     }
   })
 
-  const { data, loading, error, cancel, handleCall, fetch, updateParams, onSubmit } = useApi<ProductFormDataPartial>(paramsRef)
+  const { data, loading, error, cancel, handleCall, onSubmit } = useApi<ProductFormDataPartial>(paramsRef)
 
   useEffect(()=> {
     console.log(data)
   }, [data])
 
-  return { data, loading, error, cancel, handleCall, fetch, updateParams, onSubmit}
+  return { data, loading, error, cancel, handleCall, onSubmit}
 }

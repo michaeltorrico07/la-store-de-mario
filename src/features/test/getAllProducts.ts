@@ -19,7 +19,7 @@ export const useGetAllProduct = (): UseApiResult<Product[]> => {
     }
   })
 
-  const { data, loading, error, cancel, handleCall } = useApi<Product[]>(paramsRef.current)
+  const { data, loading, error, cancel, handleCall, onSubmit } = useApi<Product[]>(paramsRef)
   console.log(data)
-  return { data, loading, error, cancel, handleCall }
+  return { data, loading, error, cancel, handleCall, onSubmit }
 }
