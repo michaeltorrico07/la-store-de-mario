@@ -14,7 +14,8 @@ export const useInitPointRedirect = (items: CartItem[]) => {
       quantity: item.quantity,
       description: item.description,
       picture_url: item.image,
-      unit_price: item.price
+      unit_price: item.price,
+      category_id: item.tags[0]
     }))
 
     const formdata = {
