@@ -1,13 +1,15 @@
-export interface Product {
+// Tipos para cada producto
+export interface OrderProduct {
   name: string;
   amount: number;
+  price: number;
 }
 
+// Tipos para cada pedido
 export interface Order {
-  id: string;
-  products: Product[];
-  customer: string;
-  price: number;
-  pickupTime: string;
-  status: 'pending' | 'ready' | 'delivered';
+  code: string;
+  listProducts: OrderProduct[];
+  totalPrice: number;
+  deliverDate: string;
+  delivered: boolean;
 }

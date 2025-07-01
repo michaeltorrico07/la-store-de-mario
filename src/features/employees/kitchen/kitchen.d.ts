@@ -2,7 +2,7 @@ export interface KitchenOrder {
   id: string;
   quantity: number;
   product: string;
-  deliveryTime: string;
+  deliveryTime: Date;
   customer: string;
   status: 'pending' | 'unit_confirmed' | 'total_confirmed';
   orderTime: string;
@@ -18,6 +18,8 @@ export interface OrdersListProps {
   orders: KitchenOrder[];
   onUnitConfirm: (orderId: string) => void;
   onTotalConfirm: (orderId: string) => void;
+  loading: boolean;
+  onRefresh: () => void;
 }
 
 export interface KitchenHeaderProps {
@@ -26,8 +28,9 @@ export interface KitchenHeaderProps {
 
 export interface UseKitchenOrdersReturn {
   orders: KitchenOrder[];
-  isLoading: boolean;
+  loading: boolean;
   updateOrderStatus: (orderId: string, status: KitchenOrder['status']) => void;
+  refetch: () => void;
 }
 
 export interface ConfirmationButtonProps {
