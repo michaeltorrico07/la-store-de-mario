@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import type { Order } from '../profile'
 import { useApi, type UseApiResult, type UseApiOptions } from '../../shared'
 
-export const useUserOrders = (): Partial<UseApiResult<Order[]>> => {
+export const useUserOrders = (): UseApiResult<Order[]> => {
   const paramsRef = useRef<UseApiOptions>({
     autoFetch: false,
     params: {
@@ -11,7 +11,7 @@ export const useUserOrders = (): Partial<UseApiResult<Order[]>> => {
     }
   })
 
-  const { data, loading, error, cancel, handleCall } = useApi<Order[]>(paramsRef)
+  const { data, loading, error, cancel, handleCall, onSubmit } = useApi<Order[]>(paramsRef)
 
-  return { data, loading, error, cancel, handleCall }
+  return { data, loading, error, cancel, handleCall, onSubmit }
 };
