@@ -1,7 +1,15 @@
 import { Routes, Route } from 'react-router-dom'
 import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, UseApiTest, CrearProducto, OtraApiTest, UpdatearBalatro, KitchenPanel } from '../features/index'
 import { DeliveryPanel } from '../features/employees/delivery/pages/DeliveryPanel'
+import { useAuthContext } from '../features/auth/hooks/useAuthContext'
+import { Loading } from '../features/shared'
+
 export const AppRoutes = () => {
+  const { loading } = useAuthContext()
+
+  if (loading){
+    return <Loading />
+  }
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
