@@ -2,17 +2,17 @@ import { useRef } from 'react';
 import type { NameSchema } from '../schemas/personalDataSchema';
 import { useApi, type UseApiOptions } from '../../shared';
 
-export const useUserData = (userData: NameSchema | null) => {
+export const useUserData = () => {
 
-  const paramsRef = useRef({
-    url: '/user',
-    method: 'PUT',
-    body: {
-      ...userData
+  const paramsRef = useRef<UseApiOptions>({
+    autoFetch: false,
+    params: {
+      url: '/user',
+      method: 'PUT'
     }
   })
 
-  const { data, error, fetch } = useApi<NameSchema>({ params: paramsRef.current, autoFetch: false } as UseApiOptions);
+  const { data, error, onSubmit } = useApi<NameSchema>(paramsRef);
 
-  return { data, error, fetch }
+  return { data, error, onSubmit }
 }

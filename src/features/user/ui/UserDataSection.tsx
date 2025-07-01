@@ -3,6 +3,8 @@ import { useUserData } from '../hooks'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type NameSchema, nameSchema } from '../schemas/personalDataSchema'
+import { useAuthContext } from '../../auth/hooks/useAuthContext'
+import { useEffect } from 'react'
 
 interface UserDataSectionProps {
   user?: User,
@@ -10,27 +12,18 @@ interface UserDataSectionProps {
 }
 
 export const UserDataSection = ({ user, isExpanded }: UserDataSectionProps) => {
-  const { register: registerNames, handleSubmit: handleSubmitNames, formState: { errors: errorNames } } = useForm<NameSchema>({
-    resolver: zodResolver(nameSchema) // Assuming you have a zod schema defined
-  })
-  const { data, error, fetch } = useUserData(null)
+  const { register: registerNames, handleSubmit, formState: { errors: errorNames } } = useForm<NameSchema>({resolver: zodResolver(nameSchema)})
+  const { data, error, onSubmit} = useUserData()
+  const { setUser } = useAuthContext()
 
-  const handleFetch = (data: NameSchema) => {
-    setTimeout(() => {
-      fetch({
-        url: '/user',
-        method: 'PUT',
-        body: {
-          name: data.name,
-          lastName: data.lastName
-        }
-      })
-    }, 2000)
-    window.location.reload()
-  }
+  useEffect(()=> {
+    if(data) {
+      setUser(prev => prev ? { ...prev, ...data } : prev)
+    }
+  },[data, setUser])
 
   return (
-    <form onSubmit={handleSubmitNames(handleFetch)} className="space-y-3">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
         <input

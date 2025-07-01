@@ -10,6 +10,7 @@ export interface User {
 export type AuthContextType = {
   user: User | null;
   loading: boolean
+  setUser: React.Dispatch<React.SetStateAction<User | null>>
   registerUser: (email: string, password: string) => Promise<string>;
   loginUser: (email: string, password: string) => Promise<void>;
   LogOutUser: () => Promise<void>;

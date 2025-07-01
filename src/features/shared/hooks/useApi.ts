@@ -128,8 +128,8 @@ export const useApi = <T> (optionsRef: RefObject<UseApiOptions>): UseApiResult<T
 
   const onSubmit = useCallback((formData: Body)=> {
   if (optionsRef.current.params.method === 'PUT') {
-    const { id, ...body } = formData;
-    const cleanedBody = cleanObject(body);
+    const { id } = formData;
+    const cleanedBody = cleanObject(formData);
     updateParams({
       body: cleanedBody,
       pathParam: id
