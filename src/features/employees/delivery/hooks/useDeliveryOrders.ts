@@ -21,7 +21,7 @@ export const useDeliveryOrders = () => {
   useEffect(() => {
     const now = new Date();
 
-    setOrders((data || []).filter(order => new Date(order.deliverDate) >= now));
+    setOrders((data ?? []).filter(order => new Date(order.deliverDate) >= now));
   }, [data]);
 
   return {

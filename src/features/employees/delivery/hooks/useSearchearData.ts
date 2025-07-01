@@ -12,7 +12,6 @@ export const useSearchearData = (): UseApiResult<Order[]> => {
   })
 
   const { data, loading, error, cancel, handleCall, onSubmit } = useApi<Order[]>(paramsRef)
-  console.log(data);
   
   return { data, loading, error, cancel, handleCall, onSubmit}
 }
