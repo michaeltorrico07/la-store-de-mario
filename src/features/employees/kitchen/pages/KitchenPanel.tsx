@@ -5,7 +5,7 @@ import { useKitchenOrders } from '../hooks';
 export const KitchenPanel = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  const { orders, isLoading, updateOrderStatus } = useKitchenOrders();
+  const { orders, updateOrderStatus, refetch, loading } = useKitchenOrders();
 
   // Actualizar hora actual cada minuto
   useEffect(() => {
@@ -24,7 +24,7 @@ export const KitchenPanel = () => {
     updateOrderStatus(orderId, 'total_confirmed');
   };
 
-  if (isLoading) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
@@ -42,6 +42,8 @@ export const KitchenPanel = () => {
         orders={orders}
         onUnitConfirm={handleUnitConfirm}
         onTotalConfirm={handleTotalConfirm}
+        onRefresh={refetch}
+        loading={loading}
       />
     </div>
   );

@@ -22,7 +22,7 @@ const DeliveryHeader = ({ orderCount, onRefresh, loading = false }: DeliveryHead
           <button
             onClick={onRefresh}
             disabled={loading}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded text-sm font-medium transition-colors"
+            className="cursor-pointer bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded text-sm font-medium transition-colors"
           >
             {loading ? 'Cargando...' : 'Refrescar'}
           </button>
