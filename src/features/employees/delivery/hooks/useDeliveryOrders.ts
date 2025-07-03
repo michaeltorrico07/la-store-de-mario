@@ -1,33 +1,37 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import type { Order } from '../delivery';
-import { useSearchearData } from './useSearchearData';
+import { useApi, type UseApiOptions } from '../../../shared';
 
 export const useDeliveryOrders = () => {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const { loading, data, handleCall } = useSearchearData()
+  const paramsRef = useRef<UseApiOptions>({
+    autoFetch: true,
+    params: {
+      method: 'GET',
+      url: '/order',
+      body: {
+        date: "hoy unsa"
+      }
+    }
+  })
 
-  // Deliver order
+  const { data, loading, handleCall } = useApi<Order[]>(paramsRef)
+  const [orders, setOrders] = useState<Order[]>([])
+
+  useEffect(() => {
+    return setOrders(data ?? []);
+  }, [data])
+  
   const deliverOrder = async (orderCode: string) => {
     try {
       setOrders(prev => prev.filter(order => order.code !== orderCode));
     } catch (err) {
-      setError('Error al entregar la orden');
       console.error('Error delivering order:', err);
     }
   };
 
-  // Initial load
-  useEffect(() => {
-    const now = new Date();
-
-    setOrders((data ?? []).filter(order => new Date(order.deliverDate) >= now));
-  }, [data]);
-
   return {
     orders,
     loading,
-    error,
     deliverOrder,
     refetch: handleCall
   };

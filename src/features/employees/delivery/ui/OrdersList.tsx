@@ -40,7 +40,7 @@ const OrdersList = ({ orders, onDeliver }: OrdersListProps) => {
               </td>
               <td className="px-8 py-6">
                 <div className="text-base text-gray-800">
-                  {order?.listProducts?.map((product, index) => (
+                  {order.listProducts?.map((product, index) => (
                     <div key={index} className="mb-1">
                       {product.name}
                       {product.amount > 1 && (
@@ -51,7 +51,7 @@ const OrdersList = ({ orders, onDeliver }: OrdersListProps) => {
                 </div>
               </td>
               <td className="px-8 py-6 whitespace-nowrap text-base font-bold text-gray-800">
-                ${order.totalPrice.toLocaleString()}
+                ${order.totalPrice?.toLocaleString() ?? "IsNaN"}
               </td>
               <td className="px-8 py-6 whitespace-nowrap text-base text-gray-800">
                 {order?.deliverDate && new Date(order.deliverDate).toLocaleString('es-AR', {

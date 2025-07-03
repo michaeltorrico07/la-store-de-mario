@@ -158,6 +158,7 @@ const apiCall = <T>({ method, url, pathParam, query, body, headers}: ApiCallOpti
     signal: controller.signal,
     headers: headers
   }
+  console.log(config)
   const call = api.request<T>(config)
   return { call, controller }
 }
