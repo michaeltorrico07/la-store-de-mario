@@ -1,5 +1,5 @@
 import { useApi, type UseApiResult, type UseApiOptions } from "../../../shared/hooks/useApi"
-import { useRef } from "react"
+import { useEffect, useRef } from "react"
 import type { Order } from "../delivery"
 
 export const useSearchearData = (): UseApiResult<Order[]> => {
@@ -7,12 +7,22 @@ export const useSearchearData = (): UseApiResult<Order[]> => {
     autoFetch: true,
     params: {
       method: 'GET',
-      url: '/order'
+      url: '/order',
+      body: {
+        date: "hoy anaseh"
+      },
+      query: {
+        date: "hoy unsa"
+      },
+      pathParam: "asdasdasdsdad"
     }
   })
 
   const { data, loading, error, cancel, handleCall, onSubmit } = useApi<Order[]>(paramsRef)
-  console.log(data);
+  
+  useEffect(()=> {
+    console.log(error)
+  }, [error])
   
   return { data, loading, error, cancel, handleCall, onSubmit}
 }
