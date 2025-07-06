@@ -65,7 +65,7 @@ const OrdersList = ({ orders, onDeliver }: OrdersListProps) => {
               </td>
               <td className="px-8 py-6 whitespace-nowrap">
                 <button
-                  onClick={() => onDeliver(order.code)}
+                  onClick={() => onDeliver(order.id)}
                   className="cursor-pointer bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded text-base font-medium transition-colors"
                 >
                   ENTREGAR
