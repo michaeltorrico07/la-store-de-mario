@@ -1,5 +1,5 @@
 import { useApi, type UseApiResult, type UseApiOptions } from "../shared/hooks/useApi"
-import { useEffect, useRef } from "react"
+import {  useRef } from "react"
 import type { ProductFormDataPartial } from "./schemaProduct"
 
 export const useUse = (): UseApiResult<ProductFormDataPartial> => {
@@ -12,10 +12,6 @@ export const useUse = (): UseApiResult<ProductFormDataPartial> => {
   })
 
   const { data, loading, error, cancel, handleCall, onSubmit } = useApi<ProductFormDataPartial>(paramsRef)
-
-  useEffect(()=> {
-    console.log(data)
-  }, [data])
 
   return { data, loading, error, cancel, handleCall, onSubmit}
 }

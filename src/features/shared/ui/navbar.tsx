@@ -1,11 +1,14 @@
 import { useCart } from '../../product/hooks/useCart'
 import { useAuthContext } from '../../auth/hooks/useAuthContext'
 import { useLocation, Link } from 'react-router-dom'
+import { useEffect } from 'react'
 
 export const Navbar = () => {
   const { user } = useAuthContext()
   const { toggleCart, getTotalItems } = useCart()
   const location = useLocation()
+
+  useEffect(()=> {console.log(user)}, [user])
 
   // Solo mostrar el carrito en esta ruta
   const showCart = location.pathname === '/productos'
@@ -66,7 +69,7 @@ export const Navbar = () => {
                   <path fillRule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clipRule="evenodd" />
                 </svg>
               </div>
-              <span className="text-white font-medium whitespace-nowrap hidden sm:inline">{user?.name}</span>
+              <span className="text-white font-medium whitespace-nowrap hidden sm:inline">{user.name}</span>
             </div>
           </div>
         </div>

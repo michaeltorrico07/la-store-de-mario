@@ -1,13 +1,15 @@
 import { useFilteredSortedProducts, useGetAllProduct } from '../hooks'
 import { ProductList, SortFilter, CategoryFilter } from '../ui'
 import { categoriesData } from '../categoriesData'
-
+import { useAppSelector } from '../../../infrastructure/redux/hooks'
 
 export const ProductListContainer = () => {
-  
+  const storedProducts = useAppSelector(state => state.products.products)
   const { data } = useGetAllProduct()
-  const {sortedProducts, selectedCategory, changeCategory, changeSort, sortBy} = useFilteredSortedProducts(data)
-  const categories = categoriesData(data)
+  const productsToUse = storedProducts.length > 0 ? storedProducts : (data ?? [])
+  const {sortedProducts, selectedCategory, changeCategory, changeSort, sortBy} = useFilteredSortedProducts(productsToUse)
+  const categories = categoriesData(productsToUse)
+
   return (
     <>
 
