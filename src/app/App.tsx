@@ -10,7 +10,7 @@ import { store, persistor } from '../infrastructure/redux/store'
 
 function App() {
   const location = useLocation()
-  const showNavbar = ['/productos', '/profile', '/balatro', '/productosPOSTA'].includes(location.pathname)
+  const showNavbar = ['/products', '/profile', '/balatro', '/productosPOSTA'].includes(location.pathname)
 
   return (
     <ReduxProvider store={store}>
