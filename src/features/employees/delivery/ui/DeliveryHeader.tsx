@@ -1,15 +1,16 @@
 interface DeliveryHeaderProps {
-  orderCount: number;
-  onRefresh: () => void;
-  loading?: boolean;
+  orderCount: number
+  onRefresh: () => void
+  loading?: boolean
+  hour: string
 }
 
-const DeliveryHeader = ({ orderCount, onRefresh, loading = false }: DeliveryHeaderProps) => {
+const DeliveryHeader = ({ orderCount, onRefresh, loading = false, hour }: DeliveryHeaderProps) => {
   return (
     <div className="mb-8">
       <div className="flex justify-between items-start mb-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">Panel de Entregas</h1>
+          <h1 className="text-3xl font-bold text-gray-800">Órdenes del {hour}</h1>
           <p className="text-gray-600 mt-1">
             {orderCount > 0 ? `${orderCount} órdenes pendientes` : 'Sin órdenes pendientes'}
           </p>
@@ -28,12 +29,6 @@ const DeliveryHeader = ({ orderCount, onRefresh, loading = false }: DeliveryHead
           </button>
         </div>
       </div>
-      
-      {orderCount > 0 && (
-        <div className="text-sm text-gray-500">
-          Última actualización: {new Date().toLocaleTimeString()}
-        </div>
-      )}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { DeliveryHeader } from '../ui/DeliveryHeader';
 import { OrdersList } from '../ui/OrdersList';
 
 const DeliveryPanel = () => {
-  const { orders, loading, deliverOrder, refetch } = useDeliveryOrders();
+  const { orders, loading, hour, deliverOrder, refetch } = useDeliveryOrders();
 
   if (loading) {
     return (
@@ -27,6 +27,7 @@ const DeliveryPanel = () => {
               orderCount={orders.length}
               onRefresh={refetch}
               loading={loading}
+              hour={hour}
             />
 
             <OrdersList
