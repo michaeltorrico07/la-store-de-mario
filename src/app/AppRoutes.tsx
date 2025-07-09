@@ -1,8 +1,11 @@
 import { Routes, Route } from 'react-router-dom'
-import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, UseApiTest, CrearProducto, OtraApiTest, UpdatearBalatro, KitchenPanel } from '../features/index'
+import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, KitchenPanel } from '../features/index'
 import { DeliveryPanel } from '../features/employees/delivery/pages/DeliveryPanel'
 import { useAuthContext } from '../features/auth/hooks/useAuthContext'
 import { Loading } from '../features/shared'
+import { PrivateRoutes, PublicRoutes } from './routes'
+import { AuthGuard, RolGuard } from '../infrastructure/guards'
+import { Roles } from '../features/auth/roles'
 
 export const AppRoutes = () => {
   const { loading } = useAuthContext()
@@ -12,25 +15,41 @@ export const AppRoutes = () => {
   }
   return (
     <Routes>
+      <Route element = {<AuthGuard privateValidation = { false }/>} >
+        <Route path={PublicRoutes.LOGIN} element = {<Login />} />
+      </Route>
+      
+      <Route element = {<AuthGuard privateValidation = { false }/>} >
+        <Route path={PublicRoutes.REGISTER} element = {<Register />} />
+      </Route>
+
+      <Route element = {<AuthGuard privateValidation = { true }/>} >
+        <Route path={PrivateRoutes.PRODUCTS} element = { <ProductListContainer/> } />
+      </Route>
+
+      <Route element = {<AuthGuard privateValidation = { true }/>} >
+        <Route path={PrivateRoutes.PROFILE} element = { <Profile/> } />
+      </Route>
+
+
+      <Route element = {<AuthGuard privateValidation = { true }/>} >
+        <Route element = {<RolGuard rol = { Roles.ADMIN }/>} >
+          <Route path={PrivateRoutes.KITCHEN} element = { <KitchenPanel/> } />
+        </Route>
+      </Route>
+
+
+      <Route element = {<AuthGuard privateValidation = { true }/>} >
+        <Route element = {<RolGuard rol = { Roles.ADMIN }/>} >
+          <Route path={PrivateRoutes.DELIVERY} element = { <DeliveryPanel/> } />
+        </Route>
+      </Route>
+
+
       <Route path="/" element={<HomePage />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/profile" element={<Profile />} />
       <Route path="/reset-password" element={<ResetPassword />} />
       <Route path="/forgot-password" element={<SendEmail />} />
-      <Route path="/productos" element={<ProductListContainer />} />
-      <Route path="/kitchen" element={<KitchenPanel />} />
-      <Route path="/delivery" element={<DeliveryPanel />} />
-      
-      
 
-
-
-
-      <Route path="/otroapitest" element={< OtraApiTest />} />
-      <Route path="/crearBalatro" element={< CrearProducto />} />
-      <Route path="/unsa" element={< UpdatearBalatro />} />
-      <Route path="/test/:id" element={< UseApiTest />} />
     </Routes>
   )
 }

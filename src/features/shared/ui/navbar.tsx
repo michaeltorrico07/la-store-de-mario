@@ -1,14 +1,11 @@
 import { useCart } from '../../product/hooks/useCart'
 import { useAuthContext } from '../../auth/hooks/useAuthContext'
 import { useLocation, Link } from 'react-router-dom'
-import { useEffect } from 'react'
 
 export const Navbar = () => {
   const { user } = useAuthContext()
   const { toggleCart, getTotalItems } = useCart()
   const location = useLocation()
-
-  useEffect(()=> {console.log(user)}, [user])
 
   // Solo mostrar el carrito en esta ruta
   const showCart = location.pathname === '/productos'
@@ -34,7 +31,7 @@ export const Navbar = () => {
             <Link to="/" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
               Inicio
             </Link>
-            <Link to="/productos" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
+            <Link to="/products" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
               Productos
             </Link>
             <Link to="/profile" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">

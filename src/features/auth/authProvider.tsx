@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (currentUser) {
         try {
           const res = await api.get(`/user`)
+          console.log(res)
           dispatch(createAuth({
             ...res.data.data,
             id: currentUser.uid,
