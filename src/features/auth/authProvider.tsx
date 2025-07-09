@@ -1,35 +1,48 @@
-import { useEffect, useState } from "react";
-import type { User } from "./auth";
+import { useEffect } from "react";
 import { auth, api } from '../../infrastructure/services/index';
 import { AuthContext } from './authContext'
 import { onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signOut, signInWithEmailAndPassword, confirmPasswordReset, sendPasswordResetEmail, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
+import { useAppDispatch, useAppSelector } from '../../infrastructure/redux/hooks'
+import { createAuth, resetAuth } from './slice'
+import type { User } from "./auth";
+
+export type AuthContextType = {
+  loading: boolean
+  user: User
+  registerUser: (email: string, password: string) => Promise<string>;
+  loginUser: (email: string, password: string) => Promise<void>;
+  LogOutUser: () => Promise<void>;
+  ResetPassword: (oobCode: string, newPassword: string) => Promise<boolean>;
+  sendResetPasswordEmail: (email: string) => Promise<boolean>;
+  reauthenticateUser: (password: string) => Promise<void>;
+  changePassword: (newPassword: string) => Promise<void>;
+}
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null)
-  const [loading, setLoading] = useState(true)
+  const dispatch = useAppDispatch()
+  const user = useAppSelector(state => state.auth)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         try {
           const res = await api.get(`/user`)
-          setUser({
+          dispatch(createAuth({
             ...res.data.data,
             id: currentUser.uid,
             isVerified: currentUser.emailVerified,
-          })
+          }))
         } catch (error) {
           console.error("Error al obtener el usuario", error)
-          setUser(null)
+          dispatch(resetAuth())
         }
       } else {
-        setUser(null)
+        dispatch(resetAuth())
       }
-      setLoading(false)
     })
 
     return () => unsubscribe()
-  }, [])
+  }, [dispatch])
 
   const registerUser = async (email: string, password: string) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
@@ -55,6 +68,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const LogOutUser = async () => {
     await signOut(auth)
+    dispatch(resetAuth())
   }
 
   const reauthenticateUser = async (password: string) =>{
@@ -74,7 +88,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, registerUser, LogOutUser, loginUser, ResetPassword, sendResetPasswordEmail, reauthenticateUser, changePassword }}>
+    <AuthContext.Provider value={{ user, registerUser, LogOutUser, loginUser, ResetPassword, sendResetPasswordEmail, reauthenticateUser, changePassword }}>
       {children}
     </AuthContext.Provider>
   )

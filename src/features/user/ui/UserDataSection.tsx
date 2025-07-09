@@ -3,8 +3,9 @@ import { useUserData } from '../hooks'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { type NameSchema, nameSchema } from '../schemas/personalDataSchema'
-import { useAuthContext } from '../../auth/hooks/useAuthContext'
 import { useEffect } from 'react'
+import { useAppDispatch } from '../../../infrastructure/redux/hooks'
+import { modifyAuth } from '../../auth/slice'
 
 interface UserDataSectionProps {
   user?: User,
@@ -14,13 +15,12 @@ interface UserDataSectionProps {
 export const UserDataSection = ({ user, isExpanded }: UserDataSectionProps) => {
   const { register: registerNames, handleSubmit, formState: { errors: errorNames } } = useForm<NameSchema>({resolver: zodResolver(nameSchema)})
   const { data, error, onSubmit} = useUserData()
-  const { setUser } = useAuthContext()
-
+  const dispatch = useAppDispatch()
   useEffect(()=> {
     if(data) {
-      setUser(prev => prev ? { ...prev, ...data } : prev)
+      dispatch(modifyAuth(data))
     }
-  },[data, setUser])
+  },[data, dispatch])
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">

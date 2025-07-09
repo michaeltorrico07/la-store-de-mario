@@ -12,7 +12,6 @@ export const useSearchearData = (): UseApiResult<KitchenOrder[]> => {
   })
 
   const { data, loading, error, cancel, handleCall, onSubmit } = useApi<KitchenOrder[]>(paramsRef)
-  console.log(data);
   
   return { data, loading, error, cancel, handleCall, onSubmit}
 }
