@@ -1,1 +1,1 @@
-export { useKitchenProducts } from './useKitchenProducts';
+export * from './useKitchenProducts'
