@@ -1,9 +1,10 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import type { RegisterSchema, LoginSchema, PasswordSchema, EmailSchema } from '../schemas/index'
 import { useAuthContext } from './useAuthContext'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { FirebaseError } from '@firebase/util'
 import { api } from '../../../infrastructure/services'
+import { useAppSelector } from '../../../infrastructure/redux/hooks'
 
 export const useAuth = () => {
   const [error, setError] = useState<string | null>(null);
@@ -12,6 +13,7 @@ export const useAuth = () => {
   const { registerUser, loginUser, ResetPassword, sendResetPasswordEmail } = useAuthContext();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams(); // Obtener parámetros de la URL
+  const user = useAppSelector(state => state.auth)
 
   const submitRegister = async (data: RegisterSchema) => {
     setError(null);
@@ -42,15 +44,19 @@ export const useAuth = () => {
     }
   }
 
+  useEffect(() => {
+    if (user.id && user.isVerified) {
+      navigate("/products");
+    }
+  }, [user, navigate])
+
   const submitLogin = async (data: LoginSchema) => {
     setError(null);
     setSuccess(false);
     setLoading(true);
     try {
       await loginUser(data.email, data.password);
-      navigate("/profile")
       setSuccess(true);
-      setLoading(false);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         console.log(error.code)
@@ -69,8 +75,8 @@ export const useAuth = () => {
         setError('Hubo un error al enviar el email. Por favor intenta nuevamente')
       }
       setSuccess(false);
-      setLoading(false);
     }
+    setLoading(false);
   }
 
   const SubmitResetPasswordEmail = async (data: EmailSchema) => {
