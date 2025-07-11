@@ -3,50 +3,59 @@ import type { WritableDraft } from "immer"
 import type { RootState } from "../../../infrastructure/redux/store"
 
 interface KitchenProduct {
-  id: string
   name: string
   amount: number
-  deliveredAmount: number
+  amountConfirmed: number
 }
 
-export interface KitchenProducts {
+export interface Kitchen {
   deliverHour: string
-  kitchenProducts: KitchenProduct[]
+  products: KitchenProduct[]
 }
 
-const initialState: KitchenProducts = {
+const initialState: Kitchen = {
   deliverHour: '',
-  kitchenProducts: []
+  products: []
 }
 
 interface AmountConfirmProps {
-  id: string
+  name: string
   amount?: number
 }
 
-function amountConfirmReducer(state: WritableDraft<KitchenProducts>, action: PayloadAction<AmountConfirmProps>){
-  const id = action.payload.id
+function amountConfirmReducer(state: WritableDraft<Kitchen>, action: PayloadAction<AmountConfirmProps>){
+  const name = action.payload.name
   const amount = action.payload.amount
 
-  const order = state.kitchenProducts.find(product => product.id === id)
+  const order = state.products.find(product => product.name === name)
   if (order) {
     if (amount === -1) {
-      order.deliveredAmount = order.amount
+      order.amountConfirmed = order.amount
     } else {
-      order.deliveredAmount += amount ?? 1
+      order.amountConfirmed += amount ?? 1
     }
   }
+}
+
+interface LoadProductsProps {
+  deliverHour: string
+  products: KitchenProduct[]
+}
+
+function loadProductsReducer(state: WritableDraft<Kitchen>, action: PayloadAction<LoadProductsProps>){
+  state = { ...action.payload }
 }
 
 export const kitchenSlice = createSlice({
   name: 'kitchen',
   initialState,
   reducers: {
-    amountConfirm: amountConfirmReducer
+    amountConfirm: amountConfirmReducer,
+    loadProducts: loadProductsReducer
   }
 })
 
-export const { amountConfirm } = kitchenSlice.actions
-export const selectKitchenProducts = (state: RootState) => state.kitchen.kitchenProducts
+export const { amountConfirm, loadProducts } = kitchenSlice.actions
+export const selectKitchenProducts = (state: RootState) => state.kitchen.products
 export const selectKitchenHour = (state: RootState) => state.kitchen.deliverHour
 export default kitchenSlice.reducer
