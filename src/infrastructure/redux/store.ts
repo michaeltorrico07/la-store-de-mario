@@ -8,7 +8,7 @@ import authSlice from '../../features/auth/slice'
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['products', 'auth', 'kitchen']
+  whitelist: ['products', 'auth']
 }
 
 const rootReducer = combineReducers({

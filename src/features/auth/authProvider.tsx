@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { auth, api } from '../../infrastructure/services/index';
 import { AuthContext } from './authContext'
 import { onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signOut, signInWithEmailAndPassword, confirmPasswordReset, sendPasswordResetEmail, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
@@ -21,6 +21,11 @@ export type AuthContextType = {
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(state => state.auth)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(()=>{
+    console.log(user)
+  },[user])
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
@@ -31,7 +36,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           dispatch(createAuth({
             ...res.data.data,
             id: currentUser.uid,
-            isVerified: currentUser.emailVerified,
+            isVerified: true,
           }))
         } catch (error) {
           console.error("Error al obtener el usuario", error)
@@ -89,7 +94,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, registerUser, LogOutUser, loginUser, ResetPassword, sendResetPasswordEmail, reauthenticateUser, changePassword }}>
+    <AuthContext.Provider value={{loading: loading && !user.id, user, registerUser, LogOutUser, loginUser, ResetPassword, sendResetPasswordEmail, reauthenticateUser, changePassword }}>
       {children}
     </AuthContext.Provider>
   )

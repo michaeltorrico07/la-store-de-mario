@@ -10,7 +10,6 @@ import { useEffect } from 'react'
 
 export const AppRoutes = () => {
   const { loading } = useAuthContext()
-
   useEffect(()=>{console.log(loading)},[loading])
   if (loading){
     return <Loading />
@@ -20,7 +19,7 @@ export const AppRoutes = () => {
       <Route element = {<AuthGuard privateValidation = { false }/>} >
         <Route path={PublicRoutes.LOGIN} element = {<Login />} />
       </Route>
-
+      
       <Route element = {<AuthGuard privateValidation = { false }/>} >
         <Route path={PublicRoutes.REGISTER} element = {<Register />} />
       </Route>

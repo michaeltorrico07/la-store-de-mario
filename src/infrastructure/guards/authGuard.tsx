@@ -8,11 +8,14 @@ interface AuthGuardProps {
 
 export const AuthGuard = ({ privateValidation }: AuthGuardProps) => {
   const user = useAppSelector(state=>state.auth)
-  return user.isVerified ? (
-    privateValidation ? (
-      <Outlet/>
-    ) : (<Navigate replace to={PrivateRoutes.PRODUCTS}/>)
-  ): (
-    <Navigate replace to={PublicRoutes.LOGIN}/>
-  )
+
+  if (privateValidation && !user.isVerified) {
+    return <Navigate replace to={PublicRoutes.LOGIN}/>;
+  }
+
+  if (!privateValidation && user.isVerified) {
+    return <Navigate replace to={PrivateRoutes.PRODUCTS}/>;
+  }
+
+  return <Outlet/>;
 }
