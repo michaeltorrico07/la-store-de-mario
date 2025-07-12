@@ -9,8 +9,8 @@ import { Roles } from '../features/auth/roles'
 import { useEffect } from 'react'
 
 export const AppRoutes = () => {
-  const { loading } = useAuthContext()
-  useEffect(()=>{console.log(loading)},[loading])
+  const { user, loading } = useAuthContext()
+  useEffect(()=>{console.log(user)},[user])
   if (loading){
     return <Loading />
   }

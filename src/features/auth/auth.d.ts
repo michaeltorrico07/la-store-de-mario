@@ -7,5 +7,6 @@ export interface User {
   lastName: string,
   dni: string,
   isVerified: boolean,
+  isLoggedin: boolean,
   rol?: Roles
 }

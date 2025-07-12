@@ -18,7 +18,7 @@ export const ProfileSidebar = ({ user, activeTab, handleTabChange, handleCall }:
 
   const SignOut = async () => {
     LogOutUser()
-    navigate('/login')
+    navigate('/')
   }
 
   return (

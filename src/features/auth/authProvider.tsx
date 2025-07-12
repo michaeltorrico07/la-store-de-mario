@@ -23,20 +23,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const user = useAppSelector(state => state.auth)
   const [loading, setLoading] = useState(true)
 
-  useEffect(()=>{
-    console.log(user)
-  },[user])
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       if (currentUser) {
         try {
           const res = await api.get(`/user`)
-          console.log(res)
           dispatch(createAuth({
             ...res.data.data,
             id: currentUser.uid,
-            isVerified: true,
+            isVerified: currentUser.emailVerified,
+            isLoggedin: true
           }))
         } catch (error) {
           console.error("Error al obtener el usuario", error)

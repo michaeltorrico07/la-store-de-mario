@@ -1,10 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import type { RegisterSchema, LoginSchema, PasswordSchema, EmailSchema } from '../schemas/index'
 import { useAuthContext } from './useAuthContext'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { FirebaseError } from '@firebase/util'
 import { api } from '../../../infrastructure/services'
-import { useAppSelector } from '../../../infrastructure/redux/hooks'
 
 export const useAuth = () => {
   const [error, setError] = useState<string | null>(null);
@@ -13,7 +12,6 @@ export const useAuth = () => {
   const { registerUser, loginUser, ResetPassword, sendResetPasswordEmail } = useAuthContext();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams(); // Obtener parámetros de la URL
-  const user = useAppSelector(state => state.auth)
 
   const submitRegister = async (data: RegisterSchema) => {
     setError(null);
@@ -28,13 +26,13 @@ export const useAuth = () => {
         dni: data.dni,
         email: data.email,
       }
-      // Guardar los datos del usuario en la BD
+
       await api.post('/user', userData)
 
       setSuccess(true);
       setLoading(false);
       setTimeout(() => {
-        navigate('/login')
+        navigate('/')
       }, 3000);
     } catch (error) {
       setError("Error al registrar el usuario");
@@ -43,12 +41,6 @@ export const useAuth = () => {
       setLoading(false);
     }
   }
-
-  useEffect(() => {
-    if (user.id && user.isVerified) {
-      navigate("/products");
-    }
-  }, [user, navigate])
 
   const submitLogin = async (data: LoginSchema) => {
     setError(null);
