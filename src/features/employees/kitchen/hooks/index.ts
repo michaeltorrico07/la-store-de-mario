@@ -1,1 +1,1 @@
-export { useKitchenOrders } from './useKitchenOrders';
+export * from './useKitchenProducts';

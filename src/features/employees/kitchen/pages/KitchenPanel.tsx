@@ -1,27 +1,22 @@
-import { useState, useEffect } from 'react';
-import { KitchenHeader, OrdersList } from '../ui';
-import { useKitchenOrders } from '../hooks';
+import { KitchenHeader, ProductsList } from '../ui';
+import { useKitchenProducts } from '../hooks';
+import { getActualDeliverHour } from '../../../shared';
 
 export const KitchenPanel = () => {
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const hour = new Date(getActualDeliverHour()).toLocaleString('es-AR', {
+    dateStyle: 'long',
+    timeStyle: 'short'
+  });
 
-  const { orders, updateOrderStatus, refetch, loading } = useKitchenOrders();
+  const { kitchenProducts, loading, handleConfirm } = useKitchenProducts();
 
-  // Actualizar hora actual cada minuto
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setCurrentTime(new Date());
-    }, 60000);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  const handleUnitConfirm = (orderId: string) => {
-    updateOrderStatus(orderId, 'unit_confirmed');
+  const handleUnitConfirm = (productName: string) => {
+    handleConfirm(productName, 1)
+    console.log('asdsa')
   };
 
-  const handleTotalConfirm = (orderId: string) => {
-    updateOrderStatus(orderId, 'total_confirmed');
+  const handleTotalConfirm = (productName: string) => {
+    handleConfirm(productName, -1)
   };
 
   if (loading) {
@@ -37,13 +32,11 @@ export const KitchenPanel = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-4">
-      <KitchenHeader currentTime={currentTime} />
-      <OrdersList
-        orders={orders}
+      <KitchenHeader hour={hour} />
+      <ProductsList
+        products={kitchenProducts}
         onUnitConfirm={handleUnitConfirm}
         onTotalConfirm={handleTotalConfirm}
-        onRefresh={refetch}
-        loading={loading}
       />
     </div>
   );
