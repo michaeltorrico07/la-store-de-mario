@@ -26,7 +26,7 @@ export const useInitPointRedirect = (items: CartItem[]) => {
         email: user.email
       },
       metadata: {
-        date: "unafechaunsa",
+        date: "13 de julio de 2025, 4:20:00 p.m. UTC-3",
         idUser: user.id
       }
     }
