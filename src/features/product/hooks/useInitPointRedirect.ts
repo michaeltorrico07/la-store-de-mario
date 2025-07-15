@@ -18,6 +18,15 @@ export const useInitPointRedirect = (items: CartItem[]) => {
       category_id: item.tags[0]
     }))
 
+    const deliveryDate = new Date()
+    deliveryDate.setHours(16, 20, 0, 0)
+
+    const formattedDate = deliveryDate.toLocaleString('es-AR', {
+      dateStyle: 'long',
+      timeStyle: 'medium',
+      timeZoneName: 'short'
+    });
+
     const formdata = {
       items: bodyItems,
       payer: {
@@ -26,7 +35,7 @@ export const useInitPointRedirect = (items: CartItem[]) => {
         email: user.email
       },
       metadata: {
-        date: "13 de julio de 2025, 4:20:00 p.m. UTC-3",
+        date: formattedDate,
         idUser: user.id
       }
     }
