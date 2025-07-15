@@ -21,15 +21,15 @@ export const useInitPointRedirect = (items: CartItem[]) => {
     const formdata = {
       items: bodyItems,
       payer: {
-        name: user?.name,
-        surname: user?.lastName,
-        email: user?.email
+        name: user.name,
+        surname: user.lastName,
+        email: user.email
       },
-      additional_info: {
-        date: "unafechaunsa"
+      metadata: {
+        date: "unafechaunsa",
+        idUser: user.id
       }
     }
-
     onSubmit(formdata)
   }
 
