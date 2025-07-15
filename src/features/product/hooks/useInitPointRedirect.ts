@@ -2,6 +2,7 @@ import { useEffect } from "react"
 import { useAuthContext } from "../../auth/hooks/useAuthContext"
 import { useGetInitPoint } from "./useGetInitPoint"
 import type { CartItem } from "../product"
+import { getActualDeliverHour } from "../../shared"
 
 export const useInitPointRedirect = (items: CartItem[]) => {
   const { user } = useAuthContext()
@@ -18,15 +19,6 @@ export const useInitPointRedirect = (items: CartItem[]) => {
       category_id: item.tags[0]
     }))
 
-    const deliveryDate = new Date()
-    deliveryDate.setHours(16, 20, 0, 0)
-
-    const formattedDate = deliveryDate.toLocaleString('es-AR', {
-      dateStyle: 'long',
-      timeStyle: 'medium',
-      timeZoneName: 'short'
-    });
-
     const formdata = {
       items: bodyItems,
       payer: {
@@ -35,7 +27,7 @@ export const useInitPointRedirect = (items: CartItem[]) => {
         email: user.email
       },
       metadata: {
-        date: formattedDate,
+        date: getActualDeliverHour(),
         idUser: user.id
       }
     }
