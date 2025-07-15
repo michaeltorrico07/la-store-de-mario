@@ -47,7 +47,12 @@ export const useAuth = () => {
     setSuccess(false);
     setLoading(true);
     try {
-      await loginUser(data.email, data.password);
+      const userCredential = await loginUser(data.email, data.password);
+      if (!userCredential.user.emailVerified) {
+        setError('Por favor verifica tu email antes de iniciar sesión');
+        setLoading(false);
+        return;
+      }
       setSuccess(true);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
@@ -121,17 +126,19 @@ export const useAuth = () => {
       setTimeout(() => {
         navigate('/login')
       }, 2000);
-    } catch (error: any) {
+    } catch (error: unknown) {
       // Mapeo de errores de Firebase
-      switch (error.code) {
-        case "auth/invalid-action-code":
-          setError('El enlace de restablecimiento no es válido. Inténtalo de nuevo.')
-          break;
-        case "auth/weak-password":
-          setError('La contraseña es demasiado débil. Intente una más segura.')
-          break;
-        default:
-          setError('Se produjo un error al reestablecer la contraseña. Inténtalo de nuevo.')
+      if (error instanceof FirebaseError) {
+        switch (error.code) {
+          case "auth/invalid-action-code":
+            setError('El enlace de restablecimiento no es válido. Inténtalo de nuevo.')
+            break;
+          case "auth/weak-password":
+            setError('La contraseña es demasiado débil. Intente una más segura.')
+            break;
+          default:
+            setError('Se produjo un error al reestablecer la contraseña. Inténtalo de nuevo.')
+        }
       }
     }
     setSuccess(false);

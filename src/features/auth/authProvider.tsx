@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { auth, api } from '../../infrastructure/services/index';
 import { AuthContext } from './authContext'
-import { onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signOut, signInWithEmailAndPassword, confirmPasswordReset, sendPasswordResetEmail, EmailAuthProvider, reauthenticateWithCredential, updatePassword } from "firebase/auth";
+import { onAuthStateChanged, createUserWithEmailAndPassword, sendEmailVerification, signOut, signInWithEmailAndPassword, confirmPasswordReset, sendPasswordResetEmail, EmailAuthProvider, reauthenticateWithCredential, updatePassword, type UserCredential } from "firebase/auth";
 import { useAppDispatch, useAppSelector } from '../../infrastructure/redux/hooks'
 import { createAuth, resetAuth } from './slice'
 import type { User } from "./auth";
@@ -10,7 +10,7 @@ export type AuthContextType = {
   loading: boolean
   user: User
   registerUser: (email: string, password: string) => Promise<string>;
-  loginUser: (email: string, password: string) => Promise<void>;
+  loginUser: (email: string, password: string) => Promise<UserCredential>;
   LogOutUser: () => Promise<void>;
   ResetPassword: (oobCode: string, newPassword: string) => Promise<boolean>;
   sendResetPasswordEmail: (email: string) => Promise<boolean>;
@@ -56,7 +56,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   const loginUser = async (email: string, password: string) => {
-    await signInWithEmailAndPassword(auth, email, password)
+    const credential = await signInWithEmailAndPassword(auth, email, password)
+    return credential
   }
 
   const ResetPassword = async (oobCode: string, newPassword: string) => {
