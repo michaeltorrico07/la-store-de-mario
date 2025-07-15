@@ -1,6 +1,8 @@
-import type { KitchenHeaderProps } from '../kitchen.d';
+interface KitchenHeaderProps {
+  hour: string
+}
 
-export const KitchenHeader = ({ currentTime }: KitchenHeaderProps) => {
+export const KitchenHeader = ({ hour }: KitchenHeaderProps) => {
   return (
     <div className="bg-white rounded-lg shadow-md mb-6 p-6">
       <div className="flex justify-between items-center">
@@ -10,18 +12,7 @@ export const KitchenHeader = ({ currentTime }: KitchenHeaderProps) => {
         </div>
         <div className="text-right">
           <div className="text-2xl font-bold text-gray-800">
-            {currentTime.toLocaleTimeString('es-AR', { 
-              hour: '2-digit', 
-              minute: '2-digit' 
-            })}
-          </div>
-          <div className="text-sm text-gray-500">
-            {currentTime.toLocaleDateString('es-AR', { 
-              weekday: 'long',
-              year: 'numeric',
-              month: 'long',
-              day: 'numeric'
-            })}
+            {hour}
           </div>
         </div>
       </div>
