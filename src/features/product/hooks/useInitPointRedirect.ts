@@ -24,7 +24,8 @@ export const useInitPointRedirect = (items: CartItem[]) => {
         name: user?.name,
         surname: user?.lastName,
         email: user?.email
-      }
+      },
+      additional_info: "unafechaunsa"
     }
 
     onSubmit(formdata)

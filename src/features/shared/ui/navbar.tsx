@@ -8,7 +8,7 @@ export const Navbar = () => {
   const location = useLocation()
 
   // Solo mostrar el carrito en esta ruta
-  const showCart = location.pathname === '/productos'
+  const showCart = location.pathname === '/products'
 
   return (
     <nav className="bg-[#303030] text-white fixed top-0 left-0 right-0 z-50 drop-shadow-lg">
