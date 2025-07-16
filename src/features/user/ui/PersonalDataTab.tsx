@@ -1,10 +1,7 @@
-import { User as UserIcon, Mail, Lock } from 'lucide-react';
-import { DataField } from './';
-import { UserDataSection } from './';
-import { UserEmailSection } from './';
-import { UserPasswordSection } from './';
-import { useExpandedSections } from '../hooks';
-import { type User } from '../profile.d';
+import { User as UserIcon, Mail, Lock } from 'lucide-react'
+import { UserDataSection, UserEmailSection, UserPasswordSection, DataField } from './'
+import { useExpandedSections } from '../hooks'
+import { type User } from '../profile.d'
 
 interface PersonalDataTabProps {
   user: User;

@@ -64,7 +64,7 @@ export const ProductCard = ({ product }: ProductCartProps) => {
               </h3>
               <div className="space-y-1 sm:space-y-2 mb-3 sm:mb-4">
                 <p className="text-xs sm:text-sm opacity-90 capitalize">
-                  Categoría: {product.tags}
+                  Categoría: {product.category}
                 </p>
               </div>
               <div className="mb-3 sm:mb-4 max-h-16 sm:max-h-20 overflow-hidden">
