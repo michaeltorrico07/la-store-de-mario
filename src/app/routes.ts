@@ -10,5 +10,6 @@ export const PrivateRoutes = {
   PRODUCTS: 'products',
   PROFILE: 'profile',
   KITCHEN: 'kitchen',
-  DELIVERY: 'delivery'
+  DELIVERY: 'delivery',
+  MANAGEMENT: 'management'
 }

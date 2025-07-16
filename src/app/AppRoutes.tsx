@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, KitchenPanel } from '../features/index'
-import { DeliveryPanel } from '../features/employees/delivery/pages/DeliveryPanel'
+import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, KitchenPanel, DeliveryPanel, Management } from '../features/index'
 import { useAuthContext } from '../features/auth/hooks/useAuthContext'
 import { Loading } from '../features/shared'
 import { PrivateRoutes, PublicRoutes } from './routes'
@@ -43,6 +42,12 @@ export const AppRoutes = () => {
       <Route element = {<AuthGuard privateValidation = { true }/>} >
         <Route element = {<RolGuard rol = { Roles.ADMIN }/>} >
           <Route path={PrivateRoutes.DELIVERY} element = { <DeliveryPanel/> } />
+        </Route>
+      </Route>
+
+      <Route element = {<AuthGuard privateValidation = { true }/>} >
+        <Route element = {<RolGuard rol = { Roles.ADMIN }/>} >
+          <Route path={PrivateRoutes.MANAGEMENT} element = { <Management/> } />
         </Route>
       </Route>
 

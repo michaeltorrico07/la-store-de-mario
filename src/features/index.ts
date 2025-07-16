@@ -1,6 +1,5 @@
 export * from './auth'
 
-
 export * from './landing'
 
 export * from './user'
@@ -9,6 +8,9 @@ export * from './product'
 
 export * from './employees/kitchen'
 
+export * from './employees/delivery'
+
+export * from './employees/management'
 
 
 
