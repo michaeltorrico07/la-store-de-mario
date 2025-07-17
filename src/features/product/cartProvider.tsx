@@ -1,6 +1,7 @@
 import { useState, useCallback, useMemo } from 'react'
 import type { Product, CartItem } from './product'
 import { CartContext } from './cartContext.tsx'
+import { useTimeSelection } from './hooks/useTimeSelection'
 
 export interface CartContextType {
   items: CartItem[];
@@ -13,11 +14,28 @@ export interface CartContextType {
   toggleCart: () => void;
   getTotalItems: () => number;
   getTotalPrice: () => number;
+  // Nuevas propiedades para el horario
+  availableTimeSlots: any[];
+  selectedTime: string | null;
+  handleTimeSelect: (timeId: string) => void;
+  isTimeSelected: () => boolean;
+  getSelectedTimeSlot: () => any;
+  canProceedToPayment: () => boolean;
 }
 
 export const CartProvider = ({ children }: { children: React.ReactNode }) => {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  
+  // Hook para manejo de horarios
+  const {
+    availableTimeSlots,
+    selectedTime,
+    handleTimeSelect,
+    isTimeSelected,
+    getSelectedTimeSlot,
+    clearSelection
+  } = useTimeSelection();
 
   const addToCart = useCallback((product: Product)=>{
     setItems(currentItems => {
@@ -40,7 +58,6 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     addToCart(product) 
    },[addToCart])
 
-
   const removeFromCart = useCallback((productId: string) => (e: React.MouseEvent) => {
     e.stopPropagation()
     setItems(currentItems => currentItems.filter(item => item.id !== productId));
@@ -62,7 +79,8 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
 
   const clearCart = useCallback(() => {
     setItems([]);
-  }, []);
+    clearSelection(); // Limpiar selección de horario también
+  }, [clearSelection]);
 
   const toggleCart = useCallback(() => {
     setIsOpen(prev => !prev)
@@ -76,6 +94,11 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     return items.reduce((total, item) => total + (item.price * item.quantity), 0);
   }, [items])
 
+  // Nueva función para validar si se puede proceder al pago
+  const canProceedToPayment = useCallback(() => {
+    return items.length > 0 && isTimeSelected();
+  }, [items.length, isTimeSelected])
+
   const value = useMemo(() => ({
     items,
     isOpen,
@@ -86,7 +109,14 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     clearCart,
     toggleCart,
     getTotalItems,
-    getTotalPrice
+    getTotalPrice,
+    // Nuevas propiedades
+    availableTimeSlots,
+    selectedTime,
+    handleTimeSelect,
+    isTimeSelected,
+    getSelectedTimeSlot,
+    canProceedToPayment
   }), [
     items,
     isOpen,
@@ -97,7 +127,13 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     clearCart,
     toggleCart,
     getTotalItems,
-    getTotalPrice
+    getTotalPrice,
+    availableTimeSlots,
+    selectedTime,
+    handleTimeSelect,
+    isTimeSelected,
+    getSelectedTimeSlot,
+    canProceedToPayment
   ])
 
   return (
