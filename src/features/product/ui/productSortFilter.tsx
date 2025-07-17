@@ -1,4 +1,3 @@
-import React from 'react';
 import type { SortBy } from '../product';
 
 interface SortFilterProps {
@@ -6,7 +5,7 @@ interface SortFilterProps {
   onSortChange: (sortValue: SortBy) => void;
 }
 
-export const SortFilter: React.FC<SortFilterProps> = ({ sortBy, onSortChange }) => {
+export const SortFilter = ({ sortBy, onSortChange }: SortFilterProps) => {
   return (
     <div className="flex flex-wrap items-center gap-4">
       <span className="text-sm font-medium text-gray-700">Ordenar por:</span>

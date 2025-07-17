@@ -18,7 +18,7 @@ export const useGetAllProduct = (): UseApiResult<Product[]> => {
   const storedProducts = useAppSelector(state => state.products.products)
 
   useEffect(()=>{
-    if (data && storedProducts.length === 0) {
+    if (data) {
       dispatch(createListProducts({ products: data }))
 
     }

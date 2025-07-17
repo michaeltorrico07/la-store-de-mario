@@ -10,7 +10,7 @@ interface UseFilteredSortedProduct {
 }
 
 export const useFilteredSortedProducts = (products: Product[] | null): UseFilteredSortedProduct => {
-  const [selectedCategory, setSelectedCategory] = useState('todos')
+  const [selectedCategory, setSelectedCategory] = useState('Todos')
   const [sortBy, setSortBy] = useState<SortBy>('default')
 
   const changeCategory = useCallback((category: string) => {
@@ -23,9 +23,9 @@ export const useFilteredSortedProducts = (products: Product[] | null): UseFilter
 
   const filtered = useMemo(() => {
     if (!products) return []
-    return selectedCategory === 'todos'
+    return selectedCategory === 'Todos'
       ? products
-      : products.filter(p => p.tags.includes(selectedCategory))
+      : products.filter(p => p.category === selectedCategory)
   }, [products, selectedCategory])
 
   const sortedProducts = useMemo(() => {
@@ -38,7 +38,6 @@ export const useFilteredSortedProducts = (products: Product[] | null): UseFilter
       }
     })
   }, [filtered, sortBy])
-
 
   return {
     sortedProducts,

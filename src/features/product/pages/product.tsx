@@ -12,7 +12,6 @@ export const ProductListContainer = () => {
 
   return (
     <>
-
       <div className="bg-white border-b border-gray-200 sticky top-16 z-20 pt-4">
         <div className="max-w-7xl mx-auto px-4 py-6">
           <h1 className="text-3xl font-bold text-gray-900 mb-6">Productos</h1>
