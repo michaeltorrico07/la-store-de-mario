@@ -5,11 +5,9 @@ import { Loading } from '../features/shared'
 import { PrivateRoutes, PublicRoutes } from './routes'
 import { AuthGuard, RolGuard } from '../infrastructure/guards'
 import { Roles } from '../features/auth/roles'
-import { useEffect } from 'react'
 
 export const AppRoutes = () => {
-  const { user, loading } = useAuthContext()
-  useEffect(()=>{console.log(user)},[user])
+  const { loading } = useAuthContext()
   if (loading){
     return <Loading />
   }
