@@ -2,7 +2,7 @@ export const getActualDeliverHour = () => {
   const actualHour = new Date()
 
   const deliveryHours = [
-    '09:00',
+    '09:05',
     '10:40',
     '12:10',
     '12:50',
