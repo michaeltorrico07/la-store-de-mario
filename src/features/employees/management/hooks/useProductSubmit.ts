@@ -7,7 +7,8 @@ export const useProductSubmit = () => {
     autoFetch: false,
     params: {
       url: '/product',
-      method: 'POST'
+      method: 'POST',
+      headers: { "Content-Type": "multipart/form-data" }
     }
   })
 
