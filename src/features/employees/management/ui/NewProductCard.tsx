@@ -1,40 +1,38 @@
+import { useCallback } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useEffect } from "react";
+import { useDropzone } from "react-dropzone";
 import { type NewProductSchema, newProductSchema } from "../schemas/productSchema";
+import { useManagement } from "../hooks/useManagement";
 
-interface NewProductCardProps {
-  onAdd: (formdata: NewProductSchema) => void
-}
-
-export const NewProductCard = ({ onAdd }: NewProductCardProps) => {
-  const [imageName, setImageName] = useState<string>("Ningún archivo seleccionado");
-  const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<NewProductSchema>({
+export const NewProductCard = () => {
+  const { register, handleSubmit, setValue, formState: { errors } } = useForm<NewProductSchema>({
     resolver: zodResolver(newProductSchema)
   });
 
-  const formValues = watch(); // <-- acá obtenés todos los valores del form
-
-  // Podés hacer esto en un useEffect para verlos en consola cada vez que cambian:
-  useEffect(() => {
-    console.log("Valores actuales del form:", formValues);
-  }, [formValues]);
-  
-  // Manejar el cambio de imagen
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const onDrop = useCallback((acceptedFiles: File[]) => {
+    const file = acceptedFiles[0];
     if (file) {
-      setValue("image", file); // Guardar el archivo en RHF
-      setImageName(file.name);
-    } else {
-      setImageName("Ningún archivo seleccionado");
+      setValue("image", file, { shouldValidate: true }); // RHF + validación
     }
-  };
+  }, [setValue]);
+
+  const { getRootProps, getInputProps, isDragActive, acceptedFiles } = useDropzone({
+    onDrop,
+    accept: {
+      "image/*": [],
+    },
+    multiple: false,
+  });
+
+  const { SubmitNewProduct } = useManagement();
+
+  const imageName = acceptedFiles[0]?.name || "Ningún archivo seleccionado";
 
   return (
-    <div className="border-2 border-dashed border-gray-300 p-4 rounded-2xl mb-4">
+    <div className="border-2 border-dashed border-gray-400 p-4 rounded-2xl mb-4">
       <h3 className="text-lg font-medium mb-2">Agregar nuevo producto</h3>
-      <form className="space-y-2" onSubmit={handleSubmit(onAdd)}>
+      <form className="space-y-2" onSubmit={handleSubmit(SubmitNewProduct)}>
         <input
           placeholder="Nombre"
           {...register('name')}
@@ -56,23 +54,22 @@ export const NewProductCard = ({ onAdd }: NewProductCardProps) => {
         />
         {errors.category && <p className="text-red-500 text-sm mt-1">{errors.category.message}</p>}
 
-        <div className="flex flex-col">
-          <label
-            htmlFor="image-upload"
-            className="cursor-pointer bg-red-600 text-white px-4 py-2 rounded-md inline-block w-max hover:bg-red-700 transition"
-          >
-            Seleccionar imagen
-          </label>
-          <input
-            id="image-upload"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={handleImageChange}
-          />
-          <span className="mt-1 text-sm text-gray-600">{imageName}</span>
-          {errors.image && <p className="text-red-500 text-sm mt-1">{errors.image.message as string}</p>}
+        {/* Imagen con Dropzone */}
+        <div
+          {...getRootProps()}
+          className={`border-2 p-4 rounded-md text-center cursor-pointer transition ${
+            isDragActive ? "border-red-600 bg-red-50" : "border-gray-400"
+          }`}
+        >
+          <input {...getInputProps()} />
+          <p className="text-sm">
+            {isDragActive
+              ? "Suelta la imagen aquí..."
+              : "Arrastra y suelta una imagen, o hacé click para seleccionar"}
+          </p>
+          <span className="text-xs text-gray-500">{imageName}</span>
         </div>
+        {errors.image && <p className="text-red-500 text-sm">{errors.image.message as string}</p>}
 
         <input
           type="number"
