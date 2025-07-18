@@ -4,18 +4,7 @@ import { TimeSelector } from './TimeSelector';
 import { useInitPointRedirect } from '../hooks/useInitPointRedirect';
 
 export const Cart = () => {
-  const { 
-    items, 
-    removeFromCart, 
-    updateQuantity, 
-    clearCart, 
-    toggleCart, 
-    getTotalPrice,
-    availableTimeSlots,
-    selectedTime,
-    handleTimeSelect,
-    canProceedToPayment
-  } = useCart();
+  const { items, removeFromCart, updateQuantity, clearCart, toggleCart, getTotalPrice, availableTimeSlots, selectedTime, handleTimeSelect, canProceedToPayment} = useCart();
   
   const { generateInitPoint, loading } = useInitPointRedirect(items);
 
