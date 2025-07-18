@@ -7,10 +7,12 @@ import { CartPortalWrapper } from '../features/product/ui/global/cartPortalWrapp
 import { PersistGate } from 'redux-persist/integration/react'
 import { Provider as ReduxProvider } from 'react-redux'
 import { store, persistor } from '../infrastructure/redux/store'
+import { EmployeesNavbar } from '../features/shared/ui/employeesNavbar'
 
 function App() {
   const location = useLocation()
   const showNavbar = ['/products', '/profile', '/balatro', '/productosPOSTA'].includes(location.pathname)
+  const showEmployeesNavbar = ['/delivery', '/kitchen', '/management'].includes(location.pathname)
 
   return (
     <ReduxProvider store={store}>
@@ -19,6 +21,7 @@ function App() {
           <CartProvider>
             <CartPortalWrapper />
             {showNavbar && <Navbar />}
+            {showEmployeesNavbar && <EmployeesNavbar />}
             <AppRoutes />
           </CartProvider>
         </AuthProvider>
