@@ -14,7 +14,7 @@ export const useTimeSelection = () => {
   
   const availableTimeSlots: TimeSlot[] = [
     { id: '1', time: '9:05', hour: 9, minute: 5, disabled: false },
-    { id: '2', time: '10:40', hour: 23, minute: 40, disabled: false },
+    { id: '2', time: '10:40', hour: 24, minute: 40, disabled: false },
     { id: '3', time: '12:00', hour: 12, minute: 0, disabled: false },
     { id: '4', time: '12:50', hour: 12, minute: 50, disabled: false },
     { id: '5', time: '14:50', hour: 14, minute: 50, disabled: false },
