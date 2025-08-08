@@ -17,6 +17,9 @@ export const EmployeesNavbar = () => {
             <Link to="/management" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
               Gestión
             </Link>
+            <Link to="/profile" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
+              Perfil
+            </Link>
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ export interface Order {
   code: string;
   listProducts: OrderProduct[];
   totalPrice: number;
-  deliverDate: string;
+  deliverDate: Date;
   delivered: boolean;
 }
 

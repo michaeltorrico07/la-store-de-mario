@@ -2,6 +2,12 @@ import { Clock, FileText } from 'lucide-react';
 import type { OrderHistoryTabProps } from '../profile.d'
 
 export const OrderHistoryTab = ({ orderHistory, showTicketModal }: OrderHistoryTabProps) => {
+  const sortedOrderHistory = orderHistory?.slice().sort((a, b) => {
+    const dateA = new Date(a.deliverDate).getTime();
+    const dateB = new Date(b.deliverDate).getTime();
+    return dateB - dateA;
+  });
+
   return (
     <div className="bg-white rounded-lg shadow-md w-full transition-all duration-300 animate-in fade-in slide-in-from-right-3">
       <div className="p-6 border-b border-gray-200">
@@ -28,7 +34,7 @@ export const OrderHistoryTab = ({ orderHistory, showTicketModal }: OrderHistoryT
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {orderHistory?.map((order, index) => (
+                {sortedOrderHistory?.map((order, index) => (
                   <tr 
                     key={order.code} 
                     className="hover:bg-gray-50 transition-colors duration-200 animate-in fade-in slide-in-from-bottom-2"
@@ -52,7 +58,12 @@ export const OrderHistoryTab = ({ orderHistory, showTicketModal }: OrderHistoryT
                       ${order?.totalPrice?.toLocaleString()}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                      {order?.deliverDate}
+                        {order?.deliverDate
+                        ? new Date(order.deliverDate).toLocaleString('es-AR', {
+                          dateStyle: 'medium',
+                          timeStyle: 'short',
+                          })
+                        : '-'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
                       {order?.delivered ? 'Entregado' : 'Pendiente'}
