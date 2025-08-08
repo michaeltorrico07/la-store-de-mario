@@ -35,14 +35,12 @@ export const TicketModal = ({ selectedTicket, showTicket, closeTicket, user }: T
         <div className="p-6 space-y-6">
           {/* Estado */}
           <div className="text-center">
-            <div className={`inline-flex items-center px-4 py-2 rounded-full text-lg font-bold ${
-              selectedTicket.delivered
+            <div className={`inline-flex items-center px-4 py-2 rounded-full text-lg font-bold ${selectedTicket.delivered
                 ? 'bg-green-100 text-green-800'
                 : 'bg-yellow-100 text-yellow-800'
-            }`}>
-              <div className={`w-3 h-3 rounded-full mr-2 ${
-                selectedTicket.delivered ? 'bg-green-500' : 'bg-yellow-500'
-              }`}></div>
+              }`}>
+              <div className={`w-3 h-3 rounded-full mr-2 ${selectedTicket.delivered ? 'bg-green-500' : 'bg-yellow-500'
+                }`}></div>
               {selectedTicket.delivered ? 'Entregado' : 'Pendiente'}
             </div>
           </div>
@@ -61,7 +59,12 @@ export const TicketModal = ({ selectedTicket, showTicket, closeTicket, user }: T
                 <Calendar className="w-5 h-5 text-gray-600 mr-2" />
                 <div>
                   <p className="text-gray-600">Fecha:</p>
-                  <p className="font-bold text-lg text-red-600">{selectedTicket.deliverDate}</p>
+                  <p className="font-bold text-lg text-red-600">{selectedTicket?.deliverDate
+                    ? new Date(selectedTicket.deliverDate).toLocaleString('es-AR', {
+                      dateStyle: 'medium',
+                      timeStyle: 'short',
+                    })
+                    : '-'}</p>
                 </div>
               </div>
             </div>
