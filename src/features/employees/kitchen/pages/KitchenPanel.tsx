@@ -21,7 +21,7 @@ export const KitchenPanel = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
           <p className="text-gray-600">Cargando pedidos...</p>
@@ -31,7 +31,7 @@ export const KitchenPanel = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-gray-100 p-4">
       <KitchenHeader hour={hour} />
       <ProductsList
         products={kitchenProducts}

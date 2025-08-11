@@ -11,7 +11,7 @@ interface ProductsListProps {
 export const ProductsList = ({ products, onUnitConfirm, onTotalConfirm }: ProductsListProps) => {
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden max-w-[1120px] m-auto">
       <div className="p-6 border-b border-gray-200 flex justify-between">
         <h2 className="text-xl font-semibold text-gray-800">Pedidos Activos</h2>
       </div>

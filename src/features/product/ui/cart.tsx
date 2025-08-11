@@ -12,14 +12,14 @@ export const Cart = () => {
     <>
       {/* Overlay */}
       <div 
-        className="fixed inset-0 bg-black/50 z-40 transition-opacity"
+        className="fixed inset-0 bg-black/50 z-60 transition-opacity"
         onClick={toggleCart}
       />
       
       {/* Cart Sidebar */}
-      <div className="fixed top-0 right-0 h-full w-full sm:w-96 bg-white z-50 shadow-2xl transform transition-transform duration-300 flex flex-col">
+      <div className="fixed top-0 right-0 h-full w-full sm:w-96 bg-white z-70 shadow-2xl transform transition-transform duration-300 flex flex-col">
         {/* Header */}
-        <div className="bg-[#303030] text-white p-4 flex items-center justify-between">
+        <div className="bg-[#303030] text-white p-4 flex items-center justify-between h-[8vh]">
           <h2 className="text-lg font-bold">Carrito de Compras</h2>
           <button 
             onClick={toggleCart}
