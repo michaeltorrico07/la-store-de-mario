@@ -8,7 +8,7 @@ export const ProductListContainer = () => {
   const { data } = useGetAllProduct()
   const productsToUse = storedProducts.length > 0 ? storedProducts : (data ?? [])
   const {sortedProducts, selectedCategory, changeCategory, changeSort, sortBy} = useFilteredSortedProducts(productsToUse)
-  const categories = categoriesData(productsToUse)
+  const categories = categoriesData(sortedProducts)
 
   return (
     <>
