@@ -23,9 +23,14 @@ export const useFilteredSortedProducts = (products: Product[] | null): UseFilter
 
   const filtered = useMemo(() => {
     if (!products) return []
+
+    // 1️⃣ Filtramos primero por inMenu = true
+    const menuProducts = products.filter(p => p.inMenu)
+
+    // 2️⃣ Luego aplicamos filtro por categoría
     return selectedCategory === 'Todos'
-      ? products
-      : products.filter(p => p.category === selectedCategory)
+      ? menuProducts
+      : menuProducts.filter(p => p.category === selectedCategory)
   }, [products, selectedCategory])
 
   const sortedProducts = useMemo(() => {
