@@ -7,8 +7,8 @@ export const ProductListContainer = () => {
   const storedProducts = useAppSelector(state => state.products.products)
   const { data } = useGetAllProduct()
   const productsToUse = storedProducts.length > 0 ? storedProducts : (data ?? [])
-  const {sortedProducts, selectedCategory, changeCategory, changeSort, sortBy} = useFilteredSortedProducts(productsToUse)
-  const categories = categoriesData(sortedProducts)
+  const {sortedProducts, inMenuProducts, selectedCategory, changeCategory, changeSort, sortBy} = useFilteredSortedProducts(productsToUse)
+  const categories = categoriesData(inMenuProducts)
 
   return (
     <>
