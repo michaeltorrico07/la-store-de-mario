@@ -58,7 +58,7 @@ export const PopularItems = () => {
         
         <div className="text-center">
           <button 
-            onClick={() => window.location.href = '/login'}
+            onClick={() => window.location.href = '/auth'}
             className="px-8 py-4 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-all duration-300 shadow-lg cursor-pointer"
           >
             Inicia sesión para ver el menú

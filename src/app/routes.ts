@@ -1,5 +1,6 @@
 export const PublicRoutes = {
   LANDING: '',
+  AUTH: 'auth',
   LOGIN: 'login',
   REGISTER: 'register',
   RESET_PASSWORD: 'reset_password',

@@ -10,11 +10,11 @@ export const AuthGuard = ({ privateValidation }: AuthGuardProps) => {
   const user = useAppSelector(state=>state.auth)
 
   if (privateValidation && !user.isLoggedin) {
-    return <Navigate replace to={PublicRoutes.LOGIN}/>;
+    return <Navigate replace to={PublicRoutes.AUTH}/>;
   }
 
   if (privateValidation && !user.isVerified) {
-    return <Navigate replace to={PublicRoutes.LOGIN}/>;
+    return <Navigate replace to={PublicRoutes.AUTH}/>;
   }
 
   if (!privateValidation && user.isLoggedin && user.isVerified) {

@@ -44,7 +44,7 @@ export const UserDataSection = ({ user, isExpanded }: UserDataSectionProps) => {
             type="text"
             defaultValue={user?.lastName}
             {...registerNames('lastName')}
-            className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500"
+            className="w-full p-2 border outline-0 border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500"
           />
           {errorNames.name && (
             <p className="text-red-500 text-sm mt-1">{errorNames.name.message}</p>

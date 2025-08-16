@@ -30,7 +30,7 @@ export const UserPasswordSection = ({ isExpanded }: UserPasswordSectionProps) =>
             <input
               type={showCurrentPassword ? 'text' : 'password'}
               {...registerPassword('current')}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 pr-10"
+              className="w-full p-2 outline-0 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 pr-10"
             />
             <button
               type="button"
@@ -38,8 +38,8 @@ export const UserPasswordSection = ({ isExpanded }: UserPasswordSectionProps) =>
               className="absolute inset-y-0 right-0 pr-3 flex items-center"
             >
               {showCurrentPassword ?
-                <EyeOff className="w-5 h-5 text-gray-400" /> :
-                <Eye className="w-5 h-5 text-gray-400" />
+                <Eye className="w-5 h-5 text-gray-400" /> :
+                <EyeOff className="w-5 h-5 text-gray-400" />
               }
             </button>
           </div>
@@ -53,7 +53,7 @@ export const UserPasswordSection = ({ isExpanded }: UserPasswordSectionProps) =>
             <input
               type={showNewPassword ? 'text' : 'password'}
               {...registerPassword('new')}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 pr-10"
+              className="w-full p-2 outline-0 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 pr-10"
             />
             <button
               type="button"
@@ -61,8 +61,8 @@ export const UserPasswordSection = ({ isExpanded }: UserPasswordSectionProps) =>
               className="absolute inset-y-0 right-0 pr-3 flex items-center"
             >
               {showNewPassword ?
-                <EyeOff className="w-5 h-5 text-gray-400" /> :
-                <Eye className="w-5 h-5 text-gray-400" />
+                <Eye className="w-5 h-5 text-gray-400" /> :
+                <EyeOff className="w-5 h-5 text-gray-400" />
               }
             </button>
           </div>
@@ -76,7 +76,7 @@ export const UserPasswordSection = ({ isExpanded }: UserPasswordSectionProps) =>
             <input
               type={showConfirmPassword ? 'text' : 'password'}
               {...registerPassword('confirm')}
-              className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 pr-10"
+              className="w-full p-2 outline-0 border border-gray-300 rounded-md focus:ring-2 focus:ring-red-500 focus:border-red-500 pr-10"
             />
             <button
               type="button"
@@ -84,8 +84,8 @@ export const UserPasswordSection = ({ isExpanded }: UserPasswordSectionProps) =>
               className="absolute inset-y-0 right-0 pr-3 flex items-center"
             >
               {showConfirmPassword ?
-                <EyeOff className="w-5 h-5 text-gray-400" /> :
-                <Eye className="w-5 h-5 text-gray-400" />
+                <Eye className="w-5 h-5 text-gray-400" /> :
+                <EyeOff className="w-5 h-5 text-gray-400" />
               }
             </button>
           </div>
