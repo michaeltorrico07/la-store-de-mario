@@ -1,7 +1,8 @@
 import { User, Clock, Cog } from 'lucide-react';
 import { useAuthContext } from '../../auth/hooks/useAuthContext';
 import { Link, useNavigate } from 'react-router-dom';
-
+import { useAppDispatch } from '../../../infrastructure/redux/hooks'
+import { resetListProducts } from '../../product/slice'
 interface ProfileSidebarProps {
   user: {
     name: string;
@@ -16,7 +17,7 @@ interface ProfileSidebarProps {
 export const ProfileSidebar = ({ user, activeTab, handleTabChange, handleCall }: ProfileSidebarProps) => {
   const { LogOutUser } = useAuthContext()
   const navigate = useNavigate()
-
+  const dispatch = useAppDispatch()
   const SignOut = async () => {
     LogOutUser()
     navigate('/')
@@ -72,7 +73,7 @@ export const ProfileSidebar = ({ user, activeTab, handleTabChange, handleCall }:
       </div>
 
       {/* Botón cerrar sesión */}
-      <button onClick={() => SignOut()} className="cursor-pointer w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-red-700/30">
+      <button onClick={() => {SignOut(); dispatch(resetListProducts())}} className="cursor-pointer w-full bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition-all duration-300 flex items-center justify-center hover:scale-105 active:scale-95 hover:shadow-lg hover:shadow-red-700/30">
         <svg
           className="w-5 h-5 mr-2 transition-transform duration-300 hover:rotate-12"
           fill="none"

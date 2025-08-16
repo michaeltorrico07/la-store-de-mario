@@ -15,7 +15,7 @@ export const useGetProductsRecentlyPurchase = (): UseApiResult<Product[]> => {
   const { data, loading, error, cancel, handleCall, onSubmit } = useApi<Product[]>(paramsRef);
   const dispatch = useAppDispatch()
   useEffect(() => {
-    if (data) {
+    if (data !== null) {
       dispatch(createProductsRecentlyPurchase(data))
     }
   }, [data, dispatch])

@@ -16,7 +16,7 @@ export const useGetAllProduct = (): UseApiResult<Product[]> => {
   const { data, loading, error, cancel, handleCall, onSubmit } = useApi<Product[]>(paramsRef)
   const dispatch = useAppDispatch()
   useEffect(()=>{
-    if (data) {
+    if (data !== null) {
       dispatch(createListProducts(data))
     }
   },[data, dispatch])
