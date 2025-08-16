@@ -5,7 +5,6 @@ export interface User {
   email: string,
   name: string,
   lastName: string,
-  dni: string,
   isVerified: boolean,
   isLoggedin: boolean,
   rol?: Roles

@@ -23,7 +23,6 @@ export const useAuth = () => {
         id: userId,
         name: data.name,
         lastName: data.lastName,
-        dni: data.dni,
         email: data.email,
       }
 

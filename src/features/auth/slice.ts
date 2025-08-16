@@ -6,7 +6,6 @@ export const initialState: User = {
   email: '',
   name: '',
   lastName: '',
-  dni: '',
   isLoggedin: false,
   isVerified: false
 }

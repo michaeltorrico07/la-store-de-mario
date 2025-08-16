@@ -12,7 +12,7 @@ export const ProductListContainer = () => {
   const storedProducts = useAppSelector(state => state.products.products ?? [])
   const storedProductsRecentlyPurchase = useAppSelector(state => state.products.productsRecentlyPurchase ?? [])
   const { data: ordersData, handleCall } = useUserOrders()
-  useGetAllProduct()
+  useGetAllProduct(true)
   const productsToUse = storedProducts
   const productsProductsRecentlyPurchaseToShow = storedProductsRecentlyPurchase
   const {sortedProducts, inMenuProducts, selectedCategory, changeCategory, changeSort, sortBy} = useFilteredSortedProducts(productsToUse)

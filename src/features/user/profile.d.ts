@@ -3,7 +3,6 @@ export interface User {
   name?: string | undefined;
   lastName?: string | undefined
   email?: string | undefined;
-  dni?: string | undefined
 }
 
 // Tipos para cada producto

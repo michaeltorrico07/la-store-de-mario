@@ -6,7 +6,6 @@ import { resetListProducts } from '../../product/slice'
 interface ProfileSidebarProps {
   user: {
     name: string;
-    dni: string
     rol: 'ADMIN' | 'USER'
   };
   activeTab: string;
@@ -31,7 +30,6 @@ export const ProfileSidebar = ({ user, activeTab, handleTabChange, handleCall }:
           <User className="w-10 h-10 text-gray-700" />
         </div>
         <h2 className="text-xl font-bold mb-1">Hola {user?.name}!</h2>
-        <p className="text-gray-300">DNI: {user?.dni}</p>
       </div>
 
       {/* Botones de navegación */}

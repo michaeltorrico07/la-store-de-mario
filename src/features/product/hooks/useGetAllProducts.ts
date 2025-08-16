@@ -4,22 +4,26 @@ import type { Product } from "../product"
 import { useAppDispatch } from '../../../infrastructure/redux/hooks'
 import { createListProducts } from '../slice'
 
-export const useGetAllProduct = (): UseApiResult<Product[]> => {
+export const useGetAllProduct = (onlyInMenu?: boolean): UseApiResult<Product[]> => {
   const paramsRef = useRef<UseApiOptions>({
     autoFetch: true,
     params: {
       method: 'GET',
-      url: '/product'
+      url: '/product',
+      query: {
+        onlyInMenu: onlyInMenu ?? false
+      }
     }
   })
 
   const { data, loading, error, cancel, handleCall, onSubmit } = useApi<Product[]>(paramsRef)
   const dispatch = useAppDispatch()
+  useEffect(()=>{ console.log(data, paramsRef) },[data])
   useEffect(()=>{
-    if (data !== null) {
+    if (data !== null && !onlyInMenu) {
       dispatch(createListProducts(data))
     }
-  },[data, dispatch])
+  },[data, dispatch, onlyInMenu])
 
   return { data, loading, error, cancel, handleCall, onSubmit }
 }
