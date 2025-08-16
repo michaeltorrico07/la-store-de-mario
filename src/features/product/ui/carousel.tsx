@@ -15,7 +15,9 @@ export const Carousel = ({ data }: CarouselProps) => {
         slidesOffsetBefore={16}
         slidesOffsetAfter={16}
         >
-      {data.map((product, index) => (
+      {data.map((product, index) => {
+        if (!product.inMenu) return null
+        return (
         <SwiperSlide
           key={index}
           style={{
@@ -39,7 +41,7 @@ export const Carousel = ({ data }: CarouselProps) => {
             </div>
           </Link>
         </SwiperSlide>
-      ))}
+      )})}
     </Swiper>
 
   );
