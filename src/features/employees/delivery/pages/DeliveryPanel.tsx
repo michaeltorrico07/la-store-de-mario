@@ -1,28 +1,16 @@
 import { useDeliveryOrders } from '../hooks/useDeliveryOrders';
 import { DeliveryHeader } from '../ui/DeliveryHeader';
 import { OrdersList } from '../ui/OrdersList';
+import { LoadingContent } from '../../../shared';
 
 const DeliveryPanel = () => {
-  const { orders, loading, hour, deliverOrder, refetch } = useDeliveryOrders();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900 mx-auto mb-4"></div>
-          <p className="text-xl text-gray-600">Cargando órdenes...</p>
-        </div>
-      </div>
-    );
-  }
+  const { orders, loading, hour, deliverOrder, refetch } = useDeliveryOrders()
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* AQUÍ VA LA NAVBAR */}
-
       <div className="pt-20 p-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="bg-white rounded-lg shadow-md p-8">
+        <div className="max-w-7xl mx-auto bg-white rounded-lg shadow-md p-8">
+          <LoadingContent loading={loading}>
             <DeliveryHeader
               orderCount={orders.length}
               onRefresh={refetch}
@@ -34,7 +22,7 @@ const DeliveryPanel = () => {
               orders={orders}
               onDeliver={deliverOrder}
             />
-          </div>
+          </LoadingContent>
         </div>
       </div>
     </div>

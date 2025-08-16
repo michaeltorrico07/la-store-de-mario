@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDropzone } from "react-dropzone";
 import { useManagement } from "../hooks/useManagement";
+import { LoadingContent } from "../../../shared";
 
 interface ProductCardProps {
   product: Product;
@@ -26,7 +27,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   const [open, setOpen] = useState(false);
   const [imageName, setImageName] = useState("Usando imagen actual");
-  const { SubmitUpdateProduct } = useManagement()
+  const { SubmitUpdateProduct, loading } = useManagement()
 
   // Dropzone
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -73,73 +74,74 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       </div>
 
       {open && (
-        <form className="mt-4 space-y-2" onSubmit={handleSubmit((data) => SubmitUpdateProduct(data, product))}>
-          <input type="hidden" {...register("id")} />
+        <LoadingContent loading={loading}>
+          <form className="mt-4 space-y-2" onSubmit={handleSubmit((data) => SubmitUpdateProduct(data, product))}>
+            <input type="hidden" {...register("id")} />
 
-          <input
-            placeholder="Nombre"
-            {...register("name")}
-            className="w-full border rounded-md p-2"
-          />
-          {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
-
-          <input
-            placeholder="Descripción"
-            {...register("description")}
-            className="w-full border rounded-md p-2"
-          />
-          {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
-
-          <input
-            placeholder="Categoría"
-            {...register("category")}
-            className="w-full border rounded-md p-2"
-          />
-          {errors.category && <p className="text-red-500 text-sm">{errors.category.message}</p>}
-
-          {/* Dropzone para nueva imagen */}
-          <div
-            {...getRootProps()}
-            className={`border-2 p-4 rounded-md text-center cursor-pointer transition ${
-              isDragActive ? "border-red-600 bg-red-50" : "border-gray-300"
-            }`}
-          >
-            <input {...getInputProps()} />
-            <p className="text-sm">
-              {isDragActive
-                ? "Soltá la nueva imagen aquí..."
-                : "Arrastrá una nueva imagen o hacé click para seleccionar (opcional)"}
-            </p>
-            <span className="text-xs text-gray-500">{imageName}</span>
-          </div>
-          {errors.image && <p className="text-red-500 text-sm">{errors.image.message as string}</p>}
-
-          <input
-            type="number"
-            placeholder="Precio"
-            {...register("price", { valueAsNumber: true })}
-            className="w-full border rounded-md p-2"
-          />
-          {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
-
-          <div className="flex items-center gap-2">
             <input
-              type="checkbox"
-              defaultChecked={product.inMenu}
-              {...register("inMenu")}
-              className="w-4 h-4"
+              placeholder="Nombre"
+              {...register("name")}
+              className="w-full border rounded-md p-2"
             />
-            <span className="text-sm">¿Está en el menú?</span>
-          </div>
-          {errors.inMenu && <p className="text-red-500 text-sm">{errors.inMenu.message}</p>}
+            {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
 
-          <button
-            type="submit"
-            className="bg-red-600 hover:bg-red-700 cursor-pointer text-white px-4 py-2 rounded-md"
-          >
-            Guardar cambios
-          </button>
-        </form>
+            <input
+              placeholder="Descripción"
+              {...register("description")}
+              className="w-full border rounded-md p-2"
+            />
+            {errors.description && <p className="text-red-500 text-sm">{errors.description.message}</p>}
+
+            <input
+              placeholder="Categoría"
+              {...register("category")}
+              className="w-full border rounded-md p-2"
+            />
+            {errors.category && <p className="text-red-500 text-sm">{errors.category.message}</p>}
+
+            {/* Dropzone para nueva imagen */}
+            <div
+              {...getRootProps()}
+              className={`border-2 p-4 rounded-md text-center cursor-pointer transition ${isDragActive ? "border-red-600 bg-red-50" : "border-gray-300"
+                }`}
+            >
+              <input {...getInputProps()} />
+              <p className="text-sm">
+                {isDragActive
+                  ? "Soltá la nueva imagen aquí..."
+                  : "Arrastrá una nueva imagen o hacé click para seleccionar (opcional)"}
+              </p>
+              <span className="text-xs text-gray-500">{imageName}</span>
+            </div>
+            {errors.image && <p className="text-red-500 text-sm">{errors.image.message as string}</p>}
+
+            <input
+              type="number"
+              placeholder="Precio"
+              {...register("price", { valueAsNumber: true })}
+              className="w-full border rounded-md p-2"
+            />
+            {errors.price && <p className="text-red-500 text-sm">{errors.price.message}</p>}
+
+            <div className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                defaultChecked={product.inMenu}
+                {...register("inMenu")}
+                className="w-4 h-4"
+              />
+              <span className="text-sm">¿Está en el menú?</span>
+            </div>
+            {errors.inMenu && <p className="text-red-500 text-sm">{errors.inMenu.message}</p>}
+
+            <button
+              type="submit"
+              className="bg-red-600 hover:bg-red-700 cursor-pointer text-white px-4 py-2 rounded-md"
+            >
+              Guardar cambios
+            </button>
+          </form>
+        </LoadingContent>
       )}
     </div>
   );

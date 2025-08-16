@@ -12,7 +12,7 @@ export const useUserData = () => {
     }
   })
 
-  const { data, error, onSubmit } = useApi<NameSchema>(paramsRef);
+  const { data, error, onSubmit, loading } = useApi<NameSchema>(paramsRef);
 
-  return { data, error, onSubmit }
+  return { data, error, onSubmit, loading }
 }

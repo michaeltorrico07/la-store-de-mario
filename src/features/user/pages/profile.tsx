@@ -9,7 +9,7 @@ export const Profile = () => {
 
   const { activeTab, handleTabChange } = useProfileTab();
   
-  const { data, handleCall } = useUserOrders()
+  const { data, handleCall, loading } = useUserOrders()
 
   return (
     <>
@@ -41,6 +41,7 @@ export const Profile = () => {
                   {user && (activeTab === 'historial' ? (
                     <OrderHistoryTab
                       orderHistory={data ?? []}
+                      loading={loading}
                       showTicketModal={showTicketModal}
                     />) : (
                     <PersonalDataTab user={user} />
