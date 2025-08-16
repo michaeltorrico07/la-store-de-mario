@@ -6,20 +6,22 @@ import { useEffect, useState } from 'react'
 import { useGetProductsRecentlyPurchase } from '../hooks/useGetProductsRecentlyPurchase'
 import { useAuthContext } from '../../auth/hooks/useAuthContext';
 import { useUserOrders } from '../../user/hooks'
+import { useAppDispatch } from '../../../infrastructure/redux/hooks'
+import { resetListProductsProductsRecentlyPurchase } from '../slice'
 
 export const ProductListContainer = () => {
   const storedProducts = useAppSelector(state => state.products.products ?? [])
   const storedProductsRecentlyPurchase = useAppSelector(state => state.products.productsRecentlyPurchase ?? [])
   const { data: ordersData, handleCall } = useUserOrders()
-  const { data } = useGetAllProduct()
-  const productsToUse = storedProducts.length > 0 ? storedProducts : (data ?? [])
-  const productsProductsRecentlyPurchaseToShow = storedProductsRecentlyPurchase.length > 0 ? storedProductsRecentlyPurchase : (data ?? [])
+  useGetAllProduct()
+  const productsToUse = storedProducts
+  const productsProductsRecentlyPurchaseToShow = storedProductsRecentlyPurchase
   const {sortedProducts, inMenuProducts, selectedCategory, changeCategory, changeSort, sortBy} = useFilteredSortedProducts(productsToUse)
   const categories = categoriesData(inMenuProducts)
   const [windowWidth, setWindowWidth] = useState(window.innerWidth)
   const { loading } = useAuthContext()
   const { onSubmit } = useGetProductsRecentlyPurchase()
-
+  const dispath = useAppDispatch()
   useEffect(() => {
     if (loading === false) {
       handleCall();
@@ -28,17 +30,23 @@ export const ProductListContainer = () => {
 
   useEffect(() => {
     if (ordersData !== null) {
-
       const allProductIds = ordersData.flatMap(order =>
         order.listProducts.map(product => product.idProduct)
       )
       const uniqueProductIds = Array.from(new Set(allProductIds)).slice(0, 10)
-      const productIdsString = uniqueProductIds.join(',')
-      const productsQuery = { ids: productIdsString }
 
-      onSubmit(productsQuery)
+      if (uniqueProductIds.length > 0) {
+        const productIdsString = uniqueProductIds.join(',')
+        const productsQuery = { ids: productIdsString }
+
+        dispath(resetListProductsProductsRecentlyPurchase())
+        onSubmit(productsQuery)
+      } else {
+        console.log("asd")
+        dispath(resetListProductsProductsRecentlyPurchase())
+      }
     }
-  }, [ordersData, onSubmit])
+  }, [ordersData, onSubmit, dispath])
 
 
   useEffect(() => {

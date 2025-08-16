@@ -22,10 +22,13 @@ export const listProductsSlice = createSlice({
       state.productsRecentlyPurchase = action.payload
     },
     modifyListProducts: (state, action) => ({ ...state, ...action.payload }),
+    resetListProductsProductsRecentlyPurchase: (state) => {
+      state.productsRecentlyPurchase = []
+    },
     resetListProducts: () => initialState
   }
 })
 
-export const { createListProducts, createProductsRecentlyPurchase, modifyListProducts, resetListProducts } = listProductsSlice.actions
+export const { createListProducts, createProductsRecentlyPurchase, modifyListProducts, resetListProducts, resetListProductsProductsRecentlyPurchase } = listProductsSlice.actions
 
 export default listProductsSlice.reducer

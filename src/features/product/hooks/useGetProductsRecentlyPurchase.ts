@@ -2,7 +2,7 @@ import { useApi, type UseApiResult, type UseApiOptions } from "../../shared";
 import { useEffect, useRef } from "react";
 import type { Product } from "../product";
 import { useAppDispatch } from '../../../infrastructure/redux/hooks'
-import { createProductsRecentlyPurchase } from '../slice'
+import { createProductsRecentlyPurchase, resetListProductsProductsRecentlyPurchase } from '../slice'
 export const useGetProductsRecentlyPurchase = (): UseApiResult<Product[]> => {
   const paramsRef = useRef<UseApiOptions>({
     autoFetch: false,
@@ -19,6 +19,10 @@ export const useGetProductsRecentlyPurchase = (): UseApiResult<Product[]> => {
       dispatch(createProductsRecentlyPurchase(data))
     }
   }, [data, dispatch])
-
+  useEffect(()=>{
+    if (error !== null) {
+      dispatch(resetListProductsProductsRecentlyPurchase())
+    }
+  },[dispatch, error])
   return { data, loading, error, cancel, handleCall, onSubmit };
 };
