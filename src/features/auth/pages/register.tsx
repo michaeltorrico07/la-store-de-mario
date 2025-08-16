@@ -43,13 +43,6 @@ export const Register = () => {
             />
 
             <InputField
-              type="number"
-              placeholder="DNI"
-              registration={register("dni")}
-              error={errors.dni}
-            />
-
-            <InputField
               type="email"
               placeholder="E-mail"
               registration={register("email")}

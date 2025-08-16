@@ -25,7 +25,6 @@ export const Profile = () => {
                 <ProfileSidebar
                   user={{
                     name: user?.name ?? '',
-                    dni: user?.dni ?? '',
                     rol: user?.rol ?? 'USER'
                   }}
                   handleCall={handleCall}
