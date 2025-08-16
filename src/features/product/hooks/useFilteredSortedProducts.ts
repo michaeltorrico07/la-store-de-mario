@@ -3,6 +3,7 @@ import type { Product, SortBy } from "../product"
 
 interface UseFilteredSortedProduct {
   sortedProducts: Product[]
+  inMenuProducts: Product[]
   selectedCategory: string
   changeCategory: (category: string) => void
   sortBy: SortBy
@@ -11,6 +12,7 @@ interface UseFilteredSortedProduct {
 
 export const useFilteredSortedProducts = (products: Product[] | null): UseFilteredSortedProduct => {
   const [selectedCategory, setSelectedCategory] = useState('Todos')
+  const [inMenuProducts, setInMenuProducts] = useState<Product[]>([])
   const [sortBy, setSortBy] = useState<SortBy>('default')
 
   const changeCategory = useCallback((category: string) => {
@@ -23,9 +25,15 @@ export const useFilteredSortedProducts = (products: Product[] | null): UseFilter
 
   const filtered = useMemo(() => {
     if (!products) return []
+
+    // 1️⃣ Filtramos primero por inMenu = true
+    const menuProducts = products.filter(p => p.inMenu)
+    setInMenuProducts(menuProducts)
+
+    // 2️⃣ Luego aplicamos filtro por categoría
     return selectedCategory === 'Todos'
-      ? products
-      : products.filter(p => p.category === selectedCategory)
+      ? menuProducts
+      : menuProducts.filter(p => p.category === selectedCategory)
   }, [products, selectedCategory])
 
   const sortedProducts = useMemo(() => {
@@ -41,6 +49,7 @@ export const useFilteredSortedProducts = (products: Product[] | null): UseFilter
 
   return {
     sortedProducts,
+    inMenuProducts,
     selectedCategory,
     changeCategory,
     sortBy,

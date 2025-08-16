@@ -7,6 +7,7 @@ export const Management = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [showAll, setShowAll] = useState(false);
   const { data: allProducts } = useGetAllProduct();
+  console.log(allProducts)
 
   useEffect(() => {
     if (allProducts && allProducts.length > 0) {
