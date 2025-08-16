@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css'
+import 'swiper/swiper-bundle.css';
 import type { Product } from '../product';
 import { Link } from 'react-router-dom';
 
