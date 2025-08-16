@@ -79,7 +79,7 @@ export const OrderHistoryTab = ({ orderHistory, showTicketModal, loading }: Orde
                       <td className="px-6 py-4 whitespace-nowrap">
                         <button
                           onClick={() => showTicketModal(order)}
-                          className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-md text-sm transition-colors flex items-center"
+                          className="bg-gray-600 cursor-pointer hover:bg-gray-700 text-white px-3 py-1 rounded-md text-sm transition-colors flex items-center"
                         >
                           <FileText className="w-4 h-4 mr-1" />
                           Detalles
