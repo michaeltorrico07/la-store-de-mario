@@ -7,7 +7,6 @@ import { useGetProductsRecentlyPurchase } from '../hooks/useGetProductsRecentlyP
 import { useAuthContext } from '../../auth/hooks/useAuthContext';
 import { useUserOrders } from '../../user/hooks'
 import { useAppDispatch } from '../../../infrastructure/redux/hooks'
-import { resetListProductsProductsRecentlyPurchase } from '../slice'
 
 export const ProductListContainer = () => {
   const storedProducts = useAppSelector(state => state.products.products ?? [])
@@ -38,12 +37,7 @@ export const ProductListContainer = () => {
       if (uniqueProductIds.length > 0) {
         const productIdsString = uniqueProductIds.join(',')
         const productsQuery = { ids: productIdsString }
-
-        dispath(resetListProductsProductsRecentlyPurchase())
         onSubmit(productsQuery)
-      } else {
-        console.log("asd")
-        dispath(resetListProductsProductsRecentlyPurchase())
       }
     }
   }, [ordersData, onSubmit, dispath])
