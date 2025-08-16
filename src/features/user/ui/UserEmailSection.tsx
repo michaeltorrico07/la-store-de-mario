@@ -3,6 +3,7 @@ interface UserEmailSectionProps {
 }
 
 export const UserEmailSection = ({ email }: UserEmailSectionProps) => {
+  
   return (
     <div className="space-y-3">
       <div>

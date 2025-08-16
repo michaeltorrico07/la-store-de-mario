@@ -36,10 +36,6 @@ export interface ExpandedSections {
 }
 
 // Props para componentes
-export interface OrderHistoryTabProps {
-  orderHistory: Order[];
-  showTicketModal: (order: Order) => void;
-}
 
 export interface TicketModalProps {
   selectedTicket: Order | null;
