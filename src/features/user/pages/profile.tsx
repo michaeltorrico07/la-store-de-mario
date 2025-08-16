@@ -13,7 +13,7 @@ export const Profile = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 pt-20 pb-8">
+      <div className="min-h-screen bg-gray-100 pb-8">
         <div className="max-w-full mx-auto px-4 pt-8">
           {/* Header */}
           <div className="text-center mb-8">

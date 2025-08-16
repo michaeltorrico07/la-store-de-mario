@@ -140,6 +140,11 @@ export const useApi = <T> (optionsRef: RefObject<UseApiOptions>): UseApiResult<T
       body: formData,
     })
   }
+  if (optionsRef.current.params.method === 'GET') {
+    updateParams({
+      query: formData
+    })
+  }
 
   }, [optionsRef, updateParams])
 

@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, KitchenPanel, DeliveryPanel, Management } from '../features/index'
+import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, KitchenPanel, DeliveryPanel, Management, ProductDetail } from '../features/index'
 import { useAuthContext } from '../features/auth/hooks/useAuthContext'
 import { Loading } from '../features/shared'
 import { PrivateRoutes, PublicRoutes } from './routes'
@@ -22,7 +22,10 @@ export const AppRoutes = () => {
       </Route>
 
       <Route element = {<AuthGuard privateValidation = { true }/>} >
-        <Route path={PrivateRoutes.PRODUCTS} element = { <ProductListContainer/> } />
+        <Route path={PrivateRoutes.PRODUCTS} >
+          <Route index element={<ProductListContainer />} />
+          <Route path=":id" element={<ProductDetail />} />
+        </Route>
       </Route>
 
       <Route element = {<AuthGuard privateValidation = { true }/>} >

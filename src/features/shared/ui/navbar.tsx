@@ -1,16 +1,16 @@
 import { useCart } from '../../product/hooks/useCart'
 import { useAuthContext } from '../../auth/hooks/useAuthContext'
 import { useLocation, Link } from 'react-router-dom'
+import { PrivateRoutes } from '../../../app/routes'
 
 export const Navbar = () => {
   const { user } = useAuthContext()
   const { toggleCart, getTotalItems } = useCart()
   const location = useLocation()
 
-  const showCart = location.pathname === '/products'
-
+  const showCart = location.pathname === `/${PrivateRoutes.PRODUCTS}` || `/${location.pathname.startsWith(PrivateRoutes.PRODUCTS)}`
   return (
-    <nav className="bg-[#303030] text-white fixed top-0 left-0 right-0 z-50 flex items-center justify-around h-[8vh]">
+    <nav className="bg-[#303030] text-white sticky top-0 left-0 right-0 z-50 flex items-center justify-around h-[8vh]">
 
       {/* Logo y nombre - Lado izquierdo */}
       <div className="flex items-center gap-3 max-sm:hidden">

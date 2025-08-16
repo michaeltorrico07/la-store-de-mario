@@ -1,7 +1,7 @@
 import { useApi, type UseApiResult, type UseApiOptions } from "../../shared"
 import { useEffect, useRef } from "react"
 import type { Product } from "../product"
-import { useAppDispatch, useAppSelector } from '../../../infrastructure/redux/hooks'
+import { useAppDispatch } from '../../../infrastructure/redux/hooks'
 import { createListProducts } from '../slice'
 
 export const useGetAllProduct = (): UseApiResult<Product[]> => {
@@ -15,14 +15,11 @@ export const useGetAllProduct = (): UseApiResult<Product[]> => {
 
   const { data, loading, error, cancel, handleCall, onSubmit } = useApi<Product[]>(paramsRef)
   const dispatch = useAppDispatch()
-  const storedProducts = useAppSelector(state => state.products.products)
-
   useEffect(()=>{
     if (data) {
-      dispatch(createListProducts({ products: data }))
-
+      dispatch(createListProducts(data))
     }
-  },[data, dispatch, storedProducts.length])
+  },[data, dispatch])
 
   return { data, loading, error, cancel, handleCall, onSubmit }
 }

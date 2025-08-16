@@ -5,3 +5,6 @@ export * from './productCategoryFilter'
 export * from './productList'
 export * from './productSortFilter'
 export * from './TimeSelector'
+
+
+export * from './carousel'

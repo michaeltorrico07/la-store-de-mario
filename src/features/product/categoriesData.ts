@@ -1,7 +1,6 @@
 import type { Product } from "./product"
 
-export const categoriesData = (products: Product[] | null) => {
-  if (products == null) return null
+export const categoriesData = (products: Product[] ) => {
   return [
     { id: 'Todos', label: 'Todos', count: products.length },
     { id: 'Comida', label: 'Comidas', count: products.filter(p => p.category === 'Comida').length },

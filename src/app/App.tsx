@@ -11,7 +11,7 @@ import { EmployeesNavbar } from '../features/shared/ui/employeesNavbar'
 
 function App() {
   const location = useLocation()
-  const showNavbar = ['/products', '/profile', '/balatro', '/productosPOSTA'].includes(location.pathname)
+  const showNavbar =['/products', '/profile', '/balatro', '/productosPOSTA'].includes(location.pathname) ||location.pathname.startsWith('/products/');
   const showEmployeesNavbar = ['/delivery', '/kitchen', '/management'].includes(location.pathname)
 
   return (

@@ -1,8 +1,9 @@
 // Tipos para cada producto
 export interface OrderProduct {
   name: string;
-  amount: number;
-  price: number;
+  amount: number
+  price: number
+  id: string
 }
 
 // Tipos para cada pedido
