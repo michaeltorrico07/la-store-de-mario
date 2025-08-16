@@ -8,8 +8,8 @@ import { useAuthContext } from '../../auth/hooks/useAuthContext';
 import { useUserOrders } from '../../user/hooks'
 
 export const ProductListContainer = () => {
-  const storedProducts = useAppSelector(state => state.products.products)
-  const storedProductsRecentlyPurchase = useAppSelector(state => state.products.productsRecentlyPurchase)
+  const storedProducts = useAppSelector(state => state.products.products ?? [])
+  const storedProductsRecentlyPurchase = useAppSelector(state => state.products.productsRecentlyPurchase ?? [])
   const { data: ordersData, handleCall } = useUserOrders()
   const { data } = useGetAllProduct()
   const productsToUse = storedProducts.length > 0 ? storedProducts : (data ?? [])
