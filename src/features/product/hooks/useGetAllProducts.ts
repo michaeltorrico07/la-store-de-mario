@@ -20,7 +20,7 @@ export const useGetAllProduct = (onlyInMenu?: boolean): UseApiResult<Product[]> 
   const dispatch = useAppDispatch()
   useEffect(()=>{ console.log(data, paramsRef) },[data])
   useEffect(()=>{
-    if (data !== null && !onlyInMenu) {
+    if (data !== null && onlyInMenu) {
       dispatch(createListProducts(data))
     }
   },[data, dispatch, onlyInMenu])
