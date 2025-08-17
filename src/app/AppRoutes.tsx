@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
-import { HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, KitchenPanel, DeliveryPanel, Management, ProductDetail } from '../features/index'
+import { Auth, HomePage, Login, Register, Profile, ResetPassword, SendEmail, ProductListContainer, KitchenPanel, DeliveryPanel, Management, ProductDetail } from '../features/index'
 import { useAuthContext } from '../features/auth/hooks/useAuthContext'
 import { LoadingContent } from '../features/shared'
 import { PrivateRoutes, PublicRoutes } from './routes'
@@ -14,6 +14,10 @@ export const AppRoutes = () => {
       <Routes>
         <Route element={<AuthGuard privateValidation={false} />} >
           <Route path={PublicRoutes.LOGIN} element={<Login />} />
+        </Route>
+
+        <Route element={<AuthGuard privateValidation={false} />} >
+          <Route path={PublicRoutes.AUTH} element={<Auth />} />
         </Route>
 
         <Route element={<AuthGuard privateValidation={false} />} >

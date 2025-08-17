@@ -18,7 +18,7 @@ export const TicketModal = ({ selectedTicket, showTicket, closeTicket, user }: T
         <div className="bg-[#303030] text-white p-6 rounded-t-lg relative">
           <button
             onClick={closeTicket}
-            className="absolute top-4 right-4 bg-red-600 hover:bg-red-700 text-white rounded-full p-2 transition-colors shadow-lg z-10"
+            className="absolute top-4 right-4 cursor-pointer bg-red-600 hover:bg-red-700 text-white rounded-full p-2 transition-colors shadow-lg z-10"
             title="Cerrar ticket"
           >
             <X className="w-6 h-6" />
@@ -47,7 +47,7 @@ export const TicketModal = ({ selectedTicket, showTicket, closeTicket, user }: T
 
           {/* Info principal */}
           <div className="border-2 border-dashed border-gray-300 p-4 rounded-lg bg-gray-50">
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-2 gap-4 text-sm max-sm:flex-col max-sm:flex">
               <div className="flex items-center">
                 <Users className="w-5 h-5 text-gray-600 mr-2" />
                 <div>
@@ -114,7 +114,7 @@ export const TicketModal = ({ selectedTicket, showTicket, closeTicket, user }: T
           <div className="text-center mt-6">
             <button
               onClick={closeTicket}
-              className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg transition-colors flex items-center mx-auto"
+              className="bg-gray-600 cursor-pointer hover:bg-gray-700 text-white px-6 py-3 rounded-lg transition-colors flex items-center mx-auto"
             >
               <X className="w-5 h-5 mr-2" />
               Cerrar Ticket
