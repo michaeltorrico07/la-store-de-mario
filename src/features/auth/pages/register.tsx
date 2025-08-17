@@ -19,7 +19,7 @@ export const Register = () => {
       <div className="w-full md:w-1/2 flex items-center justify-center">
         <div className="w-full max-w-md px-8">
           <div className="flex justify-end mb-4">
-            <Link to="/" className="text-2xl">
+            <Link to="/auth" className="text-2xl">
               &times;
             </Link>
           </div>
