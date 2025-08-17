@@ -8,7 +8,7 @@ export const Navbar = () => {
   const { toggleCart, getTotalItems } = useCart()
   const location = useLocation()
 
-  const showCart = location.pathname === `/${PrivateRoutes.PRODUCTS}` || `/${location.pathname.startsWith(PrivateRoutes.PRODUCTS)}`
+  const showCart = location.pathname === `/${PrivateRoutes.PRODUCTS}` || location.pathname.startsWith(`/${PrivateRoutes.PRODUCTS}`)
   return (
     <>
       <nav className="bg-[#303030] text-white fixed top-0 left-0 right-0 z-50 flex items-center justify-around h-[8vh] max-h-[80px] min-h-[60px]">
@@ -32,8 +32,8 @@ export const Navbar = () => {
           <Link to="/products" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
             Productos
           </Link>
-          <Link to="/profile" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
-            Perfil
+          <Link to={user.isLoggedin ? '/profile' : '/auth'} className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
+            {user.isLoggedin ? 'Perfil' : 'Iniciar sesión'}
           </Link>
         </div>
 

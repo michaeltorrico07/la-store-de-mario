@@ -1,10 +1,16 @@
+import { Link } from "react-router-dom";
+
+interface PopularItemsProps {
+  isLogged: boolean
+}
+
 interface MenuItem {
   title: string;
   description: string;
   icon: string;
 }
 
-export const PopularItems = () => {
+export const PopularItems = ({ isLogged } : PopularItemsProps) => {
   const highlights: MenuItem[] = [
     {
       title: "Comidas Caseras",
@@ -57,12 +63,12 @@ export const PopularItems = () => {
         </div>
         
         <div className="text-center">
-          <button 
-            onClick={() => window.location.href = '/auth'}
+          <Link
+            to={isLogged ? '/products' : '/auth'}
             className="px-8 py-4 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-all duration-300 shadow-lg cursor-pointer"
           >
-            Inicia sesión para ver el menú
-          </button>
+            {isLogged ? 'Ver' : 'Inicia sesión para ver'} el menú
+          </Link>
         </div>
       </div>
     </section>

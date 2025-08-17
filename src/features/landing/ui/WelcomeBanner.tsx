@@ -1,4 +1,10 @@
-export const WelcomeBanner = () => {
+import { Link } from "react-router-dom";
+
+interface WelcomeBannerProps {
+  isLogged: boolean
+}
+
+export const WelcomeBanner = ({ isLogged } : WelcomeBannerProps) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-red-50 to-gray-100 overflow-hidden">
       {/* Background decoration */}
@@ -31,12 +37,12 @@ export const WelcomeBanner = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button 
-            onClick={() => window.location.href = '/auth'}
+          <Link
+            to={isLogged ? '/products' : '/auth'}
             className="px-8 py-4 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
           >
-            Inicia sesión para ver el menú
-          </button>
+            {isLogged ? 'Ver' : 'Inicia sesión para ver'} el menú
+          </Link>
         </div>
       </div>
     </section>
