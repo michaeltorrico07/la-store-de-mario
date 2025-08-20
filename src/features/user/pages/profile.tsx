@@ -1,6 +1,7 @@
 import { ProfileSidebar, PersonalDataTab, OrderHistoryTab, TicketModal } from '../ui';
 import { useAuthContext } from '../../auth/hooks/useAuthContext';
 import { useUserOrders, useProfileTab, useTicket } from '../hooks';
+import { Background } from '../../shared';
 
 export const Profile = () => {
   const { selectedTicket, showTicket, showTicketModal, closeTicket } = useTicket();
@@ -13,13 +14,13 @@ export const Profile = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 pb-8">
+      <Background className="bg-gray-100">
         <div className="max-w-full mx-auto px-4 pt-8">
           {/* Header */}
           <div className="text-center mb-8">
             <h1 className="text-3xl font-bold text-gray-800 mb-2">Mi cuenta</h1>
           </div>
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-7xl mx-auto mb-10">
             <div className="flex flex-col lg:flex-row gap-8">
               <div className="lg:w-80 flex-shrink-0">
                 <ProfileSidebar
@@ -58,7 +59,7 @@ export const Profile = () => {
           closeTicket={closeTicket}
           user={user?.name ?? ''}
         />
-      </div>
+      </Background>
     </>
   );
 };

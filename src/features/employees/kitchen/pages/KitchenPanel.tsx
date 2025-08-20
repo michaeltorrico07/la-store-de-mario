@@ -1,6 +1,6 @@
 import { KitchenHeader, ProductsList } from '../ui';
 import { useKitchenProducts } from '../hooks';
-import { getActualDeliverHour } from '../../../shared';
+import { getActualDeliverHour, Background } from '../../../shared';
 
 export const KitchenPanel = () => {
   const hour = new Date(getActualDeliverHour()).toLocaleString('es-AR', {
@@ -31,13 +31,13 @@ export const KitchenPanel = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <Background className="bg-gray-100">
       <KitchenHeader hour={hour} />
       <ProductsList
         products={kitchenProducts}
         onUnitConfirm={handleUnitConfirm}
         onTotalConfirm={handleTotalConfirm}
       />
-    </div>
+    </Background>
   );
 };
