@@ -5,6 +5,7 @@ import { registerSchema } from '../schemas/index';
 import type { RegisterSchema } from '../schemas/index';
 import { useAuth } from '../hooks/useAuth';
 import { InputField } from '../ui/inputField';
+import { ArrowLeft } from 'lucide-react';
 
 export const Register = () => {
   const { submitRegister, success, error, loading } = useAuth();
@@ -16,13 +17,8 @@ export const Register = () => {
         className="hidden md:block md:w-1/2 bg-cover bg-center"
         style={{ backgroundImage: "url('/Mario.jpg')" }}
       />
-      <div className="w-full md:w-1/2 flex items-center justify-center">
+      <div className="w-full md:w-1/2 flex items-center justify-center relative">
         <div className="w-full max-w-md px-8">
-          <div className="flex justify-end mb-4">
-            <Link to="/auth" className="text-2xl">
-              &times;
-            </Link>
-          </div>
           <h1 className="text-3xl font-bold mb-2">Tus datos</h1>
           <p className="mb-8">
             Ingresa tus datos para registrarte y disfruta de Mario
@@ -65,19 +61,20 @@ export const Register = () => {
 
             {error && <p className="text-red-600 text-sm">{error}</p>}
             {success && (
-            <p className="text-green-600 text-sm">
-            Registro exitoso! Verifica tu cuenta en tu Mail.
-            </p>
+              <p className="text-green-600 text-sm">
+                Registro exitoso! Verifica tu cuenta en tu Mail.
+              </p>
             )}
 
             <button
-            type="submit"
-            className="w-full py-3 bg-red-600 text-white rounded-md cursor-pointer"
+              type="submit"
+              className="w-full py-3 bg-red-600 text-white rounded-md cursor-pointer"
             >
-            {loading ? "Cargando..." : "Registrarse"}
+              {loading ? "Cargando..." : "Registrarse"}
             </button>
           </form>
         </div>
+        <Link to={'/auth'} className='absolute top-3 left-3 text-white bg-red-500 hover:bg-red-700 p-3 rounded-md font-semibold'><ArrowLeft /></Link>
       </div>
     </div>
   );
