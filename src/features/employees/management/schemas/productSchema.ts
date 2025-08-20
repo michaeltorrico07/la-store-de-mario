@@ -9,7 +9,7 @@ export const productSchema = z.object({
   description: z
     .string()
     .min(1, "La descripción es obligatoria")
-    .max(60, "La descripción no puede exceder los 60 caracteres"),
+    .max(200, "La descripción no puede exceder los 200 caracteres"),
   price: z
     .number({ invalid_type_error: "Debe ser un número" })
     .nonnegative("El precio no puede ser negativo"),
