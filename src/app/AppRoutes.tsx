@@ -7,10 +7,10 @@ import { AuthGuard, RolGuard } from '../infrastructure/guards'
 import { Roles } from '../features/auth/roles'
 
 export const AppRoutes = () => {
-  const { loading } = useAuthContext()
+  const { loading, user } = useAuthContext()
 
   return (
-    <LoadingContent loading={loading} app={true}>
+    <LoadingContent loading={!user.isLoggedin ? loading : false} app={true}>
       <Routes>
         <Route element={<AuthGuard privateValidation={false} />} >
           <Route path={PublicRoutes.LOGIN} element={<Login />} />

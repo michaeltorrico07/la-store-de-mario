@@ -53,21 +53,21 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   return (
     <div className="bg-white border border-gray-300 rounded-2xl p-4">
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-4">
+        <div className="flex flex-1 items-center gap-4">
           <img
             src={typeof product.image === "string" ? product.image : URL.createObjectURL(product.image)}
             alt={product.name}
             className="w-32 h-32 object-cover rounded-xl"
           />
-          <div>
+          <div className="w-[80%]">
             <h3 className="text-xl font-semibold">{product.name}</h3>
-            <p className="text-sm text-gray-500">{product.description}</p>
+            <p className="text-sm text-gray-500 max-sm:hidden">{product.description}</p>
             <p className="text-sm text-gray-500 font-semibold">${product.price}</p>
           </div>
         </div>
         <button
           onClick={() => setOpen(!open)}
-          className="p-2 font-semibold bg-red-600 rounded-md text-sm text-white hover:bg-red-700 cursor-pointer"
+          className="p-2 font-semibold bg-red-600 rounded-md text-sm w-16 text-white hover:bg-red-700 cursor-pointer"
         >
           {open ? "Cerrar" : "Editar"}
         </button>
