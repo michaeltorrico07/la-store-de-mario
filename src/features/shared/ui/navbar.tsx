@@ -3,12 +3,13 @@ import { useAuthContext } from '../../auth/hooks/useAuthContext'
 import { useLocation, Link } from 'react-router-dom'
 import { PrivateRoutes } from '../../../app/routes'
 import LogoOtto from '../../../../assets/svgs/logoOtto.svg?react'
+import { useEffect } from 'react'
 
 export const Navbar = () => {
   const { user } = useAuthContext()
   const { toggleCart, getTotalItems } = useCart()
   const location = useLocation()
-
+  useEffect(()=>{console.log(user)},[user])
   const showCart = location.pathname === `/${PrivateRoutes.PRODUCTS}` || location.pathname.startsWith(`/${PrivateRoutes.PRODUCTS}`)
   return (
     <>
