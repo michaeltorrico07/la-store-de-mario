@@ -74,7 +74,7 @@ export const ProductListContainer = () => {
     </div>
     ) : (
       <>
-        <div className="bg-white border-b border-gray-200 sticky top-18 z-20">
+        <div className="bg-white border-b border-gray-200 sticky top-0 z-20">
           <div className="max-w-7xl mx-auto px-4 py-6">
             <h1 className="text-3xl font-bold text-gray-900 mb-6">Productos</h1>
             
