@@ -30,7 +30,7 @@ export const Carousel = ({ data }: CarouselProps) => {
               <div className="w-full aspect-square flex items-center justify-center rounded-lg shadow-[0_0_8px_rgba(0,0,0,0.3)]">
                 <img
                   className="max-w-28 max-h-28 min-w-14 min-h-14 object-contain object-center"
-                  src="/s.png"
+                  src={product.image}
                   alt={product.name}
                 />
               </div>
