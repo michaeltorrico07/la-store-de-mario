@@ -9,7 +9,7 @@ interface LoadingContentProps {
 
 export const LoadingContent = ({ children, loading, className, app }: LoadingContentProps) => {
   return (
-    <div className={`relative w-full h-full ${loading && 'max-h-screen'} ${className}`}>
+    <div className={`relative w-full h-full min-h-28 ${loading && 'max-h-screen'} ${className}`}>
       {children}
       {loading && (
         <div className={`absolute inset-0 flex flex-col max-w-full max-h-full bg-white ${app && 'fixed z-[100]'}`}>
