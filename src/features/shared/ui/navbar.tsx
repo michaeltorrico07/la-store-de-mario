@@ -2,6 +2,7 @@ import { useCart } from '../../product/hooks/useCart'
 import { useAuthContext } from '../../auth/hooks/useAuthContext'
 import { useLocation, Link } from 'react-router-dom'
 import { PrivateRoutes } from '../../../app/routes'
+import LogoOtto from '../../../../assets/svgs/logoOtto.svg?react'
 
 export const Navbar = () => {
   const { user } = useAuthContext()
@@ -15,13 +16,7 @@ export const Navbar = () => {
 
         {/* Logo y nombre - Lado izquierdo */}
         <div className="flex items-center gap-3 max-sm:hidden">
-          <div className="w-8 h-8 rounded overflow-hidden">
-            <img src="/Logo.png" alt="LogoMario" className="w-full h-full object-cover" />
-          </div>
-          <div className="min-w-0">
-            <h1 className="font-bold text-base whitespace-nowrap">Otto Krause</h1>
-            <p className="text-xs text-gray-300 -mt-1 whitespace-nowrap">FastFood</p>
-          </div>
+          <LogoOtto width={140} height={140} />
         </div>
 
         {/* Navegación central */}
