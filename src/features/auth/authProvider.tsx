@@ -22,10 +22,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const dispatch = useAppDispatch()
   const user = useAppSelector(state => state.auth)
   const [loading, setLoading] = useState(true)
+  const [justRegistered, setJustRegistered] = useState(false)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      if (currentUser) {
+    if (currentUser && !justRegistered) {
         try {
           const res = await api.get(`/user`)
           dispatch(createAuth({
@@ -45,11 +46,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     })
 
     return () => unsubscribe()
-  }, [dispatch])
+  }, [dispatch, justRegistered])
 
   const registerUser = async (email: string, password: string) => {
     const userCredential = await createUserWithEmailAndPassword(auth, email, password)
     await sendEmailVerification(userCredential.user)
+    setJustRegistered(true) 
     await LogOutUser()
     const id = userCredential.user.uid
     return id
