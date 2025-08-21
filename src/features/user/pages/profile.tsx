@@ -9,7 +9,7 @@ export const Profile = () => {
   const { user } = useAuthContext()
 
   const { activeTab, handleTabChange } = useProfileTab();
-  
+
   const { data, handleCall, loading } = useUserOrders()
 
   return (
@@ -51,15 +51,14 @@ export const Profile = () => {
             </div>
           </div>
         </div>
-
-        {/* Modal del ticket */}
-        <TicketModal
-          selectedTicket={selectedTicket}
-          showTicket={showTicket}
-          closeTicket={closeTicket}
-          user={user?.name ?? ''}
-        />
       </Background>
+      {/* Modal del ticket */}
+      <TicketModal
+        selectedTicket={selectedTicket}
+        showTicket={showTicket}
+        closeTicket={closeTicket}
+        user={user?.name ?? ''}
+      />
     </>
   );
 };

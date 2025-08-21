@@ -12,7 +12,7 @@ export const TicketModal = ({ selectedTicket, showTicket, closeTicket, user }: T
   if (!showTicket || !selectedTicket) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-[100] p-4" style={{ zIndex: 100 }}>
       <div className="bg-white rounded-lg shadow-2xl max-w-md w-full max-h-[90vh] overflow-y-auto">
         {/* Header del ticket */}
         <div className="bg-[#303030] text-white p-6 rounded-t-lg relative">
