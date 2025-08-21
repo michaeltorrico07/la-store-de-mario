@@ -28,8 +28,8 @@ export const Navbar = () => {
           <Link to="/products" className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
             Productos
           </Link>
-          <Link to={user.isLoggedin ? '/profile' : '/auth'} className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
-            {user.isLoggedin ? 'Perfil' : 'Iniciar sesión'}
+          <Link to={user.isVerified ? '/profile' : '/auth'} className="text-white hover:text-gray-300 transition-colors font-medium whitespace-nowrap">
+            {user.isVerified ? 'Perfil' : 'Iniciar sesión'}
           </Link>
         </div>
 
