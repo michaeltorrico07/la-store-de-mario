@@ -1,5 +1,6 @@
 export const getActualDeliverHour = () => {
   const actualHour = new Date()
+  console.log(actualHour)
 
   const deliveryHours = [
     '09:05',
