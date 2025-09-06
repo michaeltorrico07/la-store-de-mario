@@ -53,6 +53,7 @@ export const useAuth = () => {
         return;
       }
       setSuccess(true);
+      window.location.reload()
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         console.log(error.code)
